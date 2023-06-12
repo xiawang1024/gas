@@ -1,17 +1,23 @@
+<!--
+ * @Author: xiawang1024
+ * @Date: 2023-06-12 08:45:39
+ * @LastEditTime: 2023-06-12 16:52:59
+ * @LastEditors: xiawang1024
+ * @Description:
+ * @FilePath: /electronic-file/src/App.vue
+ * 工作，生活，健康
+-->
 <template>
   <div id="app">
-    <datav />
+    <!-- <datav /> -->
+    <router-view />
   </div>
 </template>
 
 <script>
-import datav from './components/datav/index.vue'
 
 export default {
   name: 'app',
-  components: {
-    datav
-  },
   data () {
     return {}
   }

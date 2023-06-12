@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 08:45:39
- * @LastEditTime: 2023-06-12 16:20:54
+ * @LastEditTime: 2023-06-12 16:31:49
  * @LastEditors: xiawang1024
  * @Description
  * @FilePath: /electronic-file/src/components/datav/index.vue
@@ -103,11 +103,13 @@ export default {
         text-align: center;
         h1{
           margin:0 10px;
+          font-size: 32px;
         }
         p{
           position: absolute;
           bottom: 10%;
-          right: -20%;
+          right: -15%;
+          font-size: 15px;
         }
 
       }

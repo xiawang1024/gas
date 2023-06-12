@@ -12,7 +12,8 @@
     "@jiaminghi/data-view": "^2.4.1",
     "core-js": "^2.6.5",
     "element-ui": "^2.15.13",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",
