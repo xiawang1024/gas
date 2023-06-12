@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
- * @Date: 2023-06-12 17:23:34
- * @LastEditTime: 2023-06-12 17:23:48
+ * @Date: 2023-06-12 17:20:27
+ * @LastEditTime: 2023-06-12 17:58:53
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/index.vue
@@ -9,18 +9,45 @@
 -->
 <template>
   <div class="container">
-    <h1>外勤查询系统</h1>
+    <el-card>
+      <el-page-header @back="goBack" content="外勤查询系统"> </el-page-header>
+    </el-card>
+    <el-card class="wrap">
+      <el-tabs v-model="activeName" type="card">
+        <el-tab-pane label="轨迹查询" name="guiji"><guiji /></el-tab-pane>
+        <el-tab-pane label="手动采集查询" name="caiji"><caiji /></el-tab-pane>
+      </el-tabs>
+    </el-card>
   </div>
 </template>
 
 <script>
+import guiji from './modules/guiji.vue'
+import caiji from './modules/caiji.vue'
+
 export default {
   name: 'Index',
-  data() {
-    return {}
+  components: {
+    guiji,
+    caiji,
   },
-  methods: {},
+  data() {
+    return {
+      activeName: 'guiji',
+    }
+  },
+  methods: {
+    goBack() {
+      console.log('go back')
+    },
+  },
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="less" scoped>
+.wrap {
+  margin: 15px auto;
+  width: 98%;
+  box-sizing: border-box;
+}
+</style>
