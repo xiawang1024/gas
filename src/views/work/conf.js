@@ -1,4 +1,4 @@
-const WorkType = [
+export const WorkType = [
   {
     lable: '巡线',
     value: 'xunxian',
@@ -24,3 +24,13 @@ const WorkType = [
     value: 'gongcheng',
   },
 ]
+
+function map(arr) {
+  let map = {}
+  for (let i = 0; i < arr.length; i++) {
+    map[arr[i].value] = arr[i].lable
+  }
+  return map
+}
+
+export const WorkTypeMap = map(WorkType)
