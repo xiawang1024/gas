@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 08:45:39
- * @LastEditTime: 2023-06-12 14:18:53
+ * @LastEditTime: 2023-06-12 16:20:54
  * @LastEditors: xiawang1024
  * @Description
  * @FilePath: /electronic-file/src/components/datav/index.vue
@@ -17,6 +17,7 @@
             </div>
             <div class="center">
               <h1>智慧燃气监控系统</h1>
+              <p>----洛阳进合燃气有限公司</p>
             <dv-decoration-5  />
             </div>
             <div class="right">
@@ -31,6 +32,18 @@
         <div class="left">
           <dv-border-box-8 :reverse="true"><mapXw /></dv-border-box-8>
         </div>
+        <div class="right">
+          <div class="right-top">
+            <dv-border-box-13 title="传感器监控">
+              <RightTop />
+            </dv-border-box-13>
+          </div>
+          <div class="right-bottom">
+            <dv-border-box-9 title="视频监控">
+              <RightBottom />
+            </dv-border-box-9>
+          </div>
+        </div>
       </div>
     </dv-full-screen-container>
   </div>
@@ -40,12 +53,16 @@
 
 import digitalFlop from '../big/digitalFlop'
 import mapXw from '../big/map.vue'
+import RightTop from '../big/rightTop.vue'
+import RightBottom from '../big/rightBottom.vue'
 
 export default {
   name: 'DataView',
   components: {
     digitalFlop,
-    mapXw
+    mapXw,
+    RightTop,
+    RightBottom
   },
   data () {
     return {}
@@ -81,11 +98,18 @@ export default {
       align-items: center;
       justify-content: space-between;
       .center{
+        position: relative;
         width: 500px;
         text-align: center;
         h1{
           margin:0 10px;
         }
+        p{
+          position: absolute;
+          bottom: 10%;
+          right: -20%;
+        }
+
       }
 
     }
@@ -103,6 +127,19 @@ export default {
     .left{
       height: 100%;
       width: 65%;
+    }
+    .right{
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      .right-top{
+        height: 45%;
+        width: 100%;
+      }
+      .right-bottom{
+        height: 55%;
+        width: 100%;
+      }
     }
   }
 }

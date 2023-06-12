@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-06-12 15:01:04
+ * @LastEditTime: 2023-06-12 16:23:22
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/map.vue
@@ -22,6 +22,22 @@
 
 <script>
 import AMapLoader from '@amap/amap-jsapi-loader'
+
+const mockData = [
+  {
+    log: '112.4260965',
+    lat: '34.83202143'
+  },
+  {
+    log: '112.422006',
+    lat: '34.83293772'
+  },
+  {
+    log: '112.409338',
+    lat: '34.8396694'
+  }
+
+]
 export default {
   name: 'mapXw',
   data () {
@@ -49,13 +65,52 @@ export default {
     this.initMap()
   },
   methods: {
+    createInfoWindow (title, content) {
+
+    },
+    createMarkers (AMap, list, onMarkerClick) {
+      let markers = []
+      for (let i = 0; i < list.length; i++) {
+        let icon = new AMap.Icon({
+          size: new AMap.Size(50, 50),
+          image: require('./icons/01.png'), // Icon的图像
+          imageSize: new AMap.Size(50, 50)
+        })
+
+        let marker = new AMap.Marker({
+          position: [list[i].log, list[i].lat],
+          icon: icon
+        })
+        marker.content = '我是第' + (i + 1) + '个Marker'
+        marker.on('click', onMarkerClick) // 绑定 click 事件
+        marker.emit('click', { target: marker })
+        markers.push(marker)
+      }
+
+      return markers
+    },
+
+    createLines (AMap, list) {
+      let lines = []
+
+      for (let i = 0; i < list.length; i++) {
+        let polyline = new AMap.Polyline({
+          path: list[i], // 设置线覆盖物路径
+          strokeColor: 'red', // 线颜色
+          strokeWeight: 5, // 线宽
+          strokeStyle: 'round' // 线样式
+        })
+        lines.push(polyline)
+      }
+      return lines
+    },
     initMap () {
       AMapLoader.load({
-        key: 'a5e96381ba664e245f7c036a6de5f7d4', // 申请好的Web端开发者Key，首次调用 load 时必填
-        version: '2.0', // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
+        key: 'a5e96381ba664e245f7c036a6de5f7d4',
+        version: '2.0',
         plugins: [''] // 需要使用的的插件列表，如比例尺'AMap.Scale'等
       }).then((AMap) => {
-        this.map = new AMap.Map('container', { // 设置地图容器id
+        this.map = new AMap.Map('container', {
           viewMode: '3D', // 是否为3D地图模式
           zoom: 12, // 初始化地图级别
           mapStyle: 'amap://styles/darkblue',
@@ -63,39 +118,19 @@ export default {
         })
 
         // 创建信息窗体
-        const infoWindow = new AMap.InfoWindow()
+        const infoWindow = new AMap.InfoWindow({ isCustom: true })
         const onMarkerClick = (e) => {
           console.log(e)
+          infoWindow.setContent(e.target.content)
           infoWindow.open(this.map, e.target.getPosition()) // 打开信息窗体
           // e.target 就是被点击的 Marker
         }
 
-        const icon = new AMap.Icon({
-          size: new AMap.Size(50, 50),
-          image: require('./icons/01.png'), // Icon的图像
-          imageSize: new AMap.Size(50, 50)
-        })
+        let markers = this.createMarkers(AMap, mockData, onMarkerClick)
 
-        const marker = new AMap.Marker({
-          position: [112.45, 34.62],
-          icon: icon
-        })
-        this.map.add(marker)
-        marker.on('click', onMarkerClick) // 绑定 click 事件
+        this.map.add(markers)
 
-        const lineArr = [
-          [116.368904, 39.913423],
-          [116.382122, 39.901176],
-          [116.387271, 39.912501],
-          [116.398258, 39.904600]
-        ]
-        const polyline = new AMap.Polyline({
-          path: lineArr, // 设置线覆盖物路径
-          strokeColor: '#3366FF', // 线颜色
-          strokeWeight: 5, // 线宽
-          strokeStyle: 'solid' // 线样式
-        })
-        this.map.add(polyline)
+        // this.map.add(polyline)
 
         this.map.setFitView()
       }).catch(e => {
@@ -107,6 +142,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+::v-deep{
+  .el-input--suffix .el-input__inner{
+    background: transparent;
+  }
+}
 .map-wrap {
   position: absolute;
   left: 1%;
