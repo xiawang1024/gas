@@ -1,10 +1,10 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 08:45:39
- * @LastEditTime: 2023-06-12 16:31:49
+ * @LastEditTime: 2023-06-12 17:01:38
  * @LastEditors: xiawang1024
  * @Description
- * @FilePath: /electronic-file/src/components/datav/index.vue
+ * @FilePath: /electronic-file/src/views/home/index.vue
  * 工作，生活，健康
 -->
 <template>
@@ -51,10 +51,10 @@
 
 <script>
 
-import digitalFlop from '../big/digitalFlop'
-import mapXw from '../big/map.vue'
-import RightTop from '../big/rightTop.vue'
-import RightBottom from '../big/rightBottom.vue'
+import digitalFlop from '@/components/big/digitalFlop'
+import mapXw from '@/components/big/map.vue'
+import RightTop from '@/components/big/rightTop.vue'
+import RightBottom from '@/components/big/rightBottom.vue'
 
 export default {
   name: 'DataView',

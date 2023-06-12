@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:38:14
- * @LastEditTime: 2023-06-12 16:58:10
+ * @LastEditTime: 2023-06-12 17:01:53
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/router/index.js
@@ -11,7 +11,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import DataV from '@/components/datav/index.vue'
+import DataV from '@/views/home/index.vue'
 Vue.use(VueRouter)
 
 const routes = [
