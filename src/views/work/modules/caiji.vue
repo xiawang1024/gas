@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-06-12 18:29:50
+ * @LastEditTime: 2023-06-12 18:47:05
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/caiji.vue
@@ -34,20 +34,34 @@
         <el-button type="primary" @click="onSubmit">查询</el-button>
       </el-form-item>
     </el-form>
-
-    <div class="map" id="guiji"></div>
-
-    <div class="controls">
-      <el-button>开始动画</el-button>
-      <el-button>暂停动画</el-button>
-      <el-button>继续动画</el-button>
-      <el-button>停止动画</el-button>
+    <el-table :data="tableData" border style="width: 100%">
+      <el-table-column prop="date" label="用户名"> </el-table-column>
+      <el-table-column prop="name" label="工种"> </el-table-column>
+      <el-table-column prop="address" label="日期"> </el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button @click="handleClick(scope.row)" type="primary" size="small"
+            >查看</el-button
+          >
+        </template>
+      </el-table-column>
+    </el-table>
+    <div class="page">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pageInfo.page"
+        :page-sizes="[10, 20, 30, 50]"
+        :page-size="pageInfo.limit"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="pageInfo.total"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
 
 <script>
-import AMapLoader from '@amap/amap-jsapi-loader'
 export default {
   name: 'Guiji',
   data() {
@@ -56,109 +70,45 @@ export default {
         user: '',
         region: '',
       },
+      pageInfo: {
+        page: 1,
+        limit: 10,
+        total: 0,
+      },
+      tableData: [
+        {
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄',
+        },
+        {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1517 弄',
+        },
+        {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄',
+        },
+        {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1516 弄',
+        },
+      ],
     }
   },
-  mounted() {
-    // this.initMap()
-  },
+  mounted() {},
   methods: {
     onSubmit() {
       console.log('submit!')
     },
-    initMap() {
-      AMapLoader.load({
-        key: 'a5e96381ba664e245f7c036a6de5f7d4',
-        version: '2.0',
-        plugins: ['AMap.MoveAnimation'], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
-      })
-        .then(AMap => {
-          this.map = new AMap.Map('guiji', {
-            resizeEnable: true,
-            viewMode: '3D', // 是否为3D地图模式
-            zoom: 12, // 初始化地图级别
-            // mapStyle: 'amap://styles/darkblue',
-            center: [116.397428, 39.90923], // 初始化地图中心点位置
-          })
-
-          var marker,
-            lineArr = [
-              [116.478935, 39.997761],
-              [116.478939, 39.997825],
-              [116.478912, 39.998549],
-              [116.478912, 39.998549],
-              [116.478998, 39.998555],
-              [116.478998, 39.998555],
-              [116.479282, 39.99856],
-              [116.479658, 39.998528],
-              [116.480151, 39.998453],
-              [116.480784, 39.998302],
-              [116.480784, 39.998302],
-              [116.481149, 39.998184],
-              [116.481573, 39.997997],
-              [116.481863, 39.997846],
-              [116.482072, 39.997718],
-              [116.482362, 39.997718],
-              [116.483633, 39.998935],
-              [116.48367, 39.998968],
-              [116.484648, 39.999861],
-            ]
-
-          marker = new AMap.Marker({
-            map: this.map,
-            position: [116.478935, 39.997761],
-            icon:
-              'https://a.amap.com/jsapi_demos/static/demo-center-v2/car.png',
-            offset: new AMap.Pixel(-13, -26),
-          })
-
-          // 绘制轨迹
-          var polyline = new AMap.Polyline({
-            map: this.map,
-            path: lineArr,
-            showDir: true,
-            strokeColor: '#28F', //线颜色
-            // strokeOpacity: 1,     //线透明度
-            strokeWeight: 6, //线宽
-            // strokeStyle: "solid"  //线样式
-          })
-
-          var passedPolyline = new AMap.Polyline({
-            map: this.map,
-            strokeColor: '#AF5', //线颜色
-            strokeWeight: 6, //线宽
-          })
-
-          marker.on('moving', function(e) {
-            passedPolyline.setPath(e.passedPath)
-            this.map.setCenter(e.target.getPosition(), true)
-          })
-
-          this.map.setFitView()
-
-          window.startAnimation = function startAnimation() {
-            marker.moveAlong(lineArr, {
-              // 每一段的时长
-              duration: 500, //可根据实际采集时间间隔设置
-              // JSAPI2.0 是否延道路自动设置角度在 moveAlong 里设置
-              autoRotation: true,
-            })
-          }
-
-          window.pauseAnimation = function() {
-            marker.pauseMove()
-          }
-
-          window.resumeAnimation = function() {
-            marker.resumeMove()
-          }
-
-          window.stopAnimation = function() {
-            marker.stopMove()
-          }
-        })
-        .catch(e => {
-          console.log(e)
-        })
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`)
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`)
     },
   },
 }
@@ -169,11 +119,8 @@ export default {
   height: calc(100vh - 280px);
   width: 100%;
 }
-
-.controls {
-  position: absolute;
-  bottom: 100px;
-  right: 30px;
-  background-color: #fff;
+.page {
+  margin-top: 30px;
+  text-align: right;
 }
 </style>

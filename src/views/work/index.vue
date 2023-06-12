@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:20:27
- * @LastEditTime: 2023-06-12 17:58:53
+ * @LastEditTime: 2023-06-12 18:52:25
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/index.vue
@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     goBack() {
-      console.log('go back')
+      this.$router.push('/')
     },
   },
 }

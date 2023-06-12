@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 08:45:39
- * @LastEditTime: 2023-06-12 17:13:58
+ * @LastEditTime: 2023-06-12 19:02:17
  * @LastEditors: xiawang1024
  * @Description
  * @FilePath: /electronic-file/src/views/home/index.vue
@@ -13,17 +13,21 @@
       <div class="main-header">
         <div class="title">
           <div class="left">
+            <dv-decoration-8 style="width:300px;height:50px;" />
             <div class="btns">
               <dv-border-box-2
                 style="width: 100px; height:40px; line-height:40px; text-align: center; "
-                >外勤查询</dv-border-box-2
+                ><span @click="goToPath('/work')"
+                  >外勤查询</span
+                ></dv-border-box-2
               >
               <dv-border-box-2
                 style="width: 120px; height:40px; line-height:40px; text-align: center; "
-                >客户缴费查询</dv-border-box-2
+                ><span @click="goToPath('/order')"
+                  >客户缴费查询</span
+                ></dv-border-box-2
               >
             </div>
-            <dv-decoration-8 style="width:300px;height:50px;" />
           </div>
           <div class="center">
             <h1>智慧燃气监控系统</h1>
@@ -76,6 +80,11 @@ export default {
   data() {
     return {}
   },
+  methods: {
+    goToPath(path) {
+      this.$router.push(path)
+    },
+  },
 }
 </script>
 
@@ -111,6 +120,7 @@ export default {
         position: relative;
         .btns {
           position: absolute;
+          z-index: 999999;
           top: -40%;
           left: 20%;
           display: flex;

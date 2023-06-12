@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:20:27
- * @LastEditTime: 2023-06-12 17:44:54
+ * @LastEditTime: 2023-06-12 18:52:42
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/order/index.vue
@@ -32,11 +32,38 @@
       </el-form>
 
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="date" label="日期" width="180">
+        <el-table-column prop="date" show-overflow-tooltip label="户号">
         </el-table-column>
-        <el-table-column prop="name" label="姓名" width="180">
+        <el-table-column prop="name" show-overflow-tooltip label="姓名">
         </el-table-column>
-        <el-table-column prop="address" label="地址"> </el-table-column>
+        <el-table-column prop="address" show-overflow-tooltip label="地址">
+        </el-table-column>
+        <el-table-column prop="address" show-overflow-tooltip label="联系方式">
+        </el-table-column>
+        <el-table-column prop="address" show-overflow-tooltip label="卡号">
+        </el-table-column>
+        <el-table-column prop="address" show-overflow-tooltip label="表号">
+        </el-table-column>
+        <el-table-column prop="address" show-overflow-tooltip label="付费类型">
+        </el-table-column>
+        <el-table-column prop="address" show-overflow-tooltip label="购气量">
+        </el-table-column>
+        <el-table-column prop="address" show-overflow-tooltip label="气费">
+        </el-table-column>
+        <el-table-column prop="address" show-overflow-tooltip label="实收金额">
+        </el-table-column>
+        <el-table-column prop="address" show-overflow-tooltip label="账户结存">
+        </el-table-column>
+        <el-table-column prop="address" show-overflow-tooltip label="上次结余">
+        </el-table-column>
+        <el-table-column prop="address" show-overflow-tooltip label="本次结余">
+        </el-table-column>
+        <el-table-column prop="address" show-overflow-tooltip label="日期">
+        </el-table-column>
+        <el-table-column prop="address" show-overflow-tooltip label="操作员">
+        </el-table-column>
+        <el-table-column prop="address" show-overflow-tooltip label="用气设备">
+        </el-table-column>
       </el-table>
     </el-card>
     <el-card class="wrap">
@@ -99,7 +126,7 @@ export default {
       console.log('submit!')
     },
     goBack() {
-      console.log('go back')
+      this.$router.push('/')
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`)
