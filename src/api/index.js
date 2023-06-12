@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 19:10:13
- * @LastEditTime: 2023-06-12 19:17:58
+ * @LastEditTime: 2023-06-12 19:45:28
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/index.js
@@ -18,4 +18,4 @@ export const headInfo = () =>
 export const mapAll = () => request({ url: '/gas/index/map', method: 'get' })
 
 export const mapSingle = type =>
-  request({ url: `/gas/index/${type}`, method: 'get' })
+  request({ url: `/gas/index/map/${type}`, method: 'get' })

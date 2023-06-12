@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-06-12 19:05:55
+ * @LastEditTime: 2023-06-12 20:12:33
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/map.vue
@@ -12,11 +12,12 @@
     <div class="container" id="container"></div>
     <div class="select">
       <el-select
-        v-model="value2"
+        v-model="value"
         multiple
         collapse-tags
         style="margin-left: 20px;"
         placeholder="请选择"
+        @change="selectHandler"
       >
         <el-option
           v-for="item in options"
@@ -31,6 +32,8 @@
 </template>
 
 <script>
+import * as Service from '@/api/index'
+
 import AMapLoader from '@amap/amap-jsapi-loader'
 
 const mockData = [
@@ -73,25 +76,67 @@ export default {
           value: 'user_online',
         },
       ],
-      value2: [],
+      value: [],
+      locationMap: {},
+      markersMap: {},
     }
+  },
+  watch: {
+    value: function(newVal, oldVal) {
+      //找出oldVal 相对 newVal 少了哪些
+      let types = oldVal.filter(item => !newVal.includes(item))
+      console.log(999, types)
+      for (let i = 0; i < types.length; i++) {
+        if (this.markersMap[types[i]]) {
+          this.map.remove(this.markersMap[types[i]])
+        }
+      }
+    },
   },
   mounted() {
     this.initMap()
   },
   methods: {
+    selectHandler(val) {
+      let types = val
+      for (let i = 0; i < types.length; i++) {
+        if (!this.locationMap[types[i]]) {
+          this.getData(types[i])
+        } else {
+          this.map.add(this.markersMap[types[i]])
+        }
+      }
+    },
+    getData(type) {
+      if (type == 'guanwang') {
+        return false
+      }
+      Service.mapSingle(type).then(res => {
+        let { code, data } = res.data
+        if (code == 200) {
+          this.locationMap[type] = data
+
+          this.markersMap[type] = this.createMarkers(this.AMap, data, e => {
+            // console.log(e)
+          })
+
+          this.map.add(this.markersMap[type])
+          this.map.setFitView()
+        }
+      })
+    },
     createInfoWindow(title, content) {},
     createMarkers(AMap, list, onMarkerClick) {
       let markers = []
       for (let i = 0; i < list.length; i++) {
         let icon = new AMap.Icon({
           size: new AMap.Size(50, 50),
-          image: require('./icons/01.png'), // Icon的图像
+          image: require(`./icons/${list[i].mapType}.png`), // Icon的图像
           imageSize: new AMap.Size(50, 50),
         })
 
         let marker = new AMap.Marker({
-          position: [list[i].log, list[i].lat],
+          position: [list[i].mapLon, list[i].mapLat],
           icon: icon,
         })
         marker.content = '我是第' + (i + 1) + '个Marker'
@@ -124,6 +169,7 @@ export default {
         plugins: [''], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
       })
         .then(AMap => {
+          this.AMap = AMap
           this.map = new AMap.Map('container', {
             viewMode: '3D', // 是否为3D地图模式
             zoom: 12, // 初始化地图级别
@@ -139,14 +185,6 @@ export default {
             infoWindow.open(this.map, e.target.getPosition()) // 打开信息窗体
             // e.target 就是被点击的 Marker
           }
-
-          let markers = this.createMarkers(AMap, mockData, onMarkerClick)
-
-          this.map.add(markers)
-
-          // this.map.add(polyline)
-
-          this.map.setFitView()
         })
         .catch(e => {
           console.log(e)
