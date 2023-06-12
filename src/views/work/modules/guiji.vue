@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-06-12 18:39:08
+ * @LastEditTime: 2023-06-12 20:45:57
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/guiji.vue
@@ -11,21 +11,35 @@
   <div class="container">
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
       <el-form-item label="用户名">
-        <el-input v-model="formInline.user" placeholder="用户名"></el-input>
+        <el-select v-model="formInline.userId" placeholder="用户名">
+          <el-option
+            v-for="item of users"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
       </el-form-item>
 
       <el-form-item label="工种">
-        <el-select v-model="formInline.region" placeholder="工种">
-          <el-option label="工种一" value="shanghai"></el-option>
-          <el-option label="工种二" value="beijing"></el-option>
+        <el-select v-model="formInline.workType" placeholder="工种">
+          <el-option
+            v-for="item of users"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
         </el-select>
       </el-form-item>
 
       <el-form-item label="日期">
         <el-date-picker
           v-model="formInline.date"
-          type="date"
-          placeholder="选择日期"
+          type="datetimerange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          value-format="yyyy-MM-dd HH:mm:ss"
         >
         </el-date-picker>
       </el-form-item>
@@ -48,47 +62,85 @@
 </template>
 
 <script>
-var lineArr = [
-  [116.478935, 39.997761],
-  [116.478939, 39.997825],
-  [116.478912, 39.998549],
-  [116.478912, 39.998549],
-  [116.478998, 39.998555],
-  [116.478998, 39.998555],
-  [116.479282, 39.99856],
-  [116.479658, 39.998528],
-  [116.480151, 39.998453],
-  [116.480784, 39.998302],
-  [116.480784, 39.998302],
-  [116.481149, 39.998184],
-  [116.481573, 39.997997],
-  [116.481863, 39.997846],
-  [116.482072, 39.997718],
-  [116.482362, 39.997718],
-  [116.483633, 39.998935],
-  [116.48367, 39.998968],
-  [116.484648, 39.999861],
-]
+import * as Service from '@/api/index'
+// var lineArr = [
+//   [116.478935, 39.997761],
+//   [116.478939, 39.997825],
+//   [116.478912, 39.998549],
+//   [116.478912, 39.998549],
+//   [116.478998, 39.998555],
+//   [116.478998, 39.998555],
+//   [116.479282, 39.99856],
+//   [116.479658, 39.998528],
+//   [116.480151, 39.998453],
+//   [116.480784, 39.998302],
+//   [116.480784, 39.998302],
+//   [116.481149, 39.998184],
+//   [116.481573, 39.997997],
+//   [116.481863, 39.997846],
+//   [116.482072, 39.997718],
+//   [116.482362, 39.997718],
+//   [116.483633, 39.998935],
+//   [116.48367, 39.998968],
+//   [116.484648, 39.999861],
+// ]
 import AMapLoader from '@amap/amap-jsapi-loader'
 export default {
   name: 'Guiji',
   data() {
     return {
+      users: [],
       formInline: {
-        user: '',
-        region: '',
+        userId: '',
+        workType: '',
+        date: [],
       },
     }
   },
+  computed: {
+    postData: function() {
+      return {
+        userId: this.formInline.userId,
+        workType: this.formInline.workType,
+        beginTime: this.formInline.date[0],
+        endTime: this.formInline.date[1],
+      }
+    },
+  },
   mounted() {
     this.initMap()
+    this.getUsers()
   },
   methods: {
+    getUsers() {
+      Service.allUser().then(res => {
+        console.log(res)
+        let { code, data } = res.data
+        if (code === 200) {
+          this.users = data.map(item => {
+            return {
+              value: item.userId,
+              label: item.nickName,
+            }
+          })
+        }
+      })
+    },
     mockGuiji() {
       this.marker = this.createGuiji(this.map, this.AMap, lineArr)
     },
     onSubmit() {
       console.log('submit!')
+      Service.guiji({ ...this.postData }).then(res => {
+        let { code, rows } = res.data
+        if (code === 200) {
+          let lineArr = rows.map(item => {
+            return [item.lon, item.lat]
+          })
+          this.lineArr = lineArr
+          this.marker = this.createGuiji(this.map, this.AMap, lineArr)
+        }
+      })
     },
 
     createGuiji(map, AMap, lineArr) {
@@ -128,7 +180,7 @@ export default {
     },
 
     startAnimation() {
-      this.marker.moveAlong(lineArr, {
+      this.marker.moveAlong(this.lineArr, {
         // 每一段的时长
         duration: 500, //可根据实际采集时间间隔设置
         // JSAPI2.0 是否延道路自动设置角度在 moveAlong 里设置
