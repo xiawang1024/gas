@@ -20,6 +20,46 @@
 </template>
 
 <script>
+import * as Service from '@/api/index'
+
+const DICT = [
+  {
+    key: 'GuanWangLiCheng',
+    unit: '公里',
+    fill: '#4d99fc',
+  },
+  {
+    key: 'FaJing',
+    unit: '个',
+    fill: '#f46827',
+  },
+  {
+    key: 'TiaoYaXiang',
+    unit: '个',
+    fill: '#40faee',
+  },
+  {
+    key: 'JuMinYongHu',
+    unit: '个',
+    fill: '#4d99fc',
+  },
+  {
+    key: 'GongShangYongHu',
+    unit: '个',
+    fill: '#f46827',
+  },
+  {
+    key: 'MenZhan',
+    unit: '个',
+    fill: '#40faee',
+  },
+  {
+    key: 'YinHuanZhengGai',
+    unit: '%',
+    fill: '#4d99fc',
+  },
+]
+
 export default {
   name: 'DigitalFlop',
   data() {
@@ -28,123 +68,35 @@ export default {
     }
   },
   mounted() {
-    const { createData } = this
-
-    createData()
-
-    setInterval(createData, 30000)
+    this.getData()
+    setInterval(this.getData(), 10000)
   },
   methods: {
-    createData() {
-      const { randomExtend } = this
-
-      this.digitalFlopData = [
-        {
-          title: '管网里程',
-          number: {
-            number: [randomExtend(20000, 30000)],
-            content: '{nt}',
-            textAlign: 'right',
-            style: {
-              fill: '#4d99fc',
-              fontWeight: 'bold',
-              fontSize: 36,
-            },
-          },
-          unit: '公里',
-        },
-        {
-          title: '阀井数',
-          number: {
-            number: [randomExtend(20, 30)],
-            content: '{nt}',
-            textAlign: 'right',
-            style: {
-              fill: '#f46827',
-              fontWeight: 'bold',
-              fontSize: 36,
-            },
-          },
-          unit: '个',
-        },
-        {
-          title: '调压箱数',
-          number: {
-            number: [randomExtend(20, 30)],
-            content: '{nt}',
-            textAlign: 'right',
-            style: {
-              fill: '#40faee',
-              fontWeight: 'bold',
-              fontSize: 36,
-            },
-          },
-          unit: '个',
-        },
-        {
-          title: '居民用户',
-          number: {
-            number: [randomExtend(10, 20)],
-            content: '{nt}',
-            textAlign: 'right',
-            style: {
-              fill: '#4d99fc',
-              fontWeight: 'bold',
-              fontSize: 36,
-            },
-          },
-          unit: '个',
-        },
-        {
-          title: '工商用户',
-          number: {
-            number: [randomExtend(5, 10)],
-            content: '{nt}',
-            textAlign: 'right',
-            style: {
-              fill: '#f46827',
-              fontWeight: 'bold',
-              fontSize: 36,
-            },
-          },
-          unit: '个',
-        },
-        {
-          title: '门站/调压站数',
-          number: {
-            number: [randomExtend(5, 10)],
-            content: '{nt}',
-            textAlign: 'right',
-            style: {
-              fill: '#40faee',
-              fontWeight: 'bold',
-              fontSize: 36,
-            },
-          },
-          unit: '个',
-        },
-        {
-          title: '隐患整改率',
-          number: {
-            number: [randomExtend(95, 100)],
-            content: '{nt}',
-            textAlign: 'right',
-            style: {
-              fill: '#4d99fc',
-              fontWeight: 'bold',
-              fontSize: 36,
-            },
-          },
-          unit: '%',
-        },
-      ]
-    },
-    randomExtend(minNum, maxNum) {
-      if (arguments.length === 1) {
-        return parseInt(Math.random() * minNum + 1, 10)
-      } else {
-        return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10)
-      }
+    getData() {
+      Service.headInfo().then(res => {
+        let { code, data } = res.data
+        if (code == 200) {
+          let list = []
+          for (let i = 0; i < DICT.length; i++) {
+            let { key, unit, fill } = DICT[i]
+            list.push({
+              title: data[key].remark,
+              number: {
+                number: [Number(data[key].dictValue)],
+                content: '{nt}',
+                textAlign: 'right',
+                style: {
+                  fill: fill,
+                  fontWeight: 'bold',
+                  fontSize: 36,
+                },
+              },
+              unit: unit,
+            })
+          }
+          this.digitalFlopData = list
+        }
+      })
     },
   },
 }

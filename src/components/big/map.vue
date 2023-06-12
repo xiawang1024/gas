@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-06-12 16:23:22
+ * @LastEditTime: 2023-06-12 19:05:55
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/map.vue
@@ -53,24 +53,24 @@ export default {
     return {
       options: [
         {
-          value: '选项1',
-          label: '黄金糕',
+          label: '管网',
+          value: 'guanwang',
         },
         {
-          value: '选项2',
-          label: '双皮奶',
+          label: '门站',
+          value: 'menzhan',
         },
         {
-          value: '选项3',
-          label: '蚵仔煎',
+          label: '阀井',
+          value: 'fajing',
         },
         {
-          value: '选项4',
-          label: '龙须面',
+          label: '调压箱',
+          value: 'tiaoyaxiang',
         },
         {
-          value: '选项5',
-          label: '北京烤鸭',
+          label: '外勤人员',
+          value: 'user_online',
         },
       ],
       value2: [],

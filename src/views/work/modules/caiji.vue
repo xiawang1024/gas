@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-06-12 18:47:05
+ * @LastEditTime: 2023-06-12 19:08:46
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/caiji.vue
@@ -58,6 +58,16 @@
       >
       </el-pagination>
     </div>
+
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+      <span>这里面是问题，需要具体看数据结构</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -97,10 +107,15 @@ export default {
           address: '上海市普陀区金沙江路 1516 弄',
         },
       ],
+      dialogVisible: false,
     }
   },
   mounted() {},
   methods: {
+    handleClick(row) {
+      //获取详情，然后弹出框
+      this.dialogVisible = true
+    },
     onSubmit() {
       console.log('submit!')
     },
