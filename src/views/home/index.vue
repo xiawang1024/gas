@@ -12,24 +12,28 @@
     <dv-full-screen-container>
       <div class="main-header">
         <div class="title">
-            <div class="left">
-              <div class="btns">
-
-                <dv-border-box-2 style="width: 100px; height:40px; line-height:40px; text-align: center; ">外勤查询</dv-border-box-2>
-                <dv-border-box-2 style="width: 120px; height:40px; line-height:40px; text-align: center; ">客户缴费查询</dv-border-box-2>
-
-              </div>
-              <dv-decoration-8 style="width:300px;height:50px;" />
+          <div class="left">
+            <div class="btns">
+              <dv-border-box-2
+                style="width: 100px; height:40px; line-height:40px; text-align: center; "
+                >外勤查询</dv-border-box-2
+              >
+              <dv-border-box-2
+                style="width: 120px; height:40px; line-height:40px; text-align: center; "
+                >客户缴费查询</dv-border-box-2
+              >
             </div>
-            <div class="center">
-              <h1>智慧燃气监控系统</h1>
-              <p>----洛阳进合燃气有限公司</p>
-            <dv-decoration-5  />
-            </div>
-            <div class="right">
-              <dv-decoration-8 :reverse="true" style="width:300px;height:50px;" />
-            </div>
+            <dv-decoration-8 style="width:300px;height:50px;" />
           </div>
+          <div class="center">
+            <h1>智慧燃气监控系统</h1>
+            <p>----洛阳进合燃气有限公司</p>
+            <dv-decoration-5 />
+          </div>
+          <div class="right">
+            <dv-decoration-8 :reverse="true" style="width:300px;height:50px;" />
+          </div>
+        </div>
       </div>
       <div class="main-top">
         <digitalFlop />
@@ -56,7 +60,6 @@
 </template>
 
 <script>
-
 import digitalFlop from '@/components/big/digitalFlop'
 import mapXw from '@/components/big/map.vue'
 import RightTop from '@/components/big/rightTop.vue'
@@ -68,11 +71,11 @@ export default {
     digitalFlop,
     mapXw,
     RightTop,
-    RightBottom
+    RightBottom,
   },
-  data () {
+  data() {
     return {}
-  }
+  },
 }
 </script>
 
@@ -98,71 +101,67 @@ export default {
     justify-content: space-between;
     align-items: flex-end;
 
-    .title{
+    .title {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
 
-      .left{
+      .left {
         position: relative;
-        .btns{
+        .btns {
           position: absolute;
           top: -40%;
-          left:20%;
+          left: 20%;
           display: flex;
           align-items: center;
           font-size: 15px;
           cursor: pointer;
         }
       }
-      .center{
+      .center {
         position: relative;
         width: 500px;
         text-align: center;
-        h1{
-          margin:0 10px;
+        h1 {
+          margin: 0 10px;
           font-size: 32px;
         }
-        p{
+        p {
           position: absolute;
           bottom: 10%;
           right: -15%;
           font-size: 15px;
         }
-
       }
-
     }
-
   }
 
-  .main-top{
+  .main-top {
     width: 100%;
     height: 10%;
   }
 
-  .main-content{
-    flex:1;
+  .main-content {
+    flex: 1;
     display: flex;
-    .left{
+    .left {
       height: 100%;
       width: 65%;
     }
-    .right{
+    .right {
       flex: 1;
       display: flex;
       flex-direction: column;
-      .right-top{
+      .right-top {
         height: 45%;
         width: 100%;
       }
-      .right-bottom{
+      .right-bottom {
         height: 55%;
         width: 100%;
       }
     }
   }
 }
-
 </style>

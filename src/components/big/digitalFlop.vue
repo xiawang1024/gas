@@ -11,24 +11,31 @@
           :config="item.number"
           style="width:100px;height:50px;"
         />
-          <div class="unit">{{ item.unit }}</div>
+        <div class="unit">{{ item.unit }}</div>
       </div>
     </div>
 
-    <dv-decoration-10 style="width: 98% ;left:1%;"/>
+    <dv-decoration-10 style="width: 98% ;left:1%;" />
   </div>
 </template>
 
 <script>
 export default {
   name: 'DigitalFlop',
-  data () {
+  data() {
     return {
-      digitalFlopData: []
+      digitalFlopData: [],
     }
   },
+  mounted() {
+    const { createData } = this
+
+    createData()
+
+    setInterval(createData, 30000)
+  },
   methods: {
-    createData () {
+    createData() {
       const { randomExtend } = this
 
       this.digitalFlopData = [
@@ -41,10 +48,10 @@ export default {
             style: {
               fill: '#4d99fc',
               fontWeight: 'bold',
-              fontSize: 36
-            }
+              fontSize: 36,
+            },
           },
-          unit: '公里'
+          unit: '公里',
         },
         {
           title: '阀井数',
@@ -55,10 +62,10 @@ export default {
             style: {
               fill: '#f46827',
               fontWeight: 'bold',
-              fontSize: 36
-            }
+              fontSize: 36,
+            },
           },
-          unit: '个'
+          unit: '个',
         },
         {
           title: '调压箱数',
@@ -69,10 +76,10 @@ export default {
             style: {
               fill: '#40faee',
               fontWeight: 'bold',
-              fontSize: 36
-            }
+              fontSize: 36,
+            },
           },
-          unit: '个'
+          unit: '个',
         },
         {
           title: '居民用户',
@@ -83,10 +90,10 @@ export default {
             style: {
               fill: '#4d99fc',
               fontWeight: 'bold',
-              fontSize: 36
-            }
+              fontSize: 36,
+            },
           },
-          unit: '个'
+          unit: '个',
         },
         {
           title: '工商用户',
@@ -97,10 +104,10 @@ export default {
             style: {
               fill: '#f46827',
               fontWeight: 'bold',
-              fontSize: 36
-            }
+              fontSize: 36,
+            },
           },
-          unit: '个'
+          unit: '个',
         },
         {
           title: '门站/调压站数',
@@ -111,10 +118,10 @@ export default {
             style: {
               fill: '#40faee',
               fontWeight: 'bold',
-              fontSize: 36
-            }
+              fontSize: 36,
+            },
           },
-          unit: '个'
+          unit: '个',
         },
         {
           title: '隐患整改率',
@@ -125,28 +132,21 @@ export default {
             style: {
               fill: '#4d99fc',
               fontWeight: 'bold',
-              fontSize: 36
-            }
+              fontSize: 36,
+            },
           },
-          unit: '%'
-        }
+          unit: '%',
+        },
       ]
     },
-    randomExtend (minNum, maxNum) {
+    randomExtend(minNum, maxNum) {
       if (arguments.length === 1) {
         return parseInt(Math.random() * minNum + 1, 10)
       } else {
         return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10)
       }
-    }
+    },
   },
-  mounted () {
-    const { createData } = this
-
-    createData()
-
-    setInterval(createData, 30000)
-  }
 }
 </script>
 

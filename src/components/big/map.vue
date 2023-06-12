@@ -9,11 +9,21 @@
 -->
 <template>
   <div class="map-wrap">
-    <div class="container" id="container">
-    </div>
+    <div class="container" id="container"></div>
     <div class="select">
-      <el-select v-model="value2" multiple collapse-tags style="margin-left: 20px;" placeholder="请选择">
-        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+      <el-select
+        v-model="value2"
+        multiple
+        collapse-tags
+        style="margin-left: 20px;"
+        placeholder="请选择"
+      >
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
         </el-option>
       </el-select>
     </div>
@@ -26,60 +36,63 @@ import AMapLoader from '@amap/amap-jsapi-loader'
 const mockData = [
   {
     log: '112.4260965',
-    lat: '34.83202143'
+    lat: '34.83202143',
   },
   {
     log: '112.422006',
-    lat: '34.83293772'
+    lat: '34.83293772',
   },
   {
     log: '112.409338',
-    lat: '34.8396694'
-  }
-
+    lat: '34.8396694',
+  },
 ]
 export default {
-  name: 'mapXw',
-  data () {
+  name: 'MapXw',
+  data() {
     return {
-      options: [{
-        value: '选项1',
-        label: '黄金糕'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
-      }],
-      value2: []
+      options: [
+        {
+          value: '选项1',
+          label: '黄金糕',
+        },
+        {
+          value: '选项2',
+          label: '双皮奶',
+        },
+        {
+          value: '选项3',
+          label: '蚵仔煎',
+        },
+        {
+          value: '选项4',
+          label: '龙须面',
+        },
+        {
+          value: '选项5',
+          label: '北京烤鸭',
+        },
+      ],
+      value2: [],
     }
   },
-  mounted () {
+  mounted() {
     this.initMap()
   },
   methods: {
-    createInfoWindow (title, content) {
-
-    },
-    createMarkers (AMap, list, onMarkerClick) {
+    createInfoWindow(title, content) {},
+    createMarkers(AMap, list, onMarkerClick) {
       let markers = []
       for (let i = 0; i < list.length; i++) {
         let icon = new AMap.Icon({
           size: new AMap.Size(50, 50),
           image: require('./icons/01.png'), // Icon的图像
-          imageSize: new AMap.Size(50, 50)
+          imageSize: new AMap.Size(50, 50),
         })
 
         let marker = new AMap.Marker({
           position: [list[i].log, list[i].lat],
-          icon: icon
+          icon: icon,
         })
         marker.content = '我是第' + (i + 1) + '个Marker'
         marker.on('click', onMarkerClick) // 绑定 click 事件
@@ -90,7 +103,7 @@ export default {
       return markers
     },
 
-    createLines (AMap, list) {
+    createLines(AMap, list) {
       let lines = []
 
       for (let i = 0; i < list.length; i++) {
@@ -98,53 +111,54 @@ export default {
           path: list[i], // 设置线覆盖物路径
           strokeColor: 'red', // 线颜色
           strokeWeight: 5, // 线宽
-          strokeStyle: 'round' // 线样式
+          strokeStyle: 'round', // 线样式
         })
         lines.push(polyline)
       }
       return lines
     },
-    initMap () {
+    initMap() {
       AMapLoader.load({
         key: 'a5e96381ba664e245f7c036a6de5f7d4',
         version: '2.0',
-        plugins: [''] // 需要使用的的插件列表，如比例尺'AMap.Scale'等
-      }).then((AMap) => {
-        this.map = new AMap.Map('container', {
-          viewMode: '3D', // 是否为3D地图模式
-          zoom: 12, // 初始化地图级别
-          mapStyle: 'amap://styles/darkblue',
-          center: [112.45, 34.62] // 初始化地图中心点位置
-        })
-
-        // 创建信息窗体
-        const infoWindow = new AMap.InfoWindow({ isCustom: true })
-        const onMarkerClick = (e) => {
-          console.log(e)
-          infoWindow.setContent(e.target.content)
-          infoWindow.open(this.map, e.target.getPosition()) // 打开信息窗体
-          // e.target 就是被点击的 Marker
-        }
-
-        let markers = this.createMarkers(AMap, mockData, onMarkerClick)
-
-        this.map.add(markers)
-
-        // this.map.add(polyline)
-
-        this.map.setFitView()
-      }).catch(e => {
-        console.log(e)
+        plugins: [''], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
       })
-    }
-  }
+        .then(AMap => {
+          this.map = new AMap.Map('container', {
+            viewMode: '3D', // 是否为3D地图模式
+            zoom: 12, // 初始化地图级别
+            mapStyle: 'amap://styles/darkblue',
+            center: [112.45, 34.62], // 初始化地图中心点位置
+          })
+
+          // 创建信息窗体
+          const infoWindow = new AMap.InfoWindow({ isCustom: true })
+          const onMarkerClick = e => {
+            console.log(e)
+            infoWindow.setContent(e.target.content)
+            infoWindow.open(this.map, e.target.getPosition()) // 打开信息窗体
+            // e.target 就是被点击的 Marker
+          }
+
+          let markers = this.createMarkers(AMap, mockData, onMarkerClick)
+
+          this.map.add(markers)
+
+          // this.map.add(polyline)
+
+          this.map.setFitView()
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    },
+  },
 }
 </script>
 
 <style lang="less" scoped>
-
-::v-deep{
-  .el-input--suffix .el-input__inner{
+::v-deep {
+  .el-input--suffix .el-input__inner {
     background: transparent;
   }
 }

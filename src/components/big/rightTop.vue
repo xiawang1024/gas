@@ -8,13 +8,13 @@
  * 工作，生活，健康
 -->
 <template>
-    <dv-scroll-board class="scroll-board" :config="config"  />
+  <dv-scroll-board class="scroll-board" :config="config" />
 </template>
 
 <script>
 export default {
-  name: 'rightTop',
-  data () {
+  name: 'RightTop',
+  data() {
     return {
       config: {
         header: ['列1', '列2', '列3'],
@@ -28,25 +28,23 @@ export default {
           ['行7列1', '行7列2', '行7列3'],
           ['行8列1', '行8列2', '行8列3'],
           ['行9列1', '行9列2', '行9列3'],
-          ['行10列1', '行10列2', '行10列3']
+          ['行10列1', '行10列2', '行10列3'],
         ],
         index: true,
         rowNum: 6,
-        align: ['center']
-      }
+        align: ['center'],
+      },
     }
   },
-  methods: {
-
-  }
+  methods: {},
 }
 </script>
 
 <style lang="less" scoped>
-.scroll-board{
+.scroll-board {
   position: absolute;
-  top:5.5%;
-  left:2%;
+  top: 5.5%;
+  left: 2%;
   width: 96%;
   height: 90%;
 }

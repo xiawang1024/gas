@@ -15,12 +15,11 @@
 </template>
 
 <script>
-
 export default {
-  name: 'app',
-  data () {
+  name: 'App',
+  data() {
     return {}
-  }
+  },
 }
 </script>
 
