@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:38:14
- * @LastEditTime: 2023-06-13 16:02:58
+ * @LastEditTime: 2023-06-13 17:39:20
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/router/index.js
@@ -55,5 +55,16 @@ const routes = [
 const router = new VueRouter({
   routes,
 })
+
+// 路由守卫
+// router.beforeEach((to, from, next) => {
+//   // 检查localStorage中是否有token
+//   const token = localStorage.getItem('token')
+//   if (to.path === '/login') {
+//     next()
+//   } else {
+//     token ? next() : next('/login')
+//   }
+// })
 
 export default router
