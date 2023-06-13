@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:20:27
- * @LastEditTime: 2023-06-13 16:57:52
+ * @LastEditTime: 2023-06-13 17:32:28
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/order/index.vue
@@ -135,7 +135,7 @@
 <script>
 import * as Service from '@/api/index'
 export default {
-  name: 'Index',
+  name: 'Order',
   data() {
     return {
       formInline: {
@@ -169,7 +169,7 @@ export default {
   methods: {
     getData() {
       Service.order({ ...this.pageInfo, ...this.formInline }).then(res => {
-        let { code, rows, total } = res
+        let { code, rows, total } = res.data
         if (code == 200) {
           this.tableData = rows
           this.pageInfo.total = Number(total)

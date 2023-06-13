@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 19:10:13
- * @LastEditTime: 2023-06-13 17:27:32
+ * @LastEditTime: 2023-06-13 17:31:30
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/index.js
@@ -74,7 +74,7 @@ export const order = ({
   pageSize = 10,
 }) =>
   request({
-    url: '/gas/index/paymen',
+    url: '/gas/index/payment',
     method: 'get',
     params: { payNo, payName, payCard, payTabNo, pageNum, pageSize },
   })
