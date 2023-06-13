@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:38:14
- * @LastEditTime: 2023-06-13 17:39:20
+ * @LastEditTime: 2023-06-13 17:47:22
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/router/index.js
@@ -17,6 +17,8 @@ import Work from '@/views/work/index.vue'
 import Service from '@/views/service/index.vue'
 import Danger from '@/views/danger/index.vue'
 import Report from '@/views/report/index.vue'
+import NotFound from '@/views/404/index.vue'
+import Login from '@/views/login/index.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -49,6 +51,16 @@ const routes = [
     path: '/report',
     name: 'Report',
     component: Report,
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+  },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound,
   },
 ]
 
