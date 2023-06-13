@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:20:27
- * @LastEditTime: 2023-06-13 16:52:29
+ * @LastEditTime: 2023-06-13 16:57:52
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/order/index.vue
@@ -13,29 +13,29 @@
       <el-page-header @back="goBack" content="缴费查询系统"> </el-page-header>
     </el-card>
     <el-card class="wrap">
-      <el-form :inline="true" :model="formInline">
-        <el-form-item label="户号">
+      <el-form ref="form" :inline="true" :model="formInline">
+        <el-form-item label="户号" prop="payNo">
           <el-input
             v-model="formInline.payNo"
             placeholder="户号"
             clearable
           ></el-input>
         </el-form-item>
-        <el-form-item label="姓名">
+        <el-form-item label="姓名" prop="payName">
           <el-input
             v-model="formInline.payName"
             placeholder="姓名"
             clearable
           ></el-input>
         </el-form-item>
-        <el-form-item label="卡号">
+        <el-form-item label="卡号" prop="payCard">
           <el-input
             v-model="formInline.payCard"
             placeholder="卡号"
             clearable
           ></el-input>
         </el-form-item>
-        <el-form-item label="表号">
+        <el-form-item label="表号" prop="payTabNo">
           <el-input
             v-model="formInline.payTabNo"
             placeholder="表号"
@@ -43,7 +43,12 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">查询</el-button>
+          <el-button type="primary" @click="schHandler" icon="el-icon-search"
+            >查询</el-button
+          >
+          <el-button @click="resetHandler" icon="el-icon-refresh"
+            >重置</el-button
+          >
         </el-form-item>
       </el-form>
 
@@ -171,8 +176,12 @@ export default {
         }
       })
     },
-    onSubmit() {
+    schHandler() {
       console.log('submit!')
+      this.getData()
+    },
+    resetHandler() {
+      this.$refs['form'].resetFields()
       this.getData()
     },
     goBack() {
