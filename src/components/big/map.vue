@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-06-13 09:54:45
+ * @LastEditTime: 2023-06-13 10:00:37
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/map.vue
@@ -121,10 +121,14 @@ export default {
     createMarkers(AMap, list, onMarkerClick) {
       let markers = []
       for (let i = 0; i < list.length; i++) {
+        let size =
+          list[i].mapType == 'guanwang'
+            ? new AMap.Size(5, 5)
+            : new AMap.Size(50, 50)
         let icon = new AMap.Icon({
-          size: new AMap.Size(50, 50),
+          size: size,
           image: require(`./icons/${list[i].mapType}.png`), // Icon的图像
-          imageSize: new AMap.Size(50, 50),
+          imageSize: size,
         })
 
         let marker = new AMap.Marker({
@@ -143,10 +147,11 @@ export default {
     createLabelMarkers(AMap, list) {
       let labelMarkers = []
       for (let i = 0; i < list.length; i++) {
+        let size = list[i].mapType == 'guanwang' ? [5, 5] : [50, 50]
         let icon = {
           type: 'image', // 图标类型，现阶段只支持 image 类型
           image: require(`./icons/${list[i].mapType}.png`),
-          size: [50, 50], // 图片尺寸
+          size: size, // 图片尺寸
           anchor: 'center', // 图片相对 position 的锚点，默认为 bottom-center
         }
 
