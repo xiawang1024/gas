@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-06-13 17:26:34
+ * @LastEditTime: 2023-06-13 17:29:21
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -76,10 +76,8 @@ export default {
       })
     },
     clearDanger() {
-      this.$refs['audio'].stop()
-    },
-    playAudio() {
-      this.$refs['audio'].play()
+      this.$refs['audio'].pause()
+      this.danger = false
     },
   },
 }
