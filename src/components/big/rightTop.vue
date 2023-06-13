@@ -1,14 +1,23 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-06-13 16:37:46
+ * @LastEditTime: 2023-06-13 17:26:34
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
  * 工作，生活，健康
 -->
 <template>
-  <dv-scroll-board class="scroll-board" :config="config" />
+  <div>
+    <dv-scroll-board class="scroll-board" :config="config" />
+    <div class="danger" v-if="danger" @click="clearDanger"></div>
+    <audio
+      src="./icons/jb.mp3"
+      loop
+      ref="audio"
+      style="display: none;width: 0;height: 0;"
+    ></audio>
+  </div>
 </template>
 
 <script>
@@ -31,10 +40,17 @@ export default {
         rowNum: 6,
         align: ['center'],
       },
+      danger: false,
     }
   },
+
   mounted() {
     this.getData()
+
+    setTimeout(() => {
+      this.danger = true
+      this.$refs['audio'].play()
+    }, 5000)
   },
   methods: {
     getData() {
@@ -59,6 +75,12 @@ export default {
         }
       })
     },
+    clearDanger() {
+      this.$refs['audio'].stop()
+    },
+    playAudio() {
+      this.$refs['audio'].play()
+    },
   },
 }
 </script>
@@ -70,5 +92,15 @@ export default {
   left: 2%;
   width: 96%;
   height: 90%;
+}
+
+.danger {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 20%;
+  height: 15%;
+  background: url('./icons/jb.gif') center center no-repeat;
+  background-size: contain;
 }
 </style>
