@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-06-13 15:49:40
+ * @LastEditTime: 2023-06-13 16:25:02
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/caiji.vue
@@ -69,9 +69,9 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="pageInfo.page"
+        :current-page="pageInfo.pageNum"
         :page-sizes="[10, 20, 30, 50]"
-        :page-size="pageInfo.limit"
+        :page-size="pageInfo.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="pageInfo.total"
       >
@@ -123,8 +123,8 @@ export default {
         date: [],
       },
       pageInfo: {
-        page: 1,
-        limit: 10,
+        pageNum: 1,
+        pageSize: 10,
         total: 0,
       },
       tableData: [],
@@ -141,6 +141,14 @@ export default {
         beginTime: this.formInline.date[0],
         endTime: this.formInline.date[1],
       }
+    },
+  },
+  watch: {
+    'pageInfo.pageNum': function() {
+      this.onSubmit()
+    },
+    'pageInfo.pageSize': function() {
+      this.onSubmit()
     },
   },
   mounted() {
@@ -183,18 +191,21 @@ export default {
     },
     onSubmit() {
       console.log('submit!')
-      Service.caiji({ ...this.postData }).then(res => {
-        let { code, rows } = res.data
+      Service.caiji({ ...this.postData, ...this.pageInfo }).then(res => {
+        let { code, rows, total } = res.data
         if (code === 200) {
           this.tableData = rows
+          this.pageInfo.total = Number(total)
         }
       })
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`)
+      this.pageInfo.pageSize = val
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`)
+      this.pageInfo.pageNum = val
     },
   },
 }

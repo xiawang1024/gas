@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-06-12 16:18:10
+ * @LastEditTime: 2023-06-13 16:17:45
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import * as Service from '@/api/index'
+
 export default {
   name: 'RightTop',
   data() {
@@ -36,7 +38,16 @@ export default {
       },
     }
   },
-  methods: {},
+  mounted() {
+    this.getData()
+  },
+  methods: {
+    getData() {
+      Service.flow({}).then(res => {
+        this.config.data = res.data
+      })
+    },
+  },
 }
 </script>
 
