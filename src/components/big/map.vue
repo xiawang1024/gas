@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-06-12 20:12:33
+ * @LastEditTime: 2023-06-13 09:54:45
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/map.vue
@@ -36,20 +36,6 @@ import * as Service from '@/api/index'
 
 import AMapLoader from '@amap/amap-jsapi-loader'
 
-const mockData = [
-  {
-    log: '112.4260965',
-    lat: '34.83202143',
-  },
-  {
-    log: '112.422006',
-    lat: '34.83293772',
-  },
-  {
-    log: '112.409338',
-    lat: '34.8396694',
-  },
-]
 export default {
   name: 'MapXw',
   data() {
@@ -85,10 +71,10 @@ export default {
     value: function(newVal, oldVal) {
       //找出oldVal 相对 newVal 少了哪些
       let types = oldVal.filter(item => !newVal.includes(item))
-      console.log(999, types)
       for (let i = 0; i < types.length; i++) {
         if (this.markersMap[types[i]]) {
-          this.map.remove(this.markersMap[types[i]])
+          // this.map.remove(this.markersMap[types[i]])
+          this.labelsLayer.remove(this.markersMap[types[i]])
         }
       }
     },
@@ -103,24 +89,30 @@ export default {
         if (!this.locationMap[types[i]]) {
           this.getData(types[i])
         } else {
-          this.map.add(this.markersMap[types[i]])
+          // this.map.add(this.markersMap[types[i]])
+          this.labelsLayer.add(this.markersMap[types[i]])
         }
       }
     },
     getData(type) {
-      if (type == 'guanwang') {
-        return false
-      }
       Service.mapSingle(type).then(res => {
         let { code, data } = res.data
         if (code == 200) {
           this.locationMap[type] = data
 
-          this.markersMap[type] = this.createMarkers(this.AMap, data, e => {
-            // console.log(e)
-          })
+          // if (type == 'guanwang') {
+          //   this.markersMap[type] = this.createLines(this.AMap, data)
+          // } else {
+          //   this.markersMap[type] = this.createMarkers(this.AMap, data, e => {
+          //     // console.log(e)
+          //   })
+          // }
 
-          this.map.add(this.markersMap[type])
+          this.markersMap[type] = this.createLabelMarkers(this.AMap, data)
+
+          this.labelsLayer.add(this.markersMap[type])
+
+          // this.map.add(this.markersMap[type])
           this.map.setFitView()
         }
       })
@@ -148,18 +140,96 @@ export default {
       return markers
     },
 
+    createLabelMarkers(AMap, list) {
+      let labelMarkers = []
+      for (let i = 0; i < list.length; i++) {
+        let icon = {
+          type: 'image', // 图标类型，现阶段只支持 image 类型
+          image: require(`./icons/${list[i].mapType}.png`),
+          size: [50, 50], // 图片尺寸
+          anchor: 'center', // 图片相对 position 的锚点，默认为 bottom-center
+        }
+
+        let content = ''
+
+        if (list[i].mapType == 'menzhan') {
+          content = list[i].name
+        } else if (list[i].mapType == 'fajing') {
+          content = list[i].mapNo
+        } else {
+          content = ''
+        }
+        let text = {
+          content: content, // 要展示的文字内容
+          direction: 'bottom', // 文字方向，有 icon 时为围绕文字的方向，没有 icon 时，则为相对 position 的位置
+          offset: [0, -5], // 在 direction 基础上的偏移量
+          style: {
+            // 文字样式
+            fontSize: 12, // 字体大小
+            fillColor: '#ffffff', // 字体颜色
+          },
+        }
+        let labelMarker = new AMap.LabelMarker({
+          position: [list[i].mapLon, list[i].mapLat],
+          name: list[i].mapType,
+          icon: icon,
+          text: text,
+        })
+
+        labelMarker.on('mouseover', e => {
+          console.log(e)
+          let position = e.data.data && e.data.data.position
+
+          if (position) {
+            normalMarker.setContent(
+              '<div class="amap-info-window" >' + position + '</div>'
+            )
+            normalMarker.setPosition(position)
+            this.map.add(normalMarker)
+          }
+        })
+        labelMarker.on('mouseout', () => {
+          this.map.remove(normalMarker)
+        })
+
+        labelMarkers.push(labelMarker)
+      }
+
+      //普通点标记
+      let normalMarker = new AMap.Marker({
+        anchor: 'bottom-center',
+        offset: [0, -30],
+      })
+
+      return labelMarkers
+    },
+
     createLines(AMap, list) {
-      let lines = []
+      let path = []
 
       for (let i = 0; i < list.length; i++) {
-        let polyline = new AMap.Polyline({
-          path: list[i], // 设置线覆盖物路径
-          strokeColor: 'red', // 线颜色
-          strokeWeight: 5, // 线宽
-          strokeStyle: 'round', // 线样式
-        })
-        lines.push(polyline)
+        path.push([list[i].mapLon, list[i].mapLat])
       }
+
+      let lines = []
+
+      let polyline = new AMap.Polyline({
+        path: path, // 设置线覆盖物路径
+        strokeColor: 'red', // 线颜色
+        strokeWeight: 5, // 线宽
+        strokeStyle: 'round', // 线样式
+      })
+      lines.push(polyline)
+
+      // for (let i = 0; i < list.length; i++) {
+      //   let polyline = new AMap.Polyline({
+      //     path: list[i], // 设置线覆盖物路径
+      //     strokeColor: 'red', // 线颜色
+      //     strokeWeight: 5, // 线宽
+      //     strokeStyle: 'round', // 线样式
+      //   })
+      //   lines.push(polyline)
+      // }
       return lines
     },
     initMap() {
@@ -185,6 +255,17 @@ export default {
             infoWindow.open(this.map, e.target.getPosition()) // 打开信息窗体
             // e.target 就是被点击的 Marker
           }
+
+          //海量点标记
+
+          this.labelsLayer = new AMap.LabelsLayer({
+            zooms: [3, 20],
+            zIndex: 1000,
+            collision: true, // 该层内标注是否避让
+            allowCollision: true, // 设置 allowCollision：true，可以让标注避让用户的标注
+          })
+
+          this.map.add(this.labelsLayer)
         })
         .catch(e => {
           console.log(e)

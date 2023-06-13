@@ -32,4 +32,11 @@ export default {
   width: 100%;
   height: 100%;
 }
+
+.amap-info-window {
+  background-color: #fff;
+  padding: 4px 12px;
+  color: #333333;
+  border-radius: 4px;
+}
 </style>
