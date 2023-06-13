@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 19:10:13
- * @LastEditTime: 2023-06-13 16:17:18
+ * @LastEditTime: 2023-06-13 16:47:48
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/index.js
@@ -62,4 +62,19 @@ export const flow = ({ pageNum = 1, pageSize = 10 }) =>
     url: '/gas/flowmeter/list',
     method: 'get',
     params: { pageNum, pageSize },
+  })
+
+// 客户缴费查询
+export const order = ({
+  payNo,
+  payName,
+  payCard,
+  payTabNo,
+  pageNum = 1,
+  pageSize = 10,
+}) =>
+  request({
+    url: '/gas/index/paymen',
+    method: 'get',
+    params: { payNo, payName, payCard, payTabNo, pageNum, pageSize },
   })
