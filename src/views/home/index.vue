@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 08:45:39
- * @LastEditTime: 2023-06-12 19:02:17
+ * @LastEditTime: 2023-06-13 15:58:51
  * @LastEditors: xiawang1024
  * @Description
  * @FilePath: /electronic-file/src/views/home/index.vue
@@ -16,17 +16,25 @@
             <dv-decoration-8 style="width:300px;height:50px;" />
             <div class="btns">
               <dv-border-box-2
-                style="width: 100px; height:40px; line-height:40px; text-align: center; "
-                ><span @click="goToPath('/work')"
-                  >外勤查询</span
-                ></dv-border-box-2
-              >
-              <dv-border-box-2
                 style="width: 120px; height:40px; line-height:40px; text-align: center; "
-                ><span @click="goToPath('/order')"
-                  >客户缴费查询</span
-                ></dv-border-box-2
               >
+                <el-dropdown @command="handleCommand">
+                  <span class="el-dropdown-link" style="color: #fff;">
+                    更多菜单<i class="el-icon-arrow-down el-icon--right"></i>
+                  </span>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item command="a">外勤查询</el-dropdown-item>
+                    <el-dropdown-item command="b"
+                      >客户缴费查询</el-dropdown-item
+                    >
+                    <el-dropdown-item command="c">客户服务</el-dropdown-item>
+                    <el-dropdown-item command="d"
+                      >隐患排查治理</el-dropdown-item
+                    >
+                    <el-dropdown-item command="e">运营报表</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </dv-border-box-2>
             </div>
           </div>
           <div class="center">
@@ -83,6 +91,26 @@ export default {
   methods: {
     goToPath(path) {
       this.$router.push(path)
+    },
+
+    handleCommand(command) {
+      switch (command) {
+        case 'a':
+          this.goToPath('/work')
+          break
+        case 'b':
+          this.goToPath('/order')
+          break
+        case 'c':
+          this.goToPath('/service')
+          break
+        case 'd':
+          this.goToPath('/danger')
+          break
+        case 'e':
+          this.goToPath('/report')
+          break
+      }
     },
   },
 }
