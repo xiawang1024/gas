@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-06-13 10:07:04
+ * @LastEditTime: 2023-06-13 15:43:55
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/guiji.vue
@@ -11,7 +11,7 @@
   <div class="container">
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
       <el-form-item label="用户名">
-        <el-select v-model="formInline.userId" placeholder="用户名">
+        <el-select clearable v-model="formInline.userId" placeholder="用户名">
           <el-option
             v-for="item of users"
             :key="item.value"
@@ -22,9 +22,9 @@
       </el-form-item>
 
       <el-form-item label="工种">
-        <el-select v-model="formInline.workType" placeholder="工种">
+        <el-select clearable v-model="formInline.workType" placeholder="工种">
           <el-option
-            v-for="item of users"
+            v-for="item of WorkType"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -40,6 +40,7 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
           value-format="yyyy-MM-dd HH:mm:ss"
+          clearable
         >
         </el-date-picker>
       </el-form-item>
@@ -52,7 +53,6 @@
     <div class="map" id="guiji"></div>
 
     <div class="controls">
-      <el-button @click="mockGuiji">模拟轨迹</el-button>
       <el-button @click="startAnimation">开始</el-button>
       <el-button @click="pauseAnimation">暂停</el-button>
       <el-button @click="resumeAnimation">继续</el-button>
@@ -63,12 +63,14 @@
 
 <script>
 import * as Service from '@/api/index'
+import { WorkType } from '../conf.js'
 
 import AMapLoader from '@amap/amap-jsapi-loader'
 export default {
   name: 'Guiji',
   data() {
     return {
+      WorkType,
       users: [],
       formInline: {
         userId: '',
@@ -106,9 +108,7 @@ export default {
         }
       })
     },
-    mockGuiji() {
-      this.marker = this.createGuiji(this.map, this.AMap, lineArr)
-    },
+
     onSubmit() {
       console.log('submit!')
       Service.guiji({ ...this.postData }).then(res => {
@@ -196,7 +196,7 @@ export default {
             viewMode: '3D', // 是否为3D地图模式
             zoom: 12, // 初始化地图级别
             // mapStyle: 'amap://styles/darkblue',
-            center: [116.397428, 39.90923], // 初始化地图中心点位置
+            center: [112.45, 34.62], // 初始化地图中心点位置
           })
         })
         .catch(e => {

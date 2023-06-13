@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-06-12 19:08:46
+ * @LastEditTime: 2023-06-13 15:49:40
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/caiji.vue
@@ -11,21 +11,36 @@
   <div class="container">
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
       <el-form-item label="用户名">
-        <el-input v-model="formInline.user" placeholder="用户名"></el-input>
+        <el-select v-model="formInline.userId" placeholder="用户名" clearable>
+          <el-option
+            v-for="item of users"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
       </el-form-item>
 
       <el-form-item label="工种">
-        <el-select v-model="formInline.region" placeholder="工种">
-          <el-option label="工种一" value="shanghai"></el-option>
-          <el-option label="工种二" value="beijing"></el-option>
+        <el-select v-model="formInline.workType" placeholder="工种" clearable>
+          <el-option
+            v-for="item of WorkType"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
         </el-select>
       </el-form-item>
 
       <el-form-item label="日期">
         <el-date-picker
           v-model="formInline.date"
-          type="date"
-          placeholder="选择日期"
+          type="datetimerange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          clearable
+          value-format="yyyy-MM-dd HH:mm:ss"
         >
         </el-date-picker>
       </el-form-item>
@@ -35,9 +50,13 @@
       </el-form-item>
     </el-form>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column prop="date" label="用户名"> </el-table-column>
-      <el-table-column prop="name" label="工种"> </el-table-column>
-      <el-table-column prop="address" label="日期"> </el-table-column>
+      <el-table-column prop="nickName" label="用户名"> </el-table-column>
+      <el-table-column prop="nickName" label="工种">
+        <template slot-scope="scope">
+          <span>{{ WorkTypeMap[scope.row.workType] }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="createTime" label="日期"> </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="primary" size="small"
@@ -60,7 +79,24 @@
     </div>
 
     <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
-      <span>这里面是问题，需要具体看数据结构</span>
+      <div v-for="item of content" :key="item.id">
+        <el-card
+          v-if="item.imageUrl || item.comment"
+          style="margin-bottom: 10px;"
+        >
+          <div class="dialog-card">
+            <el-image
+              v-if="item.imageUrl"
+              style="width: 100px; height: 100px"
+              :src="item.imageUrl"
+              :preview-src-list="contentImgUrls"
+            >
+            </el-image>
+            <p>{{ item.comment }}</p>
+          </div>
+        </el-card>
+      </div>
+
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false"
@@ -72,52 +108,87 @@
 </template>
 
 <script>
+import * as Service from '@/api/index'
+import { WorkType, WorkTypeMap } from '../conf.js'
 export default {
   name: 'Guiji',
   data() {
     return {
+      WorkType,
+      WorkTypeMap,
+      users: [],
       formInline: {
-        user: '',
-        region: '',
+        userId: '',
+        workType: '',
+        date: [],
       },
       pageInfo: {
         page: 1,
         limit: 10,
         total: 0,
       },
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-        },
-      ],
+      tableData: [],
       dialogVisible: false,
+      content: [],
+      contentImgUrls: [],
     }
   },
-  mounted() {},
+  computed: {
+    postData: function() {
+      return {
+        userId: this.formInline.userId,
+        workType: this.formInline.workType,
+        beginTime: this.formInline.date[0],
+        endTime: this.formInline.date[1],
+      }
+    },
+  },
+  mounted() {
+    this.getUsers()
+  },
   methods: {
+    getUsers() {
+      Service.allUser().then(res => {
+        console.log(res)
+        let { code, data } = res.data
+        if (code === 200) {
+          this.users = data.map(item => {
+            return {
+              value: item.userId,
+              label: item.nickName,
+            }
+          })
+        }
+      })
+    },
     handleClick(row) {
+      console.log(row)
+      let content = []
+      let contentImgUrls = []
+      for (let i = 1; i <= 9; i++) {
+        content.push({
+          id: i,
+          comment: row[`comment${i}`],
+          imageUrl: row[`imageUrl${i}`],
+        })
+
+        if (row[`imageUrl${i}`]) {
+          contentImgUrls.push(row[`imageUrl${i}`])
+        }
+      }
+      this.content = content
+      this.contentImgUrls = contentImgUrls
       //获取详情，然后弹出框
       this.dialogVisible = true
     },
     onSubmit() {
       console.log('submit!')
+      Service.caiji({ ...this.postData }).then(res => {
+        let { code, rows } = res.data
+        if (code === 200) {
+          this.tableData = rows
+        }
+      })
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`)
@@ -137,5 +208,15 @@ export default {
 .page {
   margin-top: 30px;
   text-align: right;
+}
+
+.dialog-card {
+  display: flex;
+  align-items: flex-start;
+  p {
+    margin: 0 0 0 10px;
+    line-height: 2;
+    font-size: 15px;
+  }
 }
 </style>

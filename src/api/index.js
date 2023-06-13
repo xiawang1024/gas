@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 19:10:13
- * @LastEditTime: 2023-06-12 20:41:10
+ * @LastEditTime: 2023-06-13 15:27:02
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/index.js
@@ -43,11 +43,11 @@ export const guiji = ({
     },
   })
 
-export const caiji = ({ nickName, workType, beginTime, endTime }) =>
+export const caiji = ({ userId, nickName, workType, beginTime, endTime }) =>
   request({
     url: '/gas/index/collect/manul',
     method: 'get',
-    params: { nickName, workType, beginTime, endTime },
+    params: { userId, nickName, workType, beginTime, endTime },
   })
 
 export const allUser = () =>
