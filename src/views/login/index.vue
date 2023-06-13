@@ -56,8 +56,8 @@ export default {
           Service.login(this.form).then(res => {
             let { code, token } = res.data
             if (code == 200) {
-              localStorage.setItem('token', token)
-              this.$router.push('/home')
+              localStorage.setItem('token', `Bearer ${token}`)
+              this.$router.push('/datav')
             } else {
               this.$message.error('登录失败')
             }

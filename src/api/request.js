@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 19:10:18
- * @LastEditTime: 2023-06-13 17:51:55
+ * @LastEditTime: 2023-06-13 18:05:10
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/request.js
@@ -20,7 +20,7 @@ request.interceptors.request.use(
     // 在发送请求之前做些什么
     // console.log(config)
     // localStorage.getItem('token') 设置token
-    config.headers['token'] = localStorage.getItem('token')
+    config.headers['Authorization'] = localStorage.getItem('token')
     return config
   },
   error => {
