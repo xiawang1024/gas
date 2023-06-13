@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-06-13 16:25:02
+ * @LastEditTime: 2023-06-13 16:59:34
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/caiji.vue
@@ -46,7 +46,9 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="primary" @click="schHandler" icon="el-icon-search"
+          >查询</el-button
+        >
       </el-form-item>
     </el-form>
     <el-table :data="tableData" border style="width: 100%">
@@ -144,11 +146,14 @@ export default {
     },
   },
   watch: {
-    'pageInfo.pageNum': function() {
-      this.onSubmit()
+    'pageInfo.pageNum': {
+      handler: function() {
+        this.schHandler()
+      },
+      immediate: true,
     },
     'pageInfo.pageSize': function() {
-      this.onSubmit()
+      this.schHandler()
     },
   },
   mounted() {
@@ -189,7 +194,7 @@ export default {
       //获取详情，然后弹出框
       this.dialogVisible = true
     },
-    onSubmit() {
+    schHandler() {
       console.log('submit!')
       Service.caiji({ ...this.postData, ...this.pageInfo }).then(res => {
         let { code, rows, total } = res.data
