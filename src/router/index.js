@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:38:14
- * @LastEditTime: 2023-06-13 17:47:22
+ * @LastEditTime: 2023-06-13 18:00:14
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/router/index.js
@@ -24,6 +24,10 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    redirect: '/datav',
+  },
+  {
+    path: '/datav',
     name: 'DataV',
     component: DataV,
   },

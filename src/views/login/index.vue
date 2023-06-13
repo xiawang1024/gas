@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import * as Service from '@/api/index'
 export default {
   data() {
     return {
@@ -52,6 +53,15 @@ export default {
           console.log(
             `用户名：${this.form.username}，密码：${this.form.password}`
           )
+          Service.login(this.form).then(res => {
+            let { code, token } = res.data
+            if (code == 200) {
+              localStorage.setItem('token', token)
+              this.$router.push('/home')
+            } else {
+              this.$message.error('登录失败')
+            }
+          })
         } else {
           return false
         }
