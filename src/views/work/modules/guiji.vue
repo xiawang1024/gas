@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-06-12 20:45:57
+ * @LastEditTime: 2023-06-13 10:07:04
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/guiji.vue
@@ -63,27 +63,7 @@
 
 <script>
 import * as Service from '@/api/index'
-// var lineArr = [
-//   [116.478935, 39.997761],
-//   [116.478939, 39.997825],
-//   [116.478912, 39.998549],
-//   [116.478912, 39.998549],
-//   [116.478998, 39.998555],
-//   [116.478998, 39.998555],
-//   [116.479282, 39.99856],
-//   [116.479658, 39.998528],
-//   [116.480151, 39.998453],
-//   [116.480784, 39.998302],
-//   [116.480784, 39.998302],
-//   [116.481149, 39.998184],
-//   [116.481573, 39.997997],
-//   [116.481863, 39.997846],
-//   [116.482072, 39.997718],
-//   [116.482362, 39.997718],
-//   [116.483633, 39.998935],
-//   [116.48367, 39.998968],
-//   [116.484648, 39.999861],
-// ]
+
 import AMapLoader from '@amap/amap-jsapi-loader'
 export default {
   name: 'Guiji',
@@ -146,10 +126,16 @@ export default {
     createGuiji(map, AMap, lineArr) {
       this.marker && this.marker.stopMove()
       map.clearMap()
+      let size = new AMap.Size(30, 30)
+      let icon = new AMap.Icon({
+        size: size,
+        image: require('../icons/ren.png'), // Icon的图像
+        imageSize: size,
+      })
       let marker = new AMap.Marker({
         map: map,
         position: lineArr[0],
-        icon: 'https://a.amap.com/jsapi_demos/static/demo-center-v2/car.png',
+        icon: icon,
         offset: new AMap.Pixel(-13, -26),
       })
       // 绘制轨迹
