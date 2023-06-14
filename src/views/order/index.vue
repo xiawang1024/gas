@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:20:27
- * @LastEditTime: 2023-06-13 17:32:28
+ * @LastEditTime: 2023-06-14 10:27:32
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/order/index.vue
@@ -9,9 +9,7 @@
 -->
 <template>
   <div class="container">
-    <el-card>
-      <el-page-header @back="goBack" content="缴费查询系统"> </el-page-header>
-    </el-card>
+    <NavHeader />
     <el-card class="wrap">
       <el-form ref="form" :inline="true" :model="formInline">
         <el-form-item label="户号" prop="payNo">
@@ -133,9 +131,13 @@
 </template>
 
 <script>
+import NavHeader from '@/components/nav/index.vue'
 import * as Service from '@/api/index'
 export default {
   name: 'Order',
+  components: {
+    NavHeader,
+  },
   data() {
     return {
       formInline: {

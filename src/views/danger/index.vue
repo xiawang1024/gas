@@ -1,14 +1,16 @@
 <template>
   <div class="container">
-    <el-card>
-      <el-page-header @back="goBack" content="隐患排查治理"> </el-page-header>
-    </el-card>
+    <NavHeader />
   </div>
 </template>
 
 <script>
+import NavHeader from '@/components/nav/index.vue'
 export default {
-  name: 'Index',
+  name: 'Danger',
+  components: {
+    NavHeader,
+  },
   data() {
     return {}
   },

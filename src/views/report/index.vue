@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:01:26
- * @LastEditTime: 2023-06-13 16:03:19
+ * @LastEditTime: 2023-06-14 10:27:56
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/report/index.vue
@@ -9,15 +9,18 @@
 -->
 <template>
   <div class="container">
-    <el-card>
-      <el-page-header @back="goBack" content="运营报表"> </el-page-header>
-    </el-card>
+    <NavHeader />
   </div>
 </template>
 
 <script>
+import NavHeader from '@/components/nav/index.vue'
+
 export default {
-  name: 'Index',
+  name: 'Report',
+  components: {
+    NavHeader,
+  },
   data() {
     return {}
   },

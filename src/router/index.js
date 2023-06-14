@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:38:14
- * @LastEditTime: 2023-06-14 10:02:28
+ * @LastEditTime: 2023-06-14 10:25:19
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/router/index.js
@@ -35,26 +35,41 @@ const routes = [
     path: '/order',
     name: 'Order',
     component: Order,
+    meta: {
+      title: '客户缴费查询系统',
+    },
   },
   {
     path: '/work',
     name: 'Work',
     component: Work,
+    meta: {
+      title: '外勤查询系统',
+    },
   },
   {
     path: '/service',
     name: 'Service',
     component: Service,
+    meta: {
+      title: '客户服务系统',
+    },
   },
   {
     path: '/danger',
     name: 'Danger',
     component: Danger,
+    meta: {
+      title: '隐患排查治理系统',
+    },
   },
   {
     path: '/report',
     name: 'Report',
     component: Report,
+    meta: {
+      title: '运营报表系统',
+    },
   },
   {
     path: '/login',

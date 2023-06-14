@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:20:27
- * @LastEditTime: 2023-06-12 18:52:25
+ * @LastEditTime: 2023-06-14 10:21:11
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/index.vue
@@ -9,9 +9,7 @@
 -->
 <template>
   <div class="container">
-    <el-card>
-      <el-page-header @back="goBack" content="外勤查询系统"> </el-page-header>
-    </el-card>
+    <NavHeader />
     <el-card class="wrap">
       <el-tabs v-model="activeName" type="card">
         <el-tab-pane label="轨迹查询" name="guiji"><guiji /></el-tab-pane>
@@ -25,9 +23,12 @@
 import guiji from './modules/guiji.vue'
 import caiji from './modules/caiji.vue'
 
+import NavHeader from '@/components/nav/index.vue'
+
 export default {
   name: 'Index',
   components: {
+    NavHeader,
     guiji,
     caiji,
   },
