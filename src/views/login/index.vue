@@ -16,6 +16,7 @@
             v-model.trim="form.password"
             prefix-icon="el-icon-lock"
             placeholder="请输入密码"
+            @keyup.enter.native="login"
           ></el-input>
         </el-form-item>
         <el-form-item>
@@ -50,16 +51,14 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           // 处理登录逻辑
-          console.log(
-            `用户名：${this.form.username}，密码：${this.form.password}`
-          )
+
           Service.login(this.form).then(res => {
-            let { code, token } = res.data
+            let { code, token, msg } = res.data
             if (code == 200) {
               localStorage.setItem('token', `Bearer ${token}`)
               this.$router.push('/datav')
             } else {
-              this.$message.error('登录失败')
+              this.$message.error(msg)
             }
           })
         } else {
@@ -80,6 +79,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 10%;
+  box-sizing: border-box;
 }
 
 .login-container {

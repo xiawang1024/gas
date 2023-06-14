@@ -1,12 +1,13 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 19:10:18
- * @LastEditTime: 2023-06-13 18:05:10
+ * @LastEditTime: 2023-06-14 10:01:26
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/request.js
  * 工作，生活，健康
  */
+import router from '@/router/index.js'
 import axios from 'axios'
 
 const request = axios.create({
@@ -37,7 +38,8 @@ request.interceptors.response.use(
     //401 token过期
     if (response.data.code === 401) {
       // 跳转到登录页面
-      window.location.href = '/login'
+      localStorage.removeItem('token')
+      router.push('/login')
     }
 
     return response
