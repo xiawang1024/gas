@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-06-13 16:59:34
+ * @LastEditTime: 2023-06-14 09:25:05
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/caiji.vue
@@ -110,6 +110,7 @@
 </template>
 
 <script>
+const IMGHOST = 'http://114.115.206.239:8089'
 import * as Service from '@/api/index'
 import { WorkType, WorkTypeMap } from '../conf.js'
 export default {
@@ -179,14 +180,15 @@ export default {
       let content = []
       let contentImgUrls = []
       for (let i = 1; i <= 9; i++) {
+        let url = row[`imageUrl${i}`] ? IMGHOST + row[`imageUrl${i}`] : ''
         content.push({
           id: i,
           comment: row[`comment${i}`],
-          imageUrl: row[`imageUrl${i}`],
+          imageUrl: url,
         })
 
-        if (row[`imageUrl${i}`]) {
-          contentImgUrls.push(row[`imageUrl${i}`])
+        if (url) {
+          contentImgUrls.push(url)
         }
       }
       this.content = content
