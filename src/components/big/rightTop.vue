@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-06-13 17:29:21
+ * @LastEditTime: 2023-06-14 09:04:00
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -37,8 +37,9 @@ export default {
         ],
         data: [],
         // index: true,
-        rowNum: 6,
+        rowNum: 10,
         align: ['center'],
+        // carousel: 'page',
       },
       danger: false,
     }

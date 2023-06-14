@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-06-13 10:00:37
+ * @LastEditTime: 2023-06-14 09:07:44
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/map.vue
@@ -75,6 +75,7 @@ export default {
         if (this.markersMap[types[i]]) {
           // this.map.remove(this.markersMap[types[i]])
           this.labelsLayer.remove(this.markersMap[types[i]])
+          this.map.setFitView()
         }
       }
     },
@@ -91,6 +92,7 @@ export default {
         } else {
           // this.map.add(this.markersMap[types[i]])
           this.labelsLayer.add(this.markersMap[types[i]])
+          this.map.setFitView()
         }
       }
     },
