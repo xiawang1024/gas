@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:18:36
- * @LastEditTime: 2023-06-12 16:29:27
+ * @LastEditTime: 2023-06-14 09:20:05
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightBottom.vue
@@ -21,16 +21,14 @@
       </el-select>
     </div>
     <div class="player">
-      <video
-        class="video"
-        src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/byted-player-videos/1.0.0/xgplayer-demo-720p.mp4"
-        controls
-      ></video>
+      <video ref="video" class="video" controls></video>
     </div>
   </div>
 </template>
 
 <script>
+import Hls from 'hls.js'
+
 export default {
   name: 'RightBottom',
   data() {
@@ -38,29 +36,38 @@ export default {
       options: [
         {
           value: '选项1',
-          label: '黄金糕',
+          label: '直播流1',
         },
         {
           value: '选项2',
-          label: '双皮奶',
+          label: '直播流2',
         },
         {
           value: '选项3',
-          label: '蚵仔煎',
-        },
-        {
-          value: '选项4',
-          label: '龙须面',
-        },
-        {
-          value: '选项5',
-          label: '北京烤鸭',
+          label: '直播流3',
         },
       ],
       value: '',
     }
   },
-  methods: {},
+  mounted() {
+    this.hlsPlay()
+  },
+  methods: {
+    hlsPlay() {
+      if (Hls.isSupported()) {
+        let video = this.$refs.video
+        let hls = new Hls()
+        hls.loadSource(
+          'https://cctvwbndbd.a.bdydns.com/cctvwbnd/cctv13_2/index.m3u8'
+        )
+        hls.attachMedia(video)
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+          video.play()
+        })
+      }
+    },
+  },
 }
 </script>
 

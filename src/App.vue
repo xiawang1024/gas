@@ -9,7 +9,6 @@
 -->
 <template>
   <div id="app">
-    <!-- <datav /> -->
     <router-view />
   </div>
 </template>
