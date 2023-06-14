@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 19:10:18
- * @LastEditTime: 2023-06-14 10:01:26
+ * @LastEditTime: 2023-06-14 14:49:24
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/request.js
@@ -12,6 +12,7 @@ import axios from 'axios'
 
 const request = axios.create({
   baseURL: 'http://192.168.241.94:8089',
+  // baseURL: 'http://114.115.206.239:8089',
   timeout: 20000,
 })
 

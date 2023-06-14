@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-06-14 09:04:00
+ * @LastEditTime: 2023-06-14 14:55:37
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -48,12 +48,25 @@ export default {
   mounted() {
     this.getData()
 
-    setTimeout(() => {
-      this.danger = true
-      this.$refs['audio'].play()
+    setInterval(() => {
+      this.watchAlarm()
     }, 5000)
   },
   methods: {
+    watchAlarm() {
+      Service.watchAlarm().then(res => {
+        let { code, data } = res.data
+        if (code == 200) {
+          if (data.isAlarm == -1) {
+            this.danger = true
+            this.$refs['audio'].play()
+          } else {
+            this.danger = false
+            this.$refs['audio'].pause()
+          }
+        }
+      })
+    },
     getData() {
       Service.flow({}).then(res => {
         let { code, rows } = res.data
@@ -77,8 +90,13 @@ export default {
       })
     },
     clearDanger() {
-      this.$refs['audio'].pause()
-      this.danger = false
+      Service.closeAlarm().then(res => {
+        let { code } = res.data
+        if (code == 200) {
+          this.danger = false
+          this.$refs['audio'].pause()
+        }
+      })
     },
   },
 }

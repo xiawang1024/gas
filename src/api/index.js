@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 19:10:13
- * @LastEditTime: 2023-06-14 09:37:07
+ * @LastEditTime: 2023-06-14 14:52:16
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/index.js
@@ -85,4 +85,17 @@ export const order = ({
     url: '/gas/index/payment',
     method: 'get',
     params: { payNo, payName, payCard, payTabNo, pageNum, pageSize },
+  })
+
+// 传感器监控报警
+export const watchAlarm = () =>
+  request({
+    url: '/gas/flowmeter/alarm',
+    method: 'get',
+  })
+// 取消传感器报警
+export const closeAlarm = () =>
+  request({
+    url: `/gas/flowmeter/alarm/disable`,
+    method: 'get',
   })
