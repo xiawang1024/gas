@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-06-14 09:07:44
+ * @LastEditTime: 2023-06-14 11:09:16
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/map.vue
@@ -243,7 +243,7 @@ export default {
       AMapLoader.load({
         key: 'a5e96381ba664e245f7c036a6de5f7d4',
         version: '2.0',
-        plugins: [''], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
+        plugins: ['AMap.Scale', 'AMap.HawkEye', 'AMap.ToolBar'], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
       })
         .then(AMap => {
           this.AMap = AMap
@@ -273,6 +273,11 @@ export default {
           })
 
           this.map.add(this.labelsLayer)
+
+          //插件
+          this.map.addControl(new AMap.Scale())
+          this.map.addControl(new AMap.HawkEye())
+          this.map.addControl(new AMap.ToolBar())
         })
         .catch(e => {
           console.log(e)
