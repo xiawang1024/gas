@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 19:10:13
- * @LastEditTime: 2023-06-14 14:52:16
+ * @LastEditTime: 2023-06-15 11:11:49
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/index.js
@@ -65,7 +65,7 @@ export const allUser = () =>
   })
 
 // 流量查询
-export const flow = ({ pageNum = 1, pageSize = 10000 }) =>
+export const flow = ({ pageNum = 1, pageSize = 1000 }) =>
   request({
     url: '/gas/flowmeter/list',
     method: 'get',
