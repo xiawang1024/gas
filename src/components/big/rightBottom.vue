@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:18:36
- * @LastEditTime: 2023-06-14 11:04:30
+ * @LastEditTime: 2023-06-19 10:00:30
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightBottom.vue
@@ -10,7 +10,7 @@
 <template>
   <div class="container">
     <div class="select">
-      <el-select v-model="value" placeholder="请选择">
+      <el-select v-model="value" placeholder="请选择" size="mini">
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -82,7 +82,7 @@ export default {
 .select {
   position: absolute;
   z-index: 100;
-  top: 2%;
+  top: 2.5%;
   right: 2%;
 }
 

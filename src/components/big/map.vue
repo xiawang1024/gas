@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-06-14 11:09:16
+ * @LastEditTime: 2023-06-19 10:47:03
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/map.vue
@@ -33,6 +33,7 @@
 
 <script>
 import * as Service from '@/api/index'
+import { WorkTypeMap } from '@/views/work/conf.js'
 
 import AMapLoader from '@amap/amap-jsapi-loader'
 
@@ -163,8 +164,13 @@ export default {
           content = list[i].name
         } else if (list[i].mapType == 'fajing') {
           content = list[i].mapNo
-        } else {
+        } else if (
+          list[i].mapType == 'tiaoyaxiang' ||
+          list[i].mapType == 'guanwang'
+        ) {
           content = ''
+        } else {
+          content = WorkTypeMap[list[i].mapType]
         }
         let text = {
           content: content, // 要展示的文字内容
