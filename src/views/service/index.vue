@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:00:16
- * @LastEditTime: 2023-06-20 11:41:18
+ * @LastEditTime: 2023-06-20 11:53:40
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/service/index.vue
@@ -128,20 +128,11 @@
     </el-card>
 
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="800px">
-      <el-form :inline="true" :model="schForm" label-width="100px">
-        <el-form-item label="时间">
-          <el-date-picker
-            class="fixWidth"
-            v-model="schForm.user"
-            type="datetime"
-            placeholder="选择日期时间"
-          >
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="紧急程度" prop="user">
+      <el-form :inline="true" :model="editForm" label-width="100px">
+        <el-form-item label="紧急程度" prop="problemUrgency">
           <el-select
-            v-model="schForm.user"
-            placeholder="活动区域"
+            v-model="editForm.problemUrgency"
+            placeholder="紧急程度"
             clearable
             class="fixWidth"
           >
@@ -153,9 +144,9 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="问题分类" prop="region">
+        <el-form-item label="问题分类" prop="problemType">
           <el-select
-            v-model="schForm.region"
+            v-model="editForm.problemType"
             placeholder="问题分类"
             clearable
             class="fixWidth"
@@ -168,46 +159,33 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="客户名称">
+        <el-form-item label="客户信息" prop="clientInfo">
           <el-input
             class="fixWidth"
-            v-model="schForm.name"
+            v-model="editForm.clientInfo"
             placeholder="请输入客户名称"
           ></el-input>
         </el-form-item>
-
-        <el-form-item label="联系方式">
+        <el-form-item label="所在位置" prop="address">
           <el-input
             class="fixWidth"
-            v-model="schForm.name"
-            placeholder="请输入联系方式"
+            v-model="editForm.address"
+            placeholder="请输入所在位置"
           ></el-input>
         </el-form-item>
-
-        <el-form-item label="处理人">
+        <el-form-item label="问题详情">
           <el-input
             class="fixWidth"
-            v-model="schForm.name"
-            placeholder="请输入处理人"
+            type="textarea"
+            rows="4"
+            v-model="editForm.problemDetails"
+            placeholder="请输入问题详情"
           ></el-input>
         </el-form-item>
-        <el-row>
-          <el-form-item label="问题详情">
-            <el-input
-              class="fixWidth"
-              type="textarea"
-              rows="4"
-              v-model="schForm.name"
-              placeholder="请输入问题详情"
-            ></el-input>
-          </el-form-item>
-        </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="dialogConfirm">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -240,6 +218,13 @@ export default {
       },
       dialogVisible: false,
       dialogType: 0, // 0 新增 1 编辑 2 查看
+      editForm: {
+        problemType: '',
+        problemUrgency: '',
+        clientInfo: '',
+        address: '',
+        problemDetails: '',
+      },
     }
   },
   computed: {
@@ -336,10 +321,12 @@ export default {
       // type 0 查看 1 编辑 2 删除
       switch (type) {
         case 0:
+          this.editForm = row
           this.dialogVisible = true
           this.dialogType = 2
           break
         case 1:
+          this.editForm = row
           this.dialogVisible = true
           this.dialogType = 1
           break
@@ -353,6 +340,33 @@ export default {
           break
       }
       console.log('actionHandler')
+    },
+    dialogConfirm() {
+      if (this.dialogType === 0) {
+        ClientService.add({ ...this.editForm }).then(res => {
+          let { code } = res.data
+          if (code === 200) {
+            this.$message({
+              type: 'success',
+              message: '新增成功!',
+            })
+            this.dialogVisible = false
+            this.getData()
+          }
+        })
+      } else {
+        ClientService.update({ ...this.editForm }).then(res => {
+          let { code } = res.data
+          if (code === 200) {
+            this.$message({
+              type: 'success',
+              message: '修改成功!',
+            })
+            this.dialogVisible = false
+            this.getData()
+          }
+        })
+      }
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`)
