@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:00:16
- * @LastEditTime: 2023-06-20 11:32:42
+ * @LastEditTime: 2023-06-20 11:41:18
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/service/index.vue
@@ -20,8 +20,19 @@
           >新增</el-button
         >
         <el-form :inline="true" :model="schForm" ref="schForm">
-          <el-form-item label="紧急程度" prop="user">
-            <el-select v-model="schForm.user" placeholder="活动区域" clearable>
+          <el-form-item label="客户信息" prop="clientInfo">
+            <el-input
+              v-model.trim="schForm.clientInfo"
+              placeholder="客户信息"
+              clearable
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="紧急程度" prop="problemUrgency">
+            <el-select
+              v-model="schForm.problemUrgency"
+              placeholder="紧急程度"
+              clearable
+            >
               <el-option
                 :label="item.label"
                 :value="item.value"
@@ -30,10 +41,10 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="问题分类" prop="region">
+          <el-form-item label="问题分类" prop="problemType">
             <el-select
-              v-model="schForm.region"
-              placeholder="活动区域"
+              v-model="schForm.problemType"
+              placeholder="问题分类"
               clearable
             >
               <el-option
@@ -62,7 +73,11 @@
             <el-tag>{{ QuestionTypeMap[scope.row.problemType] }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="problemDetails" label="问题详情">
+        <el-table-column
+          prop="problemDetails"
+          label="问题详情"
+          show-overflow-tooltip
+        >
         </el-table-column>
         <el-table-column prop="problemUrgency" label="紧急程度">
           <template slot-scope="scope">
@@ -71,7 +86,8 @@
             }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="clientInfo" label="发现人"> </el-table-column>
+        <el-table-column prop="clientInfo" label="发现人" show-overflow-tooltip>
+        </el-table-column>
         <el-table-column fixed="right" label="操作" width="220">
           <template slot-scope="scope">
             <el-button @click="actionHandler(scope.row, 0)" size="mini"
@@ -212,8 +228,9 @@ export default {
       QuestionType: [],
       ImportantLevel: [],
       schForm: {
-        user: '',
-        region: '',
+        problemType: '',
+        problemUrgency: '',
+        clientInfo: '',
       },
       tableData: [],
       pageInfo: {
@@ -290,8 +307,8 @@ export default {
   methods: {
     getData() {
       ClientService.get({
-        pageNum: this.pageInfo.pageNum,
-        pageSize: this.pageInfo.pageSize,
+        ...this.pageInfo,
+        ...this.schForm,
       }).then(res => {
         let { code, rows, total } = res.data
         if (code == 200) {
@@ -306,10 +323,11 @@ export default {
       })
     },
     schHandler() {
-      console.log(this.schForm)
+      this.getData()
     },
     resetHandler() {
       this.$refs.schForm.resetFields()
+      this.getData()
     },
     addHandler() {
       this.dialogVisible = true
