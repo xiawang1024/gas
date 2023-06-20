@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:00:16
- * @LastEditTime: 2023-06-20 10:50:15
+ * @LastEditTime: 2023-06-20 11:32:42
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/service/index.vue
@@ -55,12 +55,23 @@
         </el-form>
       </div>
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="date" label="日期"> </el-table-column>
-        <el-table-column prop="name" label="中文位置"> </el-table-column>
-        <el-table-column prop="name" label="问题分类"> </el-table-column>
-        <el-table-column prop="name" label="问题详情"> </el-table-column>
-        <el-table-column prop="name" label="紧急程度"> </el-table-column>
-        <el-table-column prop="address" label="发现人"> </el-table-column>
+        <el-table-column prop="createTime" label="日期"> </el-table-column>
+        <el-table-column prop="address" label="位置"> </el-table-column>
+        <el-table-column prop="problemType" label="问题分类">
+          <template slot-scope="scope">
+            <el-tag>{{ QuestionTypeMap[scope.row.problemType] }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="problemDetails" label="问题详情">
+        </el-table-column>
+        <el-table-column prop="problemUrgency" label="紧急程度">
+          <template slot-scope="scope">
+            <el-tag type="danger">{{
+              ImportantLevelMap[scope.row.problemUrgency]
+            }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="clientInfo" label="发现人"> </el-table-column>
         <el-table-column fixed="right" label="操作" width="220">
           <template slot-scope="scope">
             <el-button @click="actionHandler(scope.row, 0)" size="mini"
@@ -129,7 +140,7 @@
         <el-form-item label="问题分类" prop="region">
           <el-select
             v-model="schForm.region"
-            placeholder="活动区域"
+            placeholder="问题分类"
             clearable
             class="fixWidth"
           >
@@ -187,8 +198,9 @@
 </template>
 
 <script>
+import * as ClientService from '@/api/service.js'
+
 import NavHeader from '@/components/nav/index.vue'
-import { QuestionType, ImportantLevel } from '@/views/service/conf.js'
 
 export default {
   name: 'Service',
@@ -197,32 +209,13 @@ export default {
   },
   data() {
     return {
+      QuestionType: [],
+      ImportantLevel: [],
       schForm: {
         user: '',
         region: '',
       },
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-        },
-      ],
+      tableData: [],
       pageInfo: {
         pageNum: 1,
         pageSize: 10,
@@ -233,11 +226,21 @@ export default {
     }
   },
   computed: {
-    QuestionType() {
-      return QuestionType
+    QuestionTypeMap() {
+      let map = {}
+      this.QuestionType.length &&
+        this.QuestionType.forEach(item => {
+          map[item.value] = item.label
+        })
+      return map
     },
-    ImportantLevel() {
-      return ImportantLevel
+    ImportantLevelMap() {
+      let map = {}
+      this.ImportantLevel.length &&
+        this.ImportantLevel.forEach(item => {
+          map[item.value] = item.label
+        })
+      return map
     },
     dialogTitle() {
       return this.dialogType === 0
@@ -247,7 +250,61 @@ export default {
         : '查看'
     },
   },
+  watch: {
+    'pageInfo.pageNum': {
+      handler() {
+        this.getData()
+      },
+      immediate: true,
+    },
+    'pageInfo.pageSize': {
+      handler() {
+        this.getData()
+      },
+    },
+  },
+  created() {
+    ClientService.getDict('client_problem_type').then(res => {
+      let { code, data } = res.data
+      if (code === 200) {
+        this.QuestionType = data.map(item => {
+          return {
+            label: item.dictLabel,
+            value: item.dictValue,
+          }
+        })
+      }
+    })
+    ClientService.getDict('client_problem_urgency').then(res => {
+      let { code, data } = res.data
+      if (code === 200) {
+        this.ImportantLevel = data.map(item => {
+          return {
+            label: item.dictLabel,
+            value: item.dictValue,
+          }
+        })
+      }
+    })
+  },
   methods: {
+    getData() {
+      ClientService.get({
+        pageNum: this.pageInfo.pageNum,
+        pageSize: this.pageInfo.pageSize,
+      }).then(res => {
+        let { code, rows, total } = res.data
+        if (code == 200) {
+          this.tableData = rows
+          this.pageInfo.total = total
+        } else {
+          this.$message({
+            type: 'error',
+            message: '获取数据失败!',
+          })
+        }
+      })
+    },
     schHandler() {
       console.log(this.schForm)
     },
