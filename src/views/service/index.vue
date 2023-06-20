@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:00:16
- * @LastEditTime: 2023-06-20 11:53:40
+ * @LastEditTime: 2023-06-20 15:00:05
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/service/index.vue
@@ -127,7 +127,12 @@
       </div>
     </el-card>
 
-    <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="800px">
+    <el-dialog
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      width="800px"
+      @closed="dialogClose"
+    >
       <el-form :inline="true" :model="editForm" label-width="100px">
         <el-form-item label="紧急程度" prop="problemUrgency">
           <el-select
@@ -307,6 +312,15 @@ export default {
         }
       })
     },
+    dialogClose() {
+      this.editForm = {
+        problemType: '',
+        problemUrgency: '',
+        clientInfo: '',
+        address: '',
+        problemDetails: '',
+      }
+    },
     schHandler() {
       this.getData()
     },
@@ -316,6 +330,7 @@ export default {
     },
     addHandler() {
       this.dialogVisible = true
+      this.dialogType = 0
     },
     actionHandler(row, type) {
       // type 0 查看 1 编辑 2 删除
@@ -331,9 +346,15 @@ export default {
           this.dialogType = 1
           break
         case 2:
-          this.$message({
-            type: 'success',
-            message: '删除成功!',
+          ClientService.del(row.clientId).then(res => {
+            let { code } = res.data
+            if (code === 200) {
+              this.$message({
+                type: 'success',
+                message: '删除成功!',
+              })
+              this.getData()
+            }
           })
           break
         default:
@@ -382,7 +403,7 @@ export default {
 
 <style lang="less" scoped>
 .fixWidth {
-  width: 200px;
+  width: 250px;
 }
 .card {
   margin: 20px;
