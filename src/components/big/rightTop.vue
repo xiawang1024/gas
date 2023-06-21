@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-06-21 17:31:17
+ * @LastEditTime: 2023-06-21 17:37:31
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -9,7 +9,18 @@
 -->
 <template>
   <div>
-    <Flow class="scroll-board" />
+    <div class="select">
+      <el-select v-model="value" placeholder="请选择" size="mini">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+    </div>
+    <Flow class="scroll-board" :address="value" />
     <div class="danger" v-if="danger" @click="clearDanger"></div>
     <audio
       src="./icons/jb.mp3"
@@ -31,6 +42,17 @@ export default {
   },
   data() {
     return {
+      options: [
+        {
+          value: '01',
+          label: '送庄门站',
+        },
+        {
+          value: '02',
+          label: '麻屯门站',
+        },
+      ],
+      value: '01',
       danger: false,
     }
   },
@@ -73,6 +95,19 @@ export default {
 </script>
 
 <style lang="less" scoped>
+::v-deep {
+  .el-input--suffix .el-input__inner {
+    background: transparent;
+    color: #efefef;
+  }
+}
+
+.select {
+  position: absolute;
+  z-index: 100;
+  top: 2.5%;
+  right: 2%;
+}
 .scroll-board {
   position: absolute;
   top: 5.5%;

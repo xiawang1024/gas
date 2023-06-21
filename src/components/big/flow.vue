@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2023-06-21 17:29:17
+ * @LastEditTime: 2023-06-21 17:41:36
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/flow.vue
@@ -23,6 +23,12 @@ import * as FlowService from '@/api/flow'
 const LEN = 7
 export default {
   name: 'Flow',
+  props: {
+    address: {
+      type: String,
+      default: '01',
+    },
+  },
   data() {
     return {
       chart: [],
@@ -148,14 +154,31 @@ export default {
       ],
     }
   },
+  watch: {
+    address() {
+      this.options[0].series[0].data = []
+      this.options[1].series[0].data = []
+      this.options[2].series[0].data = []
+      this.options[3].series[0].data = []
+
+      this.chart[0].setOption(this.options[0])
+      this.chart[1].setOption(this.options[1])
+      this.chart[2].setOption(this.options[2])
+      this.chart[3].setOption(this.options[3])
+    },
+  },
   mounted() {
     this.initChart()
 
     this.getData()
 
-    setInterval(() => {
+    this.timer = setInterval(() => {
       this.getData()
     }, 1000)
+  },
+
+  beforeDestroy() {
+    clearInterval(this.timer)
   },
   methods: {
     initChart() {
@@ -170,7 +193,7 @@ export default {
       }
     },
     getData() {
-      FlowService.get('01').then(res => {
+      FlowService.get(this.address).then(res => {
         let { code, data } = res.data
         if (code == 200) {
           let time = new Date().getTime()
