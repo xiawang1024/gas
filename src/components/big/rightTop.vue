@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-06-21 15:51:46
+ * @LastEditTime: 2023-06-21 17:31:17
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -10,7 +10,6 @@
 <template>
   <div>
     <Flow class="scroll-board" />
-    <!-- <dv-scroll-board class="scroll-board" :config="config" /> -->
     <div class="danger" v-if="danger" @click="clearDanger"></div>
     <audio
       src="./icons/jb.mp3"
@@ -32,27 +31,11 @@ export default {
   },
   data() {
     return {
-      config: {
-        header: [
-          '温度(&#8451;)',
-          '压力(kPa)',
-          '瞬时流量(m&sup3;/h)',
-          '累计流量(m&sup3;)',
-          '脉冲(Hz)',
-        ],
-        data: [],
-        // index: true,
-        rowNum: 10,
-        align: ['center'],
-        // carousel: 'page',
-      },
       danger: false,
     }
   },
 
   mounted() {
-    this.getData()
-
     this.timer = setInterval(() => {
       this.watchAlarm()
     }, 5000)
@@ -75,28 +58,7 @@ export default {
         }
       })
     },
-    getData() {
-      Service.flow({}).then(res => {
-        let { code, rows } = res.data
-        if (code == 200) {
-          let arr = []
-          for (let i = 0; i < rows.length; i++) {
-            let item = []
-            item.push(
-              rows[i].temperature,
-              rows[i].pressure,
-              rows[i].flowInstant,
-              rows[i].flowTotal,
-              rows[i].pulse
-            )
-            arr.push(item)
-          }
-          this.config.data = arr
 
-          this.config = { ...this.config }
-        }
-      })
-    },
     clearDanger() {
       Service.closeAlarm().then(res => {
         let { code } = res.data
