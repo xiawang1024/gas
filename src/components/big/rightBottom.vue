@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:18:36
- * @LastEditTime: 2023-06-19 10:00:30
+ * @LastEditTime: 2023-06-20 16:24:23
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightBottom.vue
@@ -53,11 +53,15 @@ export default {
   mounted() {
     this.hlsPlay()
   },
+  beforeDestroy() {
+    this.hls.destroy()
+  },
   methods: {
     hlsPlay() {
       if (Hls.isSupported()) {
         let video = this.$refs.video
         let hls = new Hls()
+        this.hls = hls
         hls.loadSource(
           'https://cctvwbndbd.a.bdydns.com/cctvwbnd/cctv13_2/index.m3u8'
         )

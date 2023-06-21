@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-06-14 14:55:37
+ * @LastEditTime: 2023-06-20 16:19:16
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -48,9 +48,12 @@ export default {
   mounted() {
     this.getData()
 
-    setInterval(() => {
+    this.timer = setInterval(() => {
       this.watchAlarm()
     }, 5000)
+  },
+  beforeDestroy() {
+    clearInterval(this.timer)
   },
   methods: {
     watchAlarm() {
