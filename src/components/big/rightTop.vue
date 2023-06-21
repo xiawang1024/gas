@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-06-20 16:19:16
+ * @LastEditTime: 2023-06-21 15:51:46
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -9,7 +9,8 @@
 -->
 <template>
   <div>
-    <dv-scroll-board class="scroll-board" :config="config" />
+    <Flow class="scroll-board" />
+    <!-- <dv-scroll-board class="scroll-board" :config="config" /> -->
     <div class="danger" v-if="danger" @click="clearDanger"></div>
     <audio
       src="./icons/jb.mp3"
@@ -22,9 +23,13 @@
 
 <script>
 import * as Service from '@/api/index'
+import Flow from '@/components/big/flow.vue'
 
 export default {
   name: 'RightTop',
+  components: {
+    Flow,
+  },
   data() {
     return {
       config: {
