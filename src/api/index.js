@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 19:10:13
- * @LastEditTime: 2023-06-20 11:16:21
+ * @LastEditTime: 2023-06-25 17:57:38
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/index.js
@@ -51,11 +51,27 @@ export const guiji = ({
     },
   })
 // 手动采集查询
-export const caiji = ({ userId, nickName, workType, beginTime, endTime }) =>
+export const caiji = ({
+  userId,
+  nickName,
+  workType,
+  beginTime,
+  endTime,
+  pageNum,
+  pageSize,
+}) =>
   request({
     url: '/gas/index/collect/manul',
     method: 'get',
-    params: { userId, nickName, workType, beginTime, endTime },
+    params: {
+      userId,
+      nickName,
+      workType,
+      beginTime,
+      endTime,
+      pageNum,
+      pageSize,
+    },
   })
 // 所有用户
 export const allUser = () =>
