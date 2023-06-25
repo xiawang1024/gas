@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-25 09:24:12
- * @LastEditTime: 2023-06-25 09:53:03
+ * @LastEditTime: 2023-06-25 10:21:52
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/flow/index.vue
@@ -49,6 +49,10 @@
         </el-form-item>
       </el-form>
 
+      <div class="chart">
+        <Chart :table-data="tableData"></Chart>
+      </div>
+
       <el-table :data="tableData" border style="width: 100%">
         <el-table-column prop="address" label="门站">
           <template slot-scope="scope">
@@ -69,7 +73,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="pageInfo.pageNum"
-          :page-sizes="[20, 30, 50, 100]"
+          :page-sizes="[20, 50, 100, 500]"
           :page-size="pageInfo.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="pageInfo.total"
@@ -84,10 +88,12 @@
 import NavHeader from '@/components/nav/index.vue'
 import { FLOW_LIST, FLOW_LIST_MAP } from '@/views/flow/conf.js'
 import * as FLowService from '@/api/flow.js'
+import Chart from '@/views/flow/chart.vue'
 export default {
   name: 'Flow',
   components: {
     NavHeader,
+    Chart,
   },
   data() {
     return {
@@ -167,5 +173,10 @@ export default {
 .page {
   margin-top: 30px;
   text-align: right;
+}
+
+.chart {
+  width: 100%;
+  height: 200px;
 }
 </style>
