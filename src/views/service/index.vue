@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:00:16
- * @LastEditTime: 2023-06-25 15:12:56
+ * @LastEditTime: 2023-06-25 17:13:06
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/service/index.vue
@@ -296,7 +296,7 @@ export default {
     },
   },
   created() {
-    ClientService.getDict('client_problem_type').then(res => {
+    ClientService.getDict('problem_type').then(res => {
       let { code, data } = res.data
       if (code === 200) {
         this.QuestionType = data.map(item => {
@@ -307,7 +307,7 @@ export default {
         })
       }
     })
-    ClientService.getDict('client_problem_urgency').then(res => {
+    ClientService.getDict('problem_urgency').then(res => {
       let { code, data } = res.data
       if (code === 200) {
         this.ImportantLevel = data.map(item => {
