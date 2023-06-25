@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:38:14
- * @LastEditTime: 2023-06-14 10:25:19
+ * @LastEditTime: 2023-06-25 09:25:39
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/router/index.js
@@ -19,6 +19,8 @@ import Danger from '@/views/danger/index.vue'
 import Report from '@/views/report/index.vue'
 import NotFound from '@/views/404/index.vue'
 import Login from '@/views/login/index.vue'
+import Flow from '@/views/flow/index.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -69,6 +71,14 @@ const routes = [
     component: Report,
     meta: {
       title: '运营报表系统',
+    },
+  },
+  {
+    path: '/flow',
+    name: 'Flow',
+    component: Flow,
+    meta: {
+      title: '流量计查询系统',
     },
   },
   {

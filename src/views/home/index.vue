@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 08:45:39
- * @LastEditTime: 2023-06-14 10:10:32
+ * @LastEditTime: 2023-06-25 09:26:28
  * @LastEditors: xiawang1024
  * @Description
  * @FilePath: /electronic-file/src/views/home/index.vue
@@ -32,6 +32,8 @@
                       >隐患排查治理</el-dropdown-item
                     >
                     <el-dropdown-item command="e">运营报表</el-dropdown-item>
+                    <el-dropdown-item command="f">流量计查询</el-dropdown-item>
+
                     <el-dropdown-item command="exit" divided
                       >注销登录</el-dropdown-item
                     >
@@ -112,6 +114,9 @@ export default {
           break
         case 'e':
           this.goToPath('/report')
+          break
+        case 'f':
+          this.goToPath('/flow')
           break
         case 'exit':
           localStorage.removeItem('token')

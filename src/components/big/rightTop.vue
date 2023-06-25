@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-06-21 17:37:31
+ * @LastEditTime: 2023-06-25 09:31:24
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -34,6 +34,7 @@
 <script>
 import * as Service from '@/api/index'
 import Flow from '@/components/big/flow.vue'
+import { FLOW_LIST } from '@/views/flow/conf.js'
 
 export default {
   name: 'RightTop',
@@ -42,16 +43,7 @@ export default {
   },
   data() {
     return {
-      options: [
-        {
-          value: '01',
-          label: '送庄门站',
-        },
-        {
-          value: '02',
-          label: '麻屯门站',
-        },
-      ],
+      options: FLOW_LIST,
       value: '01',
       danger: false,
     }
