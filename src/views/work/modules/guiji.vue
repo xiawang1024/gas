@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-06-13 15:43:55
+ * @LastEditTime: 2023-06-25 10:30:15
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/guiji.vue
@@ -84,8 +84,8 @@ export default {
       return {
         userId: this.formInline.userId,
         workType: this.formInline.workType,
-        beginTime: this.formInline.date[0],
-        endTime: this.formInline.date[1],
+        beginTime: this.formInline.date && this.formInline.date[0],
+        endTime: this.formInline.date && this.formInline.date[1],
       }
     },
   },

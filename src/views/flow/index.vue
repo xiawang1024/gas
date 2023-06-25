@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-25 09:24:12
- * @LastEditTime: 2023-06-25 10:21:52
+ * @LastEditTime: 2023-06-25 10:40:34
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/flow/index.vue
@@ -115,8 +115,8 @@ export default {
     postData() {
       return {
         address: this.schForm.address,
-        beginTime: this.schForm.date[0],
-        endTime: this.schForm.date[1],
+        beginTime: this.schForm.date && this.schForm.date[0],
+        endTime: this.schForm.date && this.schForm.date[1],
         pageNum: this.pageInfo.pageNum,
         pageSize: this.pageInfo.pageSize,
       }
