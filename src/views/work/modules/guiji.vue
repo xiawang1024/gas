@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-06-25 10:30:15
+ * @LastEditTime: 2023-06-25 10:42:41
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/guiji.vue
@@ -21,7 +21,7 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="工种">
+      <el-form-item label="工种" v-if="false">
         <el-select clearable v-model="formInline.workType" placeholder="工种">
           <el-option
             v-for="item of WorkType"
