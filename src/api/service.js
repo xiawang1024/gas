@@ -1,3 +1,12 @@
+/*
+ * @Author: xiawang1024
+ * @Date: 2023-06-20 11:17:02
+ * @LastEditTime: 2023-06-25 15:10:46
+ * @LastEditors: xiawang1024
+ * @Description:
+ * @FilePath: /electronic-file/src/api/service.js
+ * 工作，生活，健康
+ */
 import request from './request'
 
 //客户服务字典值获取
@@ -12,11 +21,21 @@ export const get = ({
   problemType,
   problemUrgency,
   clientInfo,
+  beginTime,
+  endTime,
 }) =>
   request({
     url: `/gas/client/service/list`,
     method: 'get',
-    params: { pageNum, pageSize, problemType, problemUrgency, clientInfo },
+    params: {
+      pageNum,
+      pageSize,
+      problemType,
+      problemUrgency,
+      clientInfo,
+      beginTime,
+      endTime,
+    },
   })
 
 // 客户服务新增

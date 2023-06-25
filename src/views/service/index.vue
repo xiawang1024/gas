@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:00:16
- * @LastEditTime: 2023-06-20 15:00:05
+ * @LastEditTime: 2023-06-25 15:12:56
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/service/index.vue
@@ -20,14 +20,14 @@
           >新增</el-button
         >
         <el-form :inline="true" :model="schForm" ref="schForm">
-          <el-form-item label="客户信息" prop="clientInfo">
+          <el-form-item prop="clientInfo">
             <el-input
               v-model.trim="schForm.clientInfo"
               placeholder="客户信息"
               clearable
             ></el-input>
           </el-form-item>
-          <el-form-item label="紧急程度" prop="problemUrgency">
+          <el-form-item prop="problemUrgency">
             <el-select
               v-model="schForm.problemUrgency"
               placeholder="紧急程度"
@@ -41,7 +41,7 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="问题分类" prop="problemType">
+          <el-form-item prop="problemType">
             <el-select
               v-model="schForm.problemType"
               placeholder="问题分类"
@@ -54,6 +54,18 @@
                 :key="item.value"
               ></el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item prop="date">
+            <el-date-picker
+              v-model="schForm.date"
+              type="datetimerange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              clearable
+              value-format="yyyy-MM-dd HH:mm:ss"
+            >
+            </el-date-picker>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="schHandler" icon="el-icon-search"
@@ -214,6 +226,7 @@ export default {
         problemType: '',
         problemUrgency: '',
         clientInfo: '',
+        date: null,
       },
       tableData: [],
       pageInfo: {
@@ -256,6 +269,18 @@ export default {
         ? '编辑'
         : '查看'
     },
+    postData() {
+      let data = {
+        pageNum: this.pageInfo.pageNum,
+        pageSize: this.pageInfo.pageSize,
+        problemType: this.schForm.problemType,
+        problemUrgency: this.schForm.problemUrgency,
+        clientInfo: this.schForm.clientInfo,
+        beginTime: this.schForm.date && this.schForm.date[0],
+        endTime: this.schForm.date && this.schForm.date[1],
+      }
+      return data
+    },
   },
   watch: {
     'pageInfo.pageNum': {
@@ -297,8 +322,7 @@ export default {
   methods: {
     getData() {
       ClientService.get({
-        ...this.pageInfo,
-        ...this.schForm,
+        ...this.postData,
       }).then(res => {
         let { code, rows, total } = res.data
         if (code == 200) {
