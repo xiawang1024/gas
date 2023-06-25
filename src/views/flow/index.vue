@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-25 09:24:12
- * @LastEditTime: 2023-06-25 10:40:34
+ * @LastEditTime: 2023-06-25 15:41:26
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/flow/index.vue
@@ -99,7 +99,7 @@ export default {
     return {
       schForm: {
         address: FLOW_LIST[0].value,
-        date: '',
+        date: null,
       },
       FLOW_LIST,
       FLOW_LIST_MAP,
@@ -115,8 +115,8 @@ export default {
     postData() {
       return {
         address: this.schForm.address,
-        beginTime: this.schForm.date && this.schForm.date[0],
-        endTime: this.schForm.date && this.schForm.date[1],
+        beginTime: this.schForm.date ? this.schForm.date[0] : null,
+        endTime: this.schForm.date ? this.schForm.date[1] : null,
         pageNum: this.pageInfo.pageNum,
         pageSize: this.pageInfo.pageSize,
       }
@@ -151,6 +151,9 @@ export default {
     },
     resetHandler() {
       this.$refs.form.resetFields()
+      this.schForm.date = null
+      this.pageInfo.pageNum = 1
+      this.getData()
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`)
