@@ -1,10 +1,10 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:00:16
- * @LastEditTime: 2023-06-20 11:06:53
+ * @LastEditTime: 2023-06-26 21:05:18
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /electronic-file/src/views/danger/index.vue
+ * @FilePath: /gas/src/views/danger/index.vue
  * 工作，生活，健康
 -->
 <template>
@@ -17,11 +17,16 @@
           class="btn"
           icon="el-icon-plus"
           @click="addHandler"
+          v-if="false"
           >新增</el-button
         >
         <el-form :inline="true" :model="schForm" ref="schForm">
-          <el-form-item label="紧急程度" prop="user">
-            <el-select v-model="schForm.user" placeholder="活动区域" clearable>
+          <el-form-item label="紧急程度" prop="jjcdvalue">
+            <el-select
+              v-model="schForm.jjcdvalue"
+              placeholder="紧急程度"
+              clearable
+            >
               <el-option
                 :label="item.label"
                 :value="item.value"
@@ -30,10 +35,10 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="问题分类" prop="region">
+          <el-form-item label="问题分类" prop="wtflvalue">
             <el-select
-              v-model="schForm.region"
-              placeholder="活动区域"
+              v-model="schForm.wtflvalue"
+              placeholder="问题分类"
               clearable
             >
               <el-option
@@ -55,18 +60,56 @@
         </el-form>
       </div>
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="date" label="清单序号"> </el-table-column>
-        <el-table-column prop="date" label="生成时间"> </el-table-column>
-        <el-table-column prop="name" label="操作员"> </el-table-column>
-        <el-table-column prop="name" label="隐患内容"> </el-table-column>
-        <el-table-column prop="name" label="相应照片"> </el-table-column>
-        <el-table-column prop="name" label="紧急程度"> </el-table-column>
-        <el-table-column prop="address" label="发现人"> </el-table-column>
-        <el-table-column prop="address" label="发现人工种"> </el-table-column>
-        <el-table-column prop="address" label="发现时间"> </el-table-column>
-        <el-table-column prop="address" label="手动采集序号"> </el-table-column>
-        <el-table-column prop="address" label="第一处理人"> </el-table-column>
-        <el-table-column prop="address" label="处理进度"> </el-table-column>
+        <el-table-column prop="queNum" label="清单序号" show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          prop="createTime"
+          label="生成时间"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column prop="nickName" label="操作员" show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column prop="wtxq" label="隐患内容" show-overflow-tooltip>
+        </el-table-column>
+
+        <el-table-column
+          prop="jjcdvalue"
+          label="紧急程度"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            <div>
+              {{ ImportantLevelMap[scope.row.jjcdvalue] }}
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="dealProgress"
+          label="处理进度"
+          show-overflow-tooltip
+        >
+          <template slot-scope="scope">
+            <div>
+              {{ DealProcessMap[scope.row.dealProgress] }}
+            </div>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          prop="submitNickName"
+          label="发现人"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
+          prop="locationinfoId"
+          label="手动采集序号"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column prop="name" label="相应照片" show-overflow-tooltip>
+        </el-table-column>
         <el-table-column fixed="right" label="操作" width="220">
           <template slot-scope="scope">
             <el-button @click="actionHandler(scope.row, 0)" size="mini"
@@ -83,6 +126,7 @@
               icon-color="red"
               title="确定删除吗？"
               style="margin-left: 12px;"
+              v-if="false"
               @confirm="actionHandler(scope.row, 2)"
             >
               <el-button slot="reference" type="danger" size="mini"
@@ -194,7 +238,9 @@
 
 <script>
 import NavHeader from '@/components/nav/index.vue'
-import { QuestionType, ImportantLevel } from '@/views/service/conf.js'
+import * as ClientService from '@/api/service.js'
+
+import * as DangerService from '@/api/danger'
 
 export default {
   name: 'Danger',
@@ -204,31 +250,10 @@ export default {
   data() {
     return {
       schForm: {
-        user: '',
-        region: '',
+        wtflvalue: '',
+        jjcdvalue: '',
       },
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-        },
-      ],
+      tableData: [],
       pageInfo: {
         pageNum: 1,
         pageSize: 10,
@@ -236,14 +261,35 @@ export default {
       },
       dialogVisible: false,
       dialogType: 0, // 0 新增 1 编辑 2 查看
+      QuestionType: [],
+      ImportantLevel: [],
+      DealProcess: [],
     }
   },
   computed: {
-    QuestionType() {
-      return QuestionType
+    QuestionTypeMap() {
+      let map = {}
+      this.QuestionType.length &&
+        this.QuestionType.forEach(item => {
+          map[item.value] = item.label
+        })
+      return map
     },
-    ImportantLevel() {
-      return ImportantLevel
+    ImportantLevelMap() {
+      let map = {}
+      this.ImportantLevel.length &&
+        this.ImportantLevel.forEach(item => {
+          map[item.value] = item.label
+        })
+      return map
+    },
+    DealProcessMap() {
+      let map = {}
+      this.DealProcess.length &&
+        this.DealProcess.forEach(item => {
+          map[item.value] = item.label
+        })
+      return map
     },
     dialogTitle() {
       return this.dialogType === 0
@@ -253,12 +299,73 @@ export default {
         : '查看'
     },
   },
+
+  watch: {
+    'pageInfo.pageNum': {
+      handler() {
+        this.getData()
+      },
+      immediate: true,
+    },
+    'pageInfo.pageSize': {
+      handler() {
+        this.getData()
+      },
+    },
+  },
+
+  created() {
+    ClientService.getDict('problem_type').then(res => {
+      let { code, data } = res.data
+      if (code === 200) {
+        this.QuestionType = data.map(item => {
+          return {
+            label: item.dictLabel,
+            value: item.dictValue,
+          }
+        })
+      }
+    })
+    ClientService.getDict('problem_urgency').then(res => {
+      let { code, data } = res.data
+      if (code === 200) {
+        this.ImportantLevel = data.map(item => {
+          return {
+            label: item.dictLabel,
+            value: item.dictValue,
+          }
+        })
+      }
+    })
+    ClientService.getDict('deal_progress').then(res => {
+      let { code, data } = res.data
+      if (code === 200) {
+        this.DealProcess = data.map(item => {
+          return {
+            label: item.dictLabel,
+            value: item.dictValue,
+          }
+        })
+      }
+    })
+  },
   methods: {
+    getData() {
+      DangerService.get({ ...this.pageInfo, ...this.schForm }).then(res => {
+        let { code, rows, total } = res.data
+        if (code === 200) {
+          this.tableData = rows
+          this.pageInfo.total = total
+        }
+      })
+    },
     schHandler() {
-      console.log(this.schForm)
+      this.getData()
     },
     resetHandler() {
       this.$refs.schForm.resetFields()
+      this.pageInfo.pageNum = 1
+      this.getData()
     },
     addHandler() {
       this.dialogVisible = true

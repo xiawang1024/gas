@@ -1,3 +1,12 @@
+/*
+ * @Author: xiawang1024
+ * @Date: 2023-06-26 19:47:46
+ * @LastEditTime: 2023-06-26 21:06:42
+ * @LastEditors: xiawang1024
+ * @Description:
+ * @FilePath: /gas/src/api/danger.js
+ * 工作，生活，健康
+ */
 import request from './request'
 
 export const deal = ({
@@ -40,5 +49,17 @@ export const deal = ({
       imageWtjj1Wc,
       imageWtjj2Wc,
       imagetjj3Wc,
+    },
+  })
+
+export const get = ({ pageNum, pageSize, wtflvalue, jjcdvalue }) =>
+  request({
+    url: `/gas/dealquestion/list`,
+    method: 'get',
+    params: {
+      pageNum,
+      pageSize,
+      wtflvalue,
+      jjcdvalue,
     },
   })
