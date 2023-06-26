@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-26 19:47:46
- * @LastEditTime: 2023-06-26 21:06:42
+ * @LastEditTime: 2023-06-26 22:01:51
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /gas/src/api/danger.js
@@ -63,3 +63,5 @@ export const get = ({ pageNum, pageSize, wtflvalue, jjcdvalue }) =>
       jjcdvalue,
     },
   })
+export const update = data =>
+  request({ url: `/gas/dealquestion`, method: 'put', data })

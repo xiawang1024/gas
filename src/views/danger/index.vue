@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:00:16
- * @LastEditTime: 2023-06-26 21:45:20
+ * @LastEditTime: 2023-06-26 22:03:04
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /gas/src/views/danger/index.vue
@@ -68,7 +68,7 @@
           show-overflow-tooltip
         >
         </el-table-column>
-        <el-table-column prop="nickName" label="操作员" show-overflow-tooltip>
+        <el-table-column prop="nickName" label="处理人" show-overflow-tooltip>
         </el-table-column>
         <el-table-column prop="wtxq" label="隐患内容" show-overflow-tooltip>
         </el-table-column>
@@ -175,20 +175,16 @@
     </el-dialog>
 
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="800px">
-      <el-form :inline="true" :model="schForm" label-width="100px">
-        <el-form-item label="时间">
-          <el-date-picker
-            class="fixWidth"
-            v-model="schForm.user"
-            type="datetime"
-            placeholder="选择日期时间"
-          >
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="紧急程度" prop="user">
+      <el-form
+        :inline="true"
+        :model="dealForm"
+        label-width="100px"
+        :disabled="dialogType == 2"
+      >
+        <el-form-item label="紧急程度" prop="jjcdvalue">
           <el-select
-            v-model="schForm.user"
-            placeholder="活动区域"
+            v-model="dealForm.jjcdvalue"
+            placeholder="紧急程度"
             clearable
             class="fixWidth"
           >
@@ -200,10 +196,10 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="问题分类" prop="region">
+        <el-form-item label="问题分类" prop="wtflvalue">
           <el-select
-            v-model="schForm.region"
-            placeholder="活动区域"
+            v-model="dealForm.wtflvalue"
+            placeholder="问题分类"
             clearable
             class="fixWidth"
           >
@@ -215,46 +211,52 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="客户名称">
-          <el-input
-            class="fixWidth"
-            v-model="schForm.name"
-            placeholder="请输入客户名称"
-          ></el-input>
-        </el-form-item>
-
-        <el-form-item label="联系方式">
-          <el-input
-            class="fixWidth"
-            v-model="schForm.name"
-            placeholder="请输入联系方式"
-          ></el-input>
-        </el-form-item>
-
         <el-form-item label="处理人">
           <el-input
             class="fixWidth"
-            v-model="schForm.name"
-            placeholder="请输入处理人"
+            v-model="dealForm.nickName"
+            placeholder="处理人"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="处理进度">
+          <el-select
+            v-model="dealForm.dealProgress"
+            placeholder="处理进度"
+            clearable
+            class="fixWidth"
+          >
+            <el-option
+              :label="item.label"
+              :value="item.value"
+              v-for="item of DealProcess"
+              :key="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="发现人">
+          <el-input
+            class="fixWidth"
+            v-model="dealForm.submitNickName"
+            placeholder="请输入发现人"
           ></el-input>
         </el-form-item>
         <el-row>
-          <el-form-item label="问题详情">
+          <el-form-item label="隐患内容">
             <el-input
               class="fixWidth"
               type="textarea"
               rows="4"
-              v-model="schForm.name"
-              placeholder="请输入问题详情"
+              v-model="dealForm.wtxq"
+              placeholder="请输入隐患内容"
             ></el-input>
           </el-form-item>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="updateHandler">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -292,6 +294,7 @@ export default {
       DealProcess: [],
       ImgDialogVisible: false,
       ImgUrls: [],
+      dealForm: {},
     }
   },
   computed: {
@@ -381,6 +384,19 @@ export default {
     })
   },
   methods: {
+    updateHandler() {
+      DangerService.update(this.dealForm).then(res => {
+        let { code } = res.data
+        if (code === 200) {
+          this.$message({
+            type: 'success',
+            message: '操作成功!',
+          })
+          this.getData()
+          this.dialogVisible = false
+        }
+      })
+    },
     openImgDialog(row) {
       let ImgKeys = [
         {
@@ -451,10 +467,12 @@ export default {
         case 0:
           this.dialogVisible = true
           this.dialogType = 2
+          this.dealForm = row
           break
         case 1:
           this.dialogVisible = true
           this.dialogType = 1
+          this.dealForm = row
           break
         case 2:
           this.$message({
