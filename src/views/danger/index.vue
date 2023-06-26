@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:00:16
- * @LastEditTime: 2023-06-26 21:05:18
+ * @LastEditTime: 2023-06-26 21:45:20
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /gas/src/views/danger/index.vue
@@ -109,6 +109,11 @@
         >
         </el-table-column>
         <el-table-column prop="name" label="相应照片" show-overflow-tooltip>
+          <template slot-scope="scope">
+            <el-button size="mini" @click="openImgDialog(scope.row)"
+              >查看</el-button
+            >
+          </template>
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="220">
           <template slot-scope="scope">
@@ -149,6 +154,25 @@
         </el-pagination>
       </div>
     </el-card>
+
+    <el-dialog
+      title="照片"
+      :visible.sync="ImgDialogVisible"
+      width="950px"
+      top="10vh"
+    >
+      <div class="dialog-wrap">
+        <div class="img-wrap" v-for="item of ImgUrls" :key="item.key">
+          <p>{{ item.val }}</p>
+          <el-image
+            style="width: 200px; height: 200px"
+            :src="item.url"
+            fit="contain"
+            :preview-src-list="previewImgUrls"
+          ></el-image>
+        </div>
+      </div>
+    </el-dialog>
 
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="800px">
       <el-form :inline="true" :model="schForm" label-width="100px">
@@ -242,6 +266,8 @@ import * as ClientService from '@/api/service.js'
 
 import * as DangerService from '@/api/danger'
 
+const IMGHOST = 'http://114.115.206.239:8089'
+
 export default {
   name: 'Danger',
   components: {
@@ -264,6 +290,8 @@ export default {
       QuestionType: [],
       ImportantLevel: [],
       DealProcess: [],
+      ImgDialogVisible: false,
+      ImgUrls: [],
     }
   },
   computed: {
@@ -297,6 +325,9 @@ export default {
         : this.dialogType === 1
         ? '编辑'
         : '查看'
+    },
+    previewImgUrls() {
+      return this.ImgUrls.length && this.ImgUrls.map(item => item.url)
     },
   },
 
@@ -350,6 +381,50 @@ export default {
     })
   },
   methods: {
+    openImgDialog(row) {
+      let ImgKeys = [
+        {
+          key: 'imageWtyj',
+          val: '问题远景照片',
+        },
+        {
+          key: 'imageWtjj1',
+          val: '问题近景照片1',
+        },
+        {
+          key: 'imageWtjj2',
+          val: '问题近景照片2',
+        },
+        {
+          key: 'imageWtjj3',
+          val: '问题近景照片3',
+        },
+        {
+          key: 'imageWtyj_Wc',
+          val: '问题远景照片(完成)',
+        },
+        {
+          key: 'imageWtjj1Wc',
+          val: '问题近景照片1(完成)',
+        },
+        {
+          key: 'imageWtjj2Wc',
+          val: '问题近景照片2(完成)',
+        },
+        {
+          key: 'imagetjj3Wc',
+          val: '问题近景照片3(完成)',
+        },
+      ]
+      this.ImgUrls = ImgKeys.map(item => {
+        return {
+          key: item.key,
+          val: item.val,
+          url: row[item.key] ? `${IMGHOST}${row[item.key]}` : '',
+        }
+      })
+      this.ImgDialogVisible = true
+    },
     getData() {
       DangerService.get({ ...this.pageInfo, ...this.schForm }).then(res => {
         let { code, rows, total } = res.data
@@ -424,5 +499,15 @@ export default {
 .page {
   text-align: right;
   margin-top: 20px;
+}
+
+.dialog-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+.img-wrap {
+  margin-right: 20px;
+  flex: 0 0 200px;
+  width: 200px;
 }
 </style>
