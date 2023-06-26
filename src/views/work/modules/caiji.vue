@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-06-25 18:29:35
+ * @LastEditTime: 2023-06-26 10:09:23
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/caiji.vue
@@ -203,53 +203,129 @@
               class="img"
               :src="`${IMGHOST}${dealForm.imageWtyj}`"
               :preview-src-list="[`${IMGHOST}${dealForm.imageWtyj}`]"
+              fit="contain"
             >
             </el-image>
-            <el-button class="btn" @click="openImgDialog">选择</el-button>
+            <el-button class="btn" @click="openImgDialog('imageWtyj')"
+              >选择</el-button
+            >
           </div>
         </el-form-item>
         <el-form-item label="问题近景照片1">
-          <el-input v-model="dealForm.imageWtjj1" clearable> </el-input>
+          <div class="img-wrap">
+            <el-image
+              class="img"
+              :src="`${IMGHOST}${dealForm.imageWtjj1}`"
+              :preview-src-list="[`${IMGHOST}${dealForm.imageWtjj1}`]"
+              fit="contain"
+            >
+            </el-image>
+            <el-button class="btn" @click="openImgDialog('imageWtjj1')"
+              >选择</el-button
+            >
+          </div>
         </el-form-item>
         <el-form-item label="问题近景照片2">
-          <el-input v-model="dealForm.imageWtjj2" clearable> </el-input>
+          <div class="img-wrap">
+            <el-image
+              class="img"
+              :src="`${IMGHOST}${dealForm.imageWtjj2}`"
+              :preview-src-list="[`${IMGHOST}${dealForm.imageWtjj2}`]"
+              fit="contain"
+            >
+            </el-image>
+            <el-button class="btn" @click="openImgDialog('imageWtjj2')"
+              >选择</el-button
+            >
+          </div>
         </el-form-item>
         <el-form-item label="问题近景照片3">
-          <el-input v-model="dealForm.imageWtjj3" clearable> </el-input>
+          <div class="img-wrap">
+            <el-image
+              class="img"
+              :src="`${IMGHOST}${dealForm.imageWtjj3}`"
+              :preview-src-list="[`${IMGHOST}${dealForm.imageWtjj3}`]"
+              fit="contain"
+            >
+            </el-image>
+            <el-button class="btn" @click="openImgDialog('imageWtjj3')"
+              >选择</el-button
+            >
+          </div>
         </el-form-item>
         <el-form-item label="完成后远景照片">
-          <el-input v-model="dealForm.imageWtyj_Wc" clearable> </el-input>
+          <div class="img-wrap">
+            <el-image
+              class="img"
+              :src="`${IMGHOST}${dealForm.imageWtyj_Wc}`"
+              :preview-src-list="[`${IMGHOST}${dealForm.imageWtyj_Wc}`]"
+              fit="contain"
+            >
+            </el-image>
+            <el-button class="btn" @click="openImgDialog('imageWtyj_Wc')"
+              >选择</el-button
+            >
+          </div>
         </el-form-item>
         <el-form-item label="完成后近景照片1">
-          <el-input v-model="dealForm.imageWtjj1Wc" clearable> </el-input>
+          <div class="img-wrap">
+            <el-image
+              class="img"
+              :src="`${IMGHOST}${dealForm.imageWtjj1Wc}`"
+              :preview-src-list="[`${IMGHOST}${dealForm.imageWtjj1Wc}`]"
+              fit="contain"
+            >
+            </el-image>
+            <el-button class="btn" @click="openImgDialog('imageWtjj1Wc')"
+              >选择</el-button
+            >
+          </div>
         </el-form-item>
         <el-form-item label="完成后近景照片2">
-          <el-input v-model="dealForm.imageWtjj2Wc" clearable> </el-input>
+          <div class="img-wrap">
+            <el-image
+              class="img"
+              :src="`${IMGHOST}${dealForm.imageWtjj2Wc}`"
+              :preview-src-list="[`${IMGHOST}${dealForm.imageWtjj2Wc}`]"
+              fit="contain"
+            >
+            </el-image>
+            <el-button class="btn" @click="openImgDialog('imageWtjj2Wc')"
+              >选择</el-button
+            >
+          </div>
         </el-form-item>
         <el-form-item label="完成后近景照片3">
-          <el-input v-model="dealForm.imagetjj3Wc" clearable> </el-input>
+          <div class="img-wrap">
+            <el-image
+              class="img"
+              :src="`${IMGHOST}${dealForm.imagetjj3Wc}`"
+              :preview-src-list="[`${IMGHOST}${dealForm.imagetjj3Wc}`]"
+              fit="contain"
+            >
+            </el-image>
+            <el-button class="btn" @click="openImgDialog('imagetjj3Wc')"
+              >选择</el-button
+            >
+          </div>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogDealVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogDealVisible = false"
-          >确 定</el-button
-        >
+        <el-button type="primary" @click="dealFormSubmit">确 定</el-button>
       </span>
     </el-dialog>
 
-    <el-dialog title="图片" :visible.sync="dialogImgVisible">
-      <div class="img-wrap" v-for="item of noHostImgList" :key="item">
-        <el-image class="img" :src="`${IMGHOST}${item}`"> </el-image>
-        <el-button class="btn" @click="selectImg(item)">选择</el-button>
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogImgVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogImgVisible = false"
-          >确 定</el-button
+    <el-drawer title="图片选择" :visible.sync="drawerImgVisible">
+      <div class="drawer-img-wrap" v-for="item of noHostImgList" :key="item">
+        <el-image class="img" fit="contain" :src="`${IMGHOST}${item}`">
+        </el-image>
+
+        <el-button class="btn" size="mini" @click="selectImg(item)"
+          >选择</el-button
         >
-      </span>
-    </el-dialog>
+      </div>
+    </el-drawer>
   </div>
 </template>
 
@@ -258,6 +334,7 @@ const IMGHOST = 'http://114.115.206.239:8089'
 import * as Service from '@/api/index'
 import * as ClientService from '@/api/service.js'
 import { WorkType, WorkTypeMap } from '../conf.js'
+import * as DangerService from '@/api/danger.js'
 export default {
   name: 'Guiji',
   data() {
@@ -304,8 +381,9 @@ export default {
       ImportantLevel: [],
       DealProcess: [],
 
-      dialogImgVisible: false,
+      drawerImgVisible: false,
       noHostImgList: [],
+      ImgField: '',
     }
   },
   computed: {
@@ -370,6 +448,15 @@ export default {
   methods: {
     dealHandler(row) {
       this.dialogDealVisible = true
+      let noHostImgList = []
+      for (let i = 1; i <= 9; i++) {
+        let noHostUrl = row[`imageUrl${i}`] ? row[`imageUrl${i}`] : ''
+        if (noHostUrl) {
+          noHostImgList.push(noHostUrl)
+        }
+      }
+      this.noHostImgList = noHostImgList
+
       this.dealForm = {
         locationinfoId: row.locationinfoId,
         queNum: `${row.nickName}_${row.locationinfoId}`,
@@ -399,6 +486,7 @@ export default {
       console.log(row)
       let content = []
       let contentImgUrls = []
+      let noHostImgList = []
       for (let i = 1; i <= 9; i++) {
         let url = row[`imageUrl${i}`] ? IMGHOST + row[`imageUrl${i}`] : ''
         let noHostUrl = row[`imageUrl${i}`] ? row[`imageUrl${i}`] : ''
@@ -413,11 +501,12 @@ export default {
         }
 
         if (noHostUrl) {
-          this.noHostImgList.push(noHostUrl)
+          noHostImgList.push(noHostUrl)
         }
       }
       this.content = content
       this.contentImgUrls = contentImgUrls
+      this.noHostImgList = noHostImgList
       //获取详情，然后弹出框
       this.dialogVisible = true
     },
@@ -440,11 +529,30 @@ export default {
       this.pageInfo.pageNum = val
     },
 
-    openImgDialog() {
-      this.dialogImgVisible = true
+    openImgDialog(field) {
+      this.drawerImgVisible = true
+      this.ImgField = field
     },
     selectImg(url) {
-      this.dealForm.imageWtyj = url
+      this.dealForm[this.ImgField] = url
+      this.drawerImgVisible = false
+    },
+    updateImgUrl(url) {
+      return `${this.IMGHOST}${url}`
+    },
+    dealFormSubmit() {
+      DangerService.deal(this.dealForm).then(res => {
+        let { code } = res.data
+        if (code === 200) {
+          this.$message({
+            message: '处理成功',
+            type: 'success',
+          })
+          this.dialogDealVisible = false
+
+          this.schHandler()
+        }
+      })
     },
   },
 }
@@ -478,6 +586,27 @@ export default {
     height: 200px;
   }
   .btn {
+    margin-left: 30px;
+  }
+}
+
+.drawer-img-wrap {
+  float: left;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin-right: 20px;
+  .img {
+    width: 150px;
+    height: 150px;
+  }
+  .btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
     margin-left: 30px;
   }
 }
