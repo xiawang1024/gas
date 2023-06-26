@@ -1,18 +1,18 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 19:10:18
- * @LastEditTime: 2023-06-25 15:20:11
+ * @LastEditTime: 2023-06-26 19:50:16
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /electronic-file/src/api/request.js
+ * @FilePath: /gas/src/api/request.js
  * 工作，生活，健康
  */
 import router from '@/router/index.js'
 import axios from 'axios'
 
 const request = axios.create({
-  baseURL: 'http://192.168.241.94:8089',
-  // baseURL: 'http://114.115.206.239:8089',
+  // baseURL: 'http://192.168.241.94:8089',
+  baseURL: 'http://114.115.206.239:8089',
   timeout: 20000,
 })
 

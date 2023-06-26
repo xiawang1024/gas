@@ -1,10 +1,10 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-06-19 10:47:03
+ * @LastEditTime: 2023-06-26 20:20:21
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /electronic-file/src/components/big/map.vue
+ * @FilePath: /gas/src/components/big/map.vue
  * 工作，生活，健康
 -->
 <template>
@@ -74,8 +74,13 @@ export default {
       let types = oldVal.filter(item => !newVal.includes(item))
       for (let i = 0; i < types.length; i++) {
         if (this.markersMap[types[i]]) {
+          if (types[i] == 'guanwang') {
+            this.map.remove(this.markersMap[types[i]])
+          } else {
+            this.labelsLayer.remove(this.markersMap[types[i]])
+          }
           // this.map.remove(this.markersMap[types[i]])
-          this.labelsLayer.remove(this.markersMap[types[i]])
+          // this.labelsLayer.remove(this.markersMap[types[i]])
           this.map.setFitView()
         }
       }
@@ -91,8 +96,11 @@ export default {
         if (!this.locationMap[types[i]]) {
           this.getData(types[i])
         } else {
-          // this.map.add(this.markersMap[types[i]])
-          this.labelsLayer.add(this.markersMap[types[i]])
+          if (types[i] == 'guanwang') {
+            this.map.add(this.markersMap[types[i]])
+          } else {
+            this.labelsLayer.add(this.markersMap[types[i]])
+          }
           this.map.setFitView()
         }
       }
@@ -102,20 +110,16 @@ export default {
         let { code, data } = res.data
         if (code == 200) {
           this.locationMap[type] = data
+          if (type == 'guanwang') {
+            this.markersMap[type] = this.createLines(this.AMap, data)
+            this.map.add(this.markersMap[type])
+          } else {
+            this.markersMap[type] = this.createLabelMarkers(this.AMap, data)
+            this.labelsLayer.add(this.markersMap[type])
+          }
 
-          // if (type == 'guanwang') {
-          //   this.markersMap[type] = this.createLines(this.AMap, data)
-          // } else {
-          //   this.markersMap[type] = this.createMarkers(this.AMap, data, e => {
-          //     // console.log(e)
-          //   })
-          // }
+          // this.markersMap[type] = this.createLabelMarkers(this.AMap, data)
 
-          this.markersMap[type] = this.createLabelMarkers(this.AMap, data)
-
-          this.labelsLayer.add(this.markersMap[type])
-
-          // this.map.add(this.markersMap[type])
           this.map.setFitView()
         }
       })
@@ -218,31 +222,34 @@ export default {
     },
 
     createLines(AMap, list) {
-      let path = []
+      // let path = []
+
+      // for (let i = 0; i < list.length; i++) {
+      //   path.push([list[i].mapLon, list[i].mapLat])
+      // }
+
+      let paths = []
 
       for (let i = 0; i < list.length; i++) {
-        path.push([list[i].mapLon, list[i].mapLat])
+        let item = list[i]
+        let itemPath = item[Object.keys(item)[0]].map(item => {
+          return [item.mapLon, item.mapLat]
+        })
+
+        paths.push(itemPath)
       }
 
       let lines = []
 
-      let polyline = new AMap.Polyline({
-        path: path, // 设置线覆盖物路径
-        strokeColor: 'red', // 线颜色
-        strokeWeight: 5, // 线宽
-        strokeStyle: 'round', // 线样式
-      })
-      lines.push(polyline)
-
-      // for (let i = 0; i < list.length; i++) {
-      //   let polyline = new AMap.Polyline({
-      //     path: list[i], // 设置线覆盖物路径
-      //     strokeColor: 'red', // 线颜色
-      //     strokeWeight: 5, // 线宽
-      //     strokeStyle: 'round', // 线样式
-      //   })
-      //   lines.push(polyline)
-      // }
+      for (let i = 0; i < paths.length; i++) {
+        let polyline = new AMap.Polyline({
+          path: paths[i], // 设置线覆盖物路径
+          strokeColor: 'red', // 线颜色
+          strokeWeight: 5, // 线宽
+          strokeStyle: 'round', // 线样式
+        })
+        lines.push(polyline)
+      }
       return lines
     },
     initMap() {
