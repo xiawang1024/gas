@@ -1,10 +1,10 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-06-25 09:31:24
+ * @LastEditTime: 2023-07-02 18:09:28
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /electronic-file/src/components/big/rightTop.vue
+ * @FilePath: /gas/src/components/big/rightTop.vue
  * 工作，生活，健康
 -->
 <template>
@@ -33,7 +33,7 @@
 
 <script>
 import * as Service from '@/api/index'
-import Flow from '@/components/big/flow.vue'
+import Flow from '@/components/big/flowDigita.vue'
 import { FLOW_LIST } from '@/views/flow/conf.js'
 
 export default {
