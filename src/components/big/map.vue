@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-07-02 12:24:03
+ * @LastEditTime: 2023-07-02 12:50:29
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /gas/src/components/big/map.vue
@@ -36,6 +36,8 @@ import * as Service from '@/api/index'
 import { WorkTypeMap } from '@/views/work/conf.js'
 
 import AMapLoader from '@amap/amap-jsapi-loader'
+
+const DashedLineKey = ['A001', 'A002', 'A003']
 
 export default {
   name: 'MapXw',
@@ -257,17 +259,23 @@ export default {
           return [item.mapLon, item.mapLat]
         })
 
-        paths.push(itemPath)
+        paths.push({
+          path: itemPath,
+          key: Object.keys(item)[0],
+        })
       }
 
       let lines = []
 
       for (let i = 0; i < paths.length; i++) {
+        console.log(paths[i])
         let polyline = new AMap.Polyline({
-          path: paths[i], // 设置线覆盖物路径
+          path: paths[i].path, // 设置线覆盖物路径
           strokeColor: 'red', // 线颜色
-          strokeWeight: 5, // 线宽
-          strokeStyle: 'round', // 线样式
+          strokeWeight: 2, // 线宽
+          strokeStyle: DashedLineKey.includes(paths[i].key)
+            ? 'dashed'
+            : 'round', // 线样式
         })
         lines.push(polyline)
       }
