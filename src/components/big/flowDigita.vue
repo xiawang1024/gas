@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2023-07-02 20:26:50
+ * @LastEditTime: 2023-07-02 22:30:25
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /gas/src/components/big/flowDigita.vue
@@ -156,7 +156,6 @@ export default {
   }
   .digita {
     flex: 0 0 170px;
-    margin-left: 10px;
     font-size: 22px;
   }
   &:nth-child(1) {
