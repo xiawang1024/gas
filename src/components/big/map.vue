@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-06-26 20:20:21
+ * @LastEditTime: 2023-07-02 12:24:03
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /gas/src/components/big/map.vue
@@ -74,13 +74,9 @@ export default {
       let types = oldVal.filter(item => !newVal.includes(item))
       for (let i = 0; i < types.length; i++) {
         if (this.markersMap[types[i]]) {
-          if (types[i] == 'guanwang') {
-            this.map.remove(this.markersMap[types[i]])
-          } else {
-            this.labelsLayer.remove(this.markersMap[types[i]])
-          }
-          // this.map.remove(this.markersMap[types[i]])
-          // this.labelsLayer.remove(this.markersMap[types[i]])
+          clearInterval(this.timer)
+          this.map.remove(this.markersMap[types[i]])
+
           this.map.setFitView()
         }
       }
@@ -93,14 +89,16 @@ export default {
     selectHandler(val) {
       let types = val
       for (let i = 0; i < types.length; i++) {
-        if (!this.locationMap[types[i]]) {
-          this.getData(types[i])
+        let type = types[i]
+        if (type == 'user_online') {
+          // 定时获取最新数据
+          this.timer = setInterval(() => {
+            this.getData(type)
+          }, 1000)
+        } else if (!this.locationMap[type]) {
+          this.getData(type)
         } else {
-          if (types[i] == 'guanwang') {
-            this.map.add(this.markersMap[types[i]])
-          } else {
-            this.labelsLayer.add(this.markersMap[types[i]])
-          }
+          this.map.add(this.markersMap[type])
           this.map.setFitView()
         }
       }
@@ -110,15 +108,18 @@ export default {
         let { code, data } = res.data
         if (code == 200) {
           this.locationMap[type] = data
-          if (type == 'guanwang') {
-            this.markersMap[type] = this.createLines(this.AMap, data)
-            this.map.add(this.markersMap[type])
-          } else {
-            this.markersMap[type] = this.createLabelMarkers(this.AMap, data)
-            this.labelsLayer.add(this.markersMap[type])
+          if (type == 'user_online' && this.markersMap[type]) {
+            console.log('user_online', type, this.markersMap[type])
+            this.map.remove(this.markersMap[type])
           }
 
-          // this.markersMap[type] = this.createLabelMarkers(this.AMap, data)
+          if (type == 'guanwang') {
+            this.markersMap[type] = this.createLines(this.AMap, data)
+          } else {
+            this.markersMap[type] = this.createMarkers(this.AMap, data)
+          }
+
+          this.map.add(this.markersMap[type])
 
           this.map.setFitView()
         }
@@ -138,9 +139,29 @@ export default {
           imageSize: size,
         })
 
+        let content = ''
+
+        if (list[i].mapType == 'menzhan') {
+          content = list[i].name
+        } else if (list[i].mapType == 'fajing') {
+          content = list[i].mapNo
+        } else if (
+          list[i].mapType == 'tiaoyaxiang' ||
+          list[i].mapType == 'guanwang'
+        ) {
+          content = ''
+        } else {
+          content = WorkTypeMap[list[i].mapType]
+        }
+
         let marker = new AMap.Marker({
           position: [list[i].mapLon, list[i].mapLat],
           icon: icon,
+          label: {
+            content: content,
+            offset: [0, 0],
+            direction: 'bottom',
+          },
         })
         marker.content = '我是第' + (i + 1) + '个Marker'
         marker.on('click', onMarkerClick) // 绑定 click 事件

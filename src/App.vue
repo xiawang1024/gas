@@ -1,10 +1,10 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 08:45:39
- * @LastEditTime: 2023-06-12 16:52:59
+ * @LastEditTime: 2023-07-02 12:27:42
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /electronic-file/src/App.vue
+ * @FilePath: /gas/src/App.vue
  * 工作，生活，健康
 -->
 <template>
@@ -37,5 +37,11 @@ export default {
   padding: 4px 12px;
   color: #333333;
   border-radius: 4px;
+}
+
+div.amap-marker-label {
+  background: transparent;
+  border: none;
+  left: 0 !important;
 }
 </style>
