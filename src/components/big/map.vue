@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-07-02 12:50:29
+ * @LastEditTime: 2023-07-02 20:46:46
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /gas/src/components/big/map.vue
@@ -129,12 +129,13 @@ export default {
     },
     createInfoWindow(title, content) {},
     createMarkers(AMap, list, onMarkerClick) {
+      let iconSize = 40
       let markers = []
       for (let i = 0; i < list.length; i++) {
         let size =
           list[i].mapType == 'guanwang'
             ? new AMap.Size(5, 5)
-            : new AMap.Size(50, 50)
+            : new AMap.Size(iconSize, iconSize)
         let icon = new AMap.Icon({
           size: size,
           image: require(`./icons/${list[i].mapType}.png`), // Icon的图像
@@ -159,6 +160,7 @@ export default {
         let marker = new AMap.Marker({
           position: [list[i].mapLon, list[i].mapLat],
           icon: icon,
+          offset: new AMap.Pixel(-iconSize / 2, -iconSize / 2),
           label: {
             content: content,
             offset: [0, 0],
