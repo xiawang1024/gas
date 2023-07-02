@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-07-02 18:09:28
+ * @LastEditTime: 2023-07-02 20:25:47
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /gas/src/components/big/rightTop.vue
@@ -97,12 +97,12 @@ export default {
 .select {
   position: absolute;
   z-index: 100;
-  top: 2.5%;
+  top: 4%;
   right: 2%;
 }
 .scroll-board {
   position: absolute;
-  top: 5.5%;
+  top: 10%;
   left: 2%;
   width: 96%;
   height: 90%;
@@ -110,7 +110,7 @@ export default {
 
 .danger {
   position: absolute;
-  bottom: 0;
+  bottom: 20%;
   right: 0;
   width: 20%;
   height: 15%;
