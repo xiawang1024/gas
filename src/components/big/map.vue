@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-07-03 19:33:58
+ * @LastEditTime: 2023-07-03 21:28:36
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /gas/src/components/big/map.vue
@@ -94,6 +94,7 @@ export default {
         let type = types[i]
         if (type == 'user_online') {
           // 定时获取最新数据
+          clearInterval(this.timer)
           this.timer = setInterval(() => {
             this.getData(type)
           }, 1000)
