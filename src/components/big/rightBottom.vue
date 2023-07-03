@@ -1,16 +1,16 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:18:36
- * @LastEditTime: 2023-06-20 16:24:23
+ * @LastEditTime: 2023-07-03 19:04:15
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /electronic-file/src/components/big/rightBottom.vue
+ * @FilePath: /gas/src/components/big/rightBottom.vue
  * 工作，生活，健康
 -->
 <template>
   <div class="container">
     <div class="select">
-      <el-select v-model="value" placeholder="请选择" size="mini">
+      <el-select v-model="currentLive" placeholder="请选择" size="mini">
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -27,49 +27,61 @@
 </template>
 
 <script>
+import * as LiveService from '@/api/live'
 import Hls from 'hls.js'
 
 export default {
   name: 'RightBottom',
   data() {
     return {
-      options: [
-        {
-          value: '选项1',
-          label: '直播流1',
-        },
-        {
-          value: '选项2',
-          label: '直播流2',
-        },
-        {
-          value: '选项3',
-          label: '直播流3',
-        },
-      ],
-      value: '',
+      options: [],
+      currentLive: '',
     }
   },
+  watch: {
+    currentLive: {
+      handler(val) {
+        val && this.switchLive(val)
+      },
+      immediate: true,
+    },
+  },
   mounted() {
-    this.hlsPlay()
+    this.hlsPlayerInit()
+    this.getData()
   },
   beforeDestroy() {
     this.hls.destroy()
   },
   methods: {
-    hlsPlay() {
+    getData() {
+      LiveService.get({}).then(res => {
+        let { code, rows } = res.data
+        if (code === 200) {
+          this.options = rows.map(item => {
+            return {
+              value: item.liveUrl,
+              label: item.liveName,
+            }
+          })
+        }
+      })
+    },
+    hlsPlayerInit() {
       if (Hls.isSupported()) {
-        let video = this.$refs.video
         let hls = new Hls()
+        let video = this.$refs.video
         this.hls = hls
-        hls.loadSource(
-          'https://cctvwbndbd.a.bdydns.com/cctvwbnd/cctv13_2/index.m3u8'
-        )
-        hls.attachMedia(video)
         hls.on(Hls.Events.MANIFEST_PARSED, function() {
+          // 获取到manifest解析完成的信息后，开始播放视频
           video.play()
         })
       }
+    },
+    switchLive(src) {
+      let video = this.$refs.video
+      hls.loadSource(src)
+      hls.attachMedia(video)
     },
   },
 }
