@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-07-02 20:46:46
+ * @LastEditTime: 2023-07-03 19:32:49
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /gas/src/components/big/map.vue
@@ -295,7 +295,7 @@ export default {
             viewMode: '3D', // 是否为3D地图模式
             zoom: 12, // 初始化地图级别
             mapStyle: 'amap://styles/darkblue',
-            center: [112.45, 34.62], // 初始化地图中心点位置
+            center: [112.45, 34.8], // 初始化地图中心点位置
           })
 
           // 创建信息窗体

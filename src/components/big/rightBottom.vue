@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:18:36
- * @LastEditTime: 2023-07-03 19:04:15
+ * @LastEditTime: 2023-07-03 19:23:55
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /gas/src/components/big/rightBottom.vue
@@ -82,6 +82,10 @@ export default {
       let video = this.$refs.video
       hls.loadSource(src)
       hls.attachMedia(video)
+    },
+    hlsPlay() {
+      let video = this.$refs.video
+      video.play()
     },
   },
 }
