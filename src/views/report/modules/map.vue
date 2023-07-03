@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-07-03 19:06:14
- * @LastEditTime: 2023-07-03 19:31:44
+ * @LastEditTime: 2023-07-03 19:33:37
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /gas/src/views/report/modules/map.vue
@@ -89,7 +89,7 @@ export default {
         let polyline = new AMap.Polyline({
           path: paths[i].path, // 设置线覆盖物路径
           strokeColor: 'red', // 线颜色
-          strokeWeight: 2, // 线宽
+          strokeWeight: 4, // 线宽
           strokeStyle: DashedLineKey.includes(paths[i].key)
             ? 'dashed'
             : 'round', // 线样式
