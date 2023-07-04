@@ -1,14 +1,30 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-07-03 19:06:14
- * @LastEditTime: 2023-07-03 19:33:37
+ * @LastEditTime: 2023-07-04 09:32:51
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /gas/src/views/report/modules/map.vue
+ * @FilePath: /electronic-file/src/views/report/modules/map.vue
  * 工作，生活，健康
 -->
 <template>
-  <div class="map" id="map"></div>
+  <el-card class="map-wrap">
+    <div slot="header" class="clearfix">
+      <span>巡线查询</span>
+      <div class="right">
+        <el-date-picker v-model="value1" type="date" placeholder="选择日期">
+        </el-date-picker>
+        <el-button
+          style="margin-left: 10px;"
+          type="primary"
+          icon="el-icon-search"
+          @click="schHandler"
+          >查询</el-button
+        >
+      </div>
+    </div>
+    <div class="map" id="map"></div>
+  </el-card>
 </template>
 
 <script>
@@ -30,6 +46,7 @@ export default {
     this.getData('guanwang')
   },
   methods: {
+    schHandler() {},
     getData(type) {
       Service.mapSingle(type).then(res => {
         let { code, data } = res.data
@@ -103,8 +120,19 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.map-wrap {
+  margin: 20px auto;
+  width: 98%;
+  box-sizing: border-box;
+}
+
+.clearfix {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .map {
   width: 100%;
-  height: calc(100vh - 80px);
+  height: 600px;
 }
 </style>

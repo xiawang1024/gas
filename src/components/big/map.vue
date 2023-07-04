@@ -1,10 +1,10 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-07-03 21:28:36
+ * @LastEditTime: 2023-07-04 09:29:55
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /gas/src/components/big/map.vue
+ * @FilePath: /electronic-file/src/components/big/map.vue
  * 工作，生活，健康
 -->
 <template>
@@ -86,6 +86,9 @@ export default {
   },
   mounted() {
     this.initMap()
+  },
+  beforeDestroy() {
+    clearInterval(this.timer)
   },
   methods: {
     selectHandler(val) {
