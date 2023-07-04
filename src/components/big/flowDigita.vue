@@ -1,10 +1,10 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2023-07-02 22:30:25
+ * @LastEditTime: 2023-07-04 11:09:35
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /gas/src/components/big/flowDigita.vue
+ * @FilePath: /electronic-file/src/components/big/flowDigita.vue
  * 工作，生活，健康
 -->
 <template>
@@ -12,28 +12,28 @@
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text"></div>
+        <div class="text">A温度</div>
       </div>
       <div class="digita">{{ info.temperature }} ℃</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text"></div>
+        <div class="text">A压力</div>
       </div>
       <div class="digita">{{ info.pressure }} kPa</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text"></div>
+        <div class="text">A瞬时流量</div>
       </div>
       <div class="digita">{{ info.flowInstant }} m³/h</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text"></div>
+        <div class="text">A累计流量</div>
       </div>
       <div class="digita">{{ info.flowTotal }} m³</div>
     </div>
@@ -41,28 +41,28 @@
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text"></div>
+        <div class="text">B温度</div>
       </div>
       <div class="digita">{{ info.temperature }} ℃</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text"></div>
+        <div class="text">B压力</div>
       </div>
       <div class="digita">{{ info.pressure }} kPa</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text"></div>
+        <div class="text">B瞬时流量</div>
       </div>
       <div class="digita">{{ info.flowInstant }} m³/h</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text"></div>
+        <div class="text">B累计流量</div>
       </div>
       <div class="digita">{{ info.flowTotal }} m³</div>
     </div>
@@ -135,7 +135,7 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(4, 1fr);
-  gap: 5px;
+  gap: 0px;
 }
 
 .grid-item {
@@ -144,14 +144,15 @@ export default {
   justify-content: center;
 
   .icon-wrap {
-    flex: 1;
+    flex: 0 0 100px;
     .icon {
       width: 100%;
-      height: 50px;
+      height: 40px;
     }
     .text {
-      font-size: 16px;
-      font-weight: bold;
+      text-align: center;
+      margin-top: 5px;
+      font-size: 13px;
     }
   }
   .digita {
@@ -185,7 +186,7 @@ export default {
   &:nth-child(4) {
     .icon-wrap {
       .icon {
-        height: 40px;
+        height: 30px;
         background: url('./icons/ljll.png') center center no-repeat;
         background-size: contain;
       }
@@ -219,7 +220,7 @@ export default {
   &:nth-child(8) {
     .icon-wrap {
       .icon {
-        height: 40px;
+        height: 30px;
         background: url('./icons/ljll.png') center center no-repeat;
         background-size: contain;
       }
