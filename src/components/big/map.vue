@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-07-04 09:29:55
+ * @LastEditTime: 2023-07-04 11:39:16
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/map.vue
@@ -159,6 +159,10 @@ export default {
           content = ''
         } else {
           content = WorkTypeMap[list[i].mapType]
+        }
+
+        if (list[i].nickName) {
+          content += `（${list[i].nickName}）`
         }
 
         let marker = new AMap.Marker({
