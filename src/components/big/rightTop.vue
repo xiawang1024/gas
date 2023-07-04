@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-07-04 11:16:20
+ * @LastEditTime: 2023-07-04 11:53:51
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -33,8 +33,9 @@
 
 <script>
 import * as Service from '@/api/index'
-import Flow from '@/components/big/flowDigita12.vue'
-import { FLOW_LIST } from '@/views/flow/conf.js'
+import Flow from '@/components/big/flowDigita.vue'
+
+import * as ClientService from '@/api/service.js'
 
 export default {
   name: 'RightTop',
@@ -43,7 +44,7 @@ export default {
   },
   data() {
     return {
-      options: FLOW_LIST,
+      options: [],
       value: '01',
       danger: false,
     }
@@ -53,11 +54,36 @@ export default {
     this.timer = setInterval(() => {
       this.watchAlarm()
     }, 5000)
+
+    this.getDict()
   },
   beforeDestroy() {
     clearInterval(this.timer)
   },
   methods: {
+    getDict() {
+      let menzhanPromise = ClientService.getDict('location')
+      let shebeipromise = ClientService.getDict('za_device_list')
+      //并行请求
+      Promise.all([menzhanPromise, shebeipromise]).then(res => {
+        let menzhan = res[0].data.data
+        let shebei = res[1].data.data
+        let options = []
+        menzhan.forEach(item => {
+          options.push({
+            label: item.dictLabel,
+            value: item.dictValue,
+          })
+        })
+        shebei.forEach(item => {
+          options.push({
+            label: item.dictLabel,
+            value: item.dictValue,
+          })
+        })
+        this.options = options
+      })
+    },
     watchAlarm() {
       Service.watchAlarm().then(res => {
         let { code, data } = res.data

@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-25 09:24:12
- * @LastEditTime: 2023-07-04 10:59:05
+ * @LastEditTime: 2023-07-04 11:58:59
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/flow/index.vue
@@ -86,9 +86,10 @@
 
 <script>
 import NavHeader from '@/components/nav/index.vue'
-import { FLOW_LIST, FLOW_LIST_MAP } from '@/views/flow/conf.js'
 import * as FLowService from '@/api/flow.js'
 import Chart from '@/views/flow/chart.vue'
+
+import * as ClientService from '@/api/service.js'
 export default {
   name: 'Flow',
   components: {
@@ -98,11 +99,10 @@ export default {
   data() {
     return {
       schForm: {
-        address: FLOW_LIST[0].value,
+        address: '',
         date: null,
       },
-      FLOW_LIST,
-      FLOW_LIST_MAP,
+      FLOW_LIST: [],
       pageInfo: {
         pageNum: 1,
         pageSize: 20,
@@ -121,13 +121,24 @@ export default {
         pageSize: this.pageInfo.pageSize,
       }
     },
+    FLOW_LIST_MAP() {
+      let map = {}
+      this.FLOW_LIST.forEach(item => {
+        map[item.value] = item.label
+      })
+      return map
+    },
   },
   watch: {
+    'schForm.address': {
+      handler() {
+        this.getData()
+      },
+    },
     'pageInfo.pageNum': {
       handler() {
         this.getData()
       },
-      immediate: true,
     },
     'pageInfo.pageSize': {
       handler() {
@@ -135,7 +146,35 @@ export default {
       },
     },
   },
+  mounted() {
+    this.getDict()
+  },
   methods: {
+    getDict() {
+      let menzhanPromise = ClientService.getDict('location')
+      let shebeipromise = ClientService.getDict('za_device_list')
+      //并行请求
+      Promise.all([menzhanPromise, shebeipromise]).then(res => {
+        let menzhan = res[0].data.data
+        let shebei = res[1].data.data
+        let options = []
+        menzhan.forEach(item => {
+          options.push({
+            label: item.dictLabel,
+            value: item.dictValue,
+          })
+        })
+        shebei.forEach(item => {
+          options.push({
+            label: item.dictLabel,
+            value: item.dictValue,
+          })
+        })
+        this.FLOW_LIST = options
+
+        this.schForm.address = options[0].value
+      })
+    },
     getData() {
       FLowService.getFlowList(this.postData).then(res => {
         let { code, rows, total } = res.data

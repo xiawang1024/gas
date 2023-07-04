@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-21 16:33:01
- * @LastEditTime: 2023-06-25 09:52:30
+ * @LastEditTime: 2023-07-04 11:52:07
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/flow.js
@@ -9,8 +9,12 @@
  */
 import request from './request'
 //实时流量
-export const get = address =>
-  request({ url: `/gas/flowmeter/latest`, method: 'get', params: { address } })
+export const get = location =>
+  request({
+    url: `/gas/flowmeter/latest`,
+    method: 'get',
+    params: { location },
+  })
 // 历史流量
 export const getFlowList = ({
   address,
