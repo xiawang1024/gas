@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-07-04 15:32:54
+ * @LastEditTime: 2023-07-04 17:49:25
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -20,7 +20,12 @@
         </el-option>
       </el-select>
     </div>
-    <Flow class="scroll-board" :address="value" />
+    <Flow class="scroll-board" :address="value" v-if="type == 'location'" />
+    <Flow1
+      class="scroll-board"
+      :address="value"
+      v-if="type == 'za_device_list'"
+    />
     <div class="danger" v-if="danger" @click="clearDanger"></div>
     <audio
       src="./icons/jb.mp3"
@@ -34,6 +39,7 @@
 <script>
 import * as Service from '@/api/index'
 import Flow from '@/components/big/flowDigita.vue'
+import Flow1 from '@/components/big/flowDigita1.vue'
 
 import * as ClientService from '@/api/service.js'
 
@@ -41,6 +47,7 @@ export default {
   name: 'RightTop',
   components: {
     Flow,
+    Flow1,
   },
   data() {
     return {
@@ -48,6 +55,19 @@ export default {
       value: '',
       danger: false,
     }
+  },
+  computed: {
+    type() {
+      let type = ''
+      for (let i = 0; i < this.options.length; i++) {
+        if (this.options[i].value == this.value) {
+          type = this.options[i].type
+          break
+        }
+      }
+
+      return type
+    },
   },
 
   mounted() {
@@ -73,12 +93,14 @@ export default {
           options.push({
             label: item.dictLabel,
             value: item.dictValue,
+            type: item.dictType,
           })
         })
         shebei.forEach(item => {
           options.push({
             label: item.dictLabel,
             value: item.dictValue,
+            type: item.dictType,
           })
         })
         this.options = options

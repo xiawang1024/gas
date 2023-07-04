@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-21 16:33:01
- * @LastEditTime: 2023-07-04 15:43:06
+ * @LastEditTime: 2023-07-04 17:33:31
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/flow.js
@@ -13,6 +13,15 @@ export const get = location =>
   request({
     url: `/gas/flowmeter/latest/location/${location}`,
     method: 'get',
+  })
+//中安实时流量
+export const getZa = ({ deviceId }) =>
+  request({
+    url: `/gas/za/latest`,
+    method: 'get',
+    params: {
+      deviceId,
+    },
   })
 // 历史流量
 export const getFlowList = ({
