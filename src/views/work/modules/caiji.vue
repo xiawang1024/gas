@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-06-26 10:09:23
+ * @LastEditTime: 2023-07-04 09:21:30
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/caiji.vue
@@ -53,7 +53,7 @@
     </el-form>
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column prop="nickName" label="用户名"> </el-table-column>
-      <el-table-column prop="nickName" label="工种">
+      <el-table-column prop="workType" label="工种">
         <template slot-scope="scope">
           <span>{{ WorkTypeMap[scope.row.workType] }}</span>
         </template>
