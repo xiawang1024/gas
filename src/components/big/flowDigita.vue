@@ -1,41 +1,41 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2023-07-04 11:09:35
+ * @LastEditTime: 2023-07-04 15:51:19
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/flowDigita.vue
  * 工作，生活，健康
 -->
 <template>
-  <div class="grid-container">
+  <div class="grid-container" v-if="info.length">
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">A温度</div>
       </div>
-      <div class="digita">{{ info.temperature }} ℃</div>
+      <div class="digita">{{ info[0].temperature }} ℃</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">A压力</div>
       </div>
-      <div class="digita">{{ info.pressure }} kPa</div>
+      <div class="digita">{{ info[0].pressure }} kPa</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">A瞬时流量</div>
       </div>
-      <div class="digita">{{ info.flowInstant }} m³/h</div>
+      <div class="digita">{{ info[0].flowInstant }} m³/h</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">A累计流量</div>
       </div>
-      <div class="digita">{{ info.flowTotal }} m³</div>
+      <div class="digita">{{ info[0].flowTotal }} m³</div>
     </div>
 
     <div class="grid-item">
@@ -43,35 +43,33 @@
         <div class="icon"></div>
         <div class="text">B温度</div>
       </div>
-      <div class="digita">{{ info.temperature }} ℃</div>
+      <div class="digita">{{ info[1].temperature }} ℃</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">B压力</div>
       </div>
-      <div class="digita">{{ info.pressure }} kPa</div>
+      <div class="digita">{{ info[1].pressure }} kPa</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">B瞬时流量</div>
       </div>
-      <div class="digita">{{ info.flowInstant }} m³/h</div>
+      <div class="digita">{{ info[1].flowInstant }} m³/h</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">B累计流量</div>
       </div>
-      <div class="digita">{{ info.flowTotal }} m³</div>
+      <div class="digita">{{ info[1].flowTotal }} m³</div>
     </div>
   </div>
 </template>
 
 <script>
-import * as ClientService from '@/api/service.js'
-
 import * as FlowService from '@/api/flow'
 
 export default {
@@ -79,13 +77,12 @@ export default {
   props: {
     address: {
       type: String,
-      default: '01',
+      default: '',
     },
   },
   data() {
     return {
-      menZhanDict: [],
-      info: {},
+      info: [],
     }
   },
   watch: {
@@ -93,25 +90,13 @@ export default {
       this.getData()
     },
   },
-  created() {
-    ClientService.getDict('location').then(res => {
-      let { code, data } = res.data
-      if (code === 200) {
-        this.menZhanDict = data.map(item => {
-          return {
-            label: item.dictLabel,
-            value: item.dictValue,
-          }
-        })
-      }
-    })
-  },
+
   mounted() {
     this.getData()
 
     this.timer = setInterval(() => {
       this.getData()
-    }, 1000)
+    }, 2000)
   },
 
   beforeDestroy() {
@@ -119,12 +104,13 @@ export default {
   },
   methods: {
     getData() {
-      FlowService.get(this.address).then(res => {
-        let { code, data } = res.data
-        if (code == 200) {
-          this.info = data
-        }
-      })
+      this.address &&
+        FlowService.get(this.address).then(res => {
+          let { code, data } = res.data
+          if (code == 200) {
+            this.info = data
+          }
+        })
     },
   },
 }

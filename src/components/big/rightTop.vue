@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-07-04 11:53:51
+ * @LastEditTime: 2023-07-04 15:32:54
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       options: [],
-      value: '01',
+      value: '',
       danger: false,
     }
   },
@@ -82,6 +82,7 @@ export default {
           })
         })
         this.options = options
+        this.value = options[0].value
       })
     },
     watchAlarm() {

@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-25 09:24:12
- * @LastEditTime: 2023-07-04 11:58:59
+ * @LastEditTime: 2023-07-04 12:00:38
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/flow/index.vue
@@ -54,9 +54,9 @@
       </div>
 
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="address" label="门站">
+        <el-table-column prop="location" label="门站">
           <template slot-scope="scope">
-            {{ FLOW_LIST_MAP[scope.row.address] }}
+            {{ FLOW_LIST_MAP[scope.row.location] }}
           </template>
         </el-table-column>
         <el-table-column prop="temperature" label="温度 ℃"> </el-table-column>
@@ -114,7 +114,7 @@ export default {
   computed: {
     postData() {
       return {
-        address: this.schForm.address,
+        location: this.schForm.address,
         beginTime: this.schForm.date ? this.schForm.date[0] : null,
         endTime: this.schForm.date ? this.schForm.date[1] : null,
         pageNum: this.pageInfo.pageNum,

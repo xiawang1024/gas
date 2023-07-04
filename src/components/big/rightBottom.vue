@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:18:36
- * @LastEditTime: 2023-07-04 09:13:53
+ * @LastEditTime: 2023-07-04 12:36:44
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightBottom.vue
@@ -21,7 +21,7 @@
       </el-select>
     </div>
     <div class="player">
-      <video ref="video" class="video" @click="hlsPlay" autoplay></video>
+      <video ref="video" class="video" @click="hlsPlay" autoplay muted></video>
     </div>
   </div>
 </template>

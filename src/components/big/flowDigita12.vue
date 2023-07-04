@@ -107,7 +107,7 @@ export default {
   props: {
     address: {
       type: String,
-      default: '01',
+      default: '',
     },
   },
   data() {
