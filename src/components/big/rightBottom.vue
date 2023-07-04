@@ -1,10 +1,10 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:18:36
- * @LastEditTime: 2023-07-03 19:23:55
+ * @LastEditTime: 2023-07-04 09:13:53
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /gas/src/components/big/rightBottom.vue
+ * @FilePath: /electronic-file/src/components/big/rightBottom.vue
  * 工作，生活，健康
 -->
 <template>
@@ -64,6 +64,8 @@ export default {
               label: item.liveName,
             }
           })
+
+          this.currentLive = this.options[0].value
         }
       })
     },
@@ -80,8 +82,8 @@ export default {
     },
     switchLive(src) {
       let video = this.$refs.video
-      hls.loadSource(src)
-      hls.attachMedia(video)
+      this.hls.loadSource(src)
+      this.hls.attachMedia(video)
     },
     hlsPlay() {
       let video = this.$refs.video
