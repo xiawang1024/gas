@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-25 09:24:12
- * @LastEditTime: 2023-06-25 15:41:26
+ * @LastEditTime: 2023-07-04 10:59:05
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/flow/index.vue
@@ -49,7 +49,7 @@
         </el-form-item>
       </el-form>
 
-      <div class="chart">
+      <div class="chart" v-if="false">
         <Chart :table-data="tableData"></Chart>
       </div>
 

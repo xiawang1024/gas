@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:38:14
- * @LastEditTime: 2023-06-25 09:25:39
+ * @LastEditTime: 2023-07-04 10:59:52
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/router/index.js
@@ -70,7 +70,7 @@ const routes = [
     name: 'Report',
     component: Report,
     meta: {
-      title: '运营报表系统',
+      title: '巡线查询系统',
     },
   },
   {
