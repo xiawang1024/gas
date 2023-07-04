@@ -1,10 +1,10 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-07-02 20:25:47
+ * @LastEditTime: 2023-07-04 11:16:20
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /gas/src/components/big/rightTop.vue
+ * @FilePath: /electronic-file/src/components/big/rightTop.vue
  * 工作，生活，健康
 -->
 <template>
@@ -33,7 +33,7 @@
 
 <script>
 import * as Service from '@/api/index'
-import Flow from '@/components/big/flowDigita.vue'
+import Flow from '@/components/big/flowDigita12.vue'
 import { FLOW_LIST } from '@/views/flow/conf.js'
 
 export default {
@@ -102,16 +102,16 @@ export default {
 }
 .scroll-board {
   position: absolute;
-  top: 10%;
+  top: 8%;
   left: 2%;
-  width: 96%;
-  height: 90%;
+  width: 98%;
+  height: 92%;
 }
 
 .danger {
   position: absolute;
   bottom: 20%;
-  right: 0;
+  right: -10px;
   width: 20%;
   height: 15%;
   background: url('./icons/jb.gif') center center no-repeat;
