@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-07-04 11:39:16
+ * @LastEditTime: 2023-07-04 16:16:57
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/map.vue
@@ -68,6 +68,7 @@ export default {
       value: [],
       locationMap: {},
       markersMap: {},
+      userOnlineIsRequest: false,
     }
   },
   watch: {
@@ -78,6 +79,10 @@ export default {
         if (this.markersMap[types[i]]) {
           clearInterval(this.timer)
           this.map.remove(this.markersMap[types[i]])
+
+          if (types[i] == 'user_online') {
+            this.userOnlineIsRequest = false
+          }
 
           this.map.setFitView()
         }
@@ -100,7 +105,7 @@ export default {
           clearInterval(this.timer)
           this.timer = setInterval(() => {
             this.getData(type)
-          }, 1000)
+          }, 2000)
         } else if (!this.locationMap[type]) {
           this.getData(type)
         } else {
@@ -115,7 +120,6 @@ export default {
         if (code == 200) {
           this.locationMap[type] = data
           if (type == 'user_online' && this.markersMap[type]) {
-            console.log('user_online', type, this.markersMap[type])
             this.map.remove(this.markersMap[type])
           }
 
@@ -127,7 +131,14 @@ export default {
 
           this.map.add(this.markersMap[type])
 
-          this.map.setFitView()
+          if (type == 'user_online') {
+            if (!this.userOnlineIsRequest) {
+              this.map.setFitView()
+              this.userOnlineIsRequest = true
+            }
+          } else {
+            this.map.setFitView()
+          }
         }
       })
     },
