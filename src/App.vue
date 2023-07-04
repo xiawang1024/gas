@@ -1,10 +1,10 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 08:45:39
- * @LastEditTime: 2023-07-02 12:27:42
+ * @LastEditTime: 2023-07-04 17:26:06
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /gas/src/App.vue
+ * @FilePath: /electronic-file/src/App.vue
  * 工作，生活，健康
 -->
 <template>
@@ -37,6 +37,16 @@ export default {
   padding: 4px 12px;
   color: #333333;
   border-radius: 4px;
+}
+
+.amap-info-window-custom {
+  width: 130px;
+  background-color: #fff;
+  padding: 4px 12px;
+  color: #333333;
+  border-radius: 4px;
+  line-height: 1.5;
+  font-size: 13px;
 }
 
 div.amap-marker-label {

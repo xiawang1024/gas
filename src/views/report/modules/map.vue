@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-07-03 19:06:14
- * @LastEditTime: 2023-07-04 09:32:51
+ * @LastEditTime: 2023-07-04 17:26:58
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/report/modules/map.vue
@@ -12,7 +12,12 @@
     <div slot="header" class="clearfix">
       <span>巡线查询</span>
       <div class="right">
-        <el-date-picker v-model="value1" type="date" placeholder="选择日期">
+        <el-date-picker
+          v-model="date"
+          type="date"
+          placeholder="选择日期"
+          value-format="yyyy-MM-dd"
+        >
         </el-date-picker>
         <el-button
           style="margin-left: 10px;"
@@ -29,6 +34,7 @@
 
 <script>
 import * as Service from '@/api/index'
+import * as GuiJiService from '@/api/guiji'
 import AMapLoader from '@amap/amap-jsapi-loader'
 
 const DashedLineKey = ['A001', 'A002', 'A003']
@@ -39,14 +45,33 @@ export default {
     return {
       locationMap: {},
       markersMap: {},
+      date: '',
     }
+  },
+  computed: {
+    postData() {
+      return {
+        beginTime: `${this.date} 00:00:00`,
+        endTime: `${this.date} 23:59:59`,
+      }
+    },
   },
   mounted() {
     this.initMap()
-    this.getData('guanwang')
   },
   methods: {
-    schHandler() {},
+    schHandler() {
+      GuiJiService.get({ ...this.postData }).then(res => {
+        let { code, rows } = res.data
+        if (code == 200) {
+          this.markersMap['xunxian'] = this.createLabelMarkers(this.AMap, rows)
+
+          this.labelsLayer.add(this.markersMap['xunxian'])
+
+          this.map.setFitView()
+        }
+      })
+    },
     getData(type) {
       Service.mapSingle(type).then(res => {
         let { code, data } = res.data
@@ -80,6 +105,19 @@ export default {
           this.map.addControl(new AMap.Scale())
           this.map.addControl(new AMap.HawkEye())
           this.map.addControl(new AMap.ToolBar())
+
+          //海量点标记
+
+          this.labelsLayer = new AMap.LabelsLayer({
+            zooms: [3, 20],
+            zIndex: 1000,
+            collision: true, // 该层内标注是否避让
+            allowCollision: true, // 设置 allowCollision：true，可以让标注避让用户的标注
+          })
+
+          this.map.add(this.labelsLayer)
+
+          this.getData('guanwang')
         })
         .catch(e => {
           console.log(e)
@@ -114,6 +152,66 @@ export default {
         lines.push(polyline)
       }
       return lines
+    },
+    createLabelMarkers(AMap, list) {
+      let labelMarkers = []
+      for (let i = 0; i < list.length; i++) {
+        let size = [5, 5]
+        let icon = {
+          type: 'image', // 图标类型，现阶段只支持 image 类型
+          image: require(`./icons/xian.png`),
+          size: size, // 图片尺寸
+          anchor: 'center', // 图片相对 position 的锚点，默认为 bottom-center
+        }
+
+        let content = `${list[i].nickName} ${list[i].createTime}`
+
+        let text = {
+          // content: content, // 要展示的文字内容
+          direction: 'bottom', // 文字方向，有 icon 时为围绕文字的方向，没有 icon 时，则为相对 position 的位置
+          offset: [0, -5], // 在 direction 基础上的偏移量
+          style: {
+            // 文字样式
+            fontSize: 12, // 字体大小
+            fillColor: '#19acf9', // 字体颜色
+          },
+        }
+        let labelMarker = new AMap.LabelMarker({
+          position: [list[i].lon, list[i].lat],
+          name: list[i].nickName,
+          icon: icon,
+          text: text,
+          extData: list[i],
+        })
+
+        labelMarker.on('mouseover', e => {
+          let position = e.data.data && e.data.data.position
+
+          if (position) {
+            normalMarker.setContent(
+              `<div class="amap-info-window-custom" >
+                <div>${e.target._opts.extData.nickName}</div>
+                <div>${e.target._opts.extData.createTime}</div>
+                </div>`
+            )
+            normalMarker.setPosition(position)
+            this.map.add(normalMarker)
+          }
+        })
+        labelMarker.on('mouseout', () => {
+          this.map.remove(normalMarker)
+        })
+
+        labelMarkers.push(labelMarker)
+      }
+
+      //普通点标记
+      let normalMarker = new AMap.Marker({
+        anchor: 'bottom-center',
+        offset: [0, -30],
+      })
+
+      return labelMarkers
     },
   },
 }

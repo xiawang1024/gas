@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 08:45:39
- * @LastEditTime: 2023-07-04 10:57:57
+ * @LastEditTime: 2023-07-04 16:17:49
  * @LastEditors: xiawang1024
  * @Description
  * @FilePath: /electronic-file/src/views/home/index.vue
@@ -31,7 +31,7 @@
                     <el-dropdown-item command="d"
                       >隐患排查治理</el-dropdown-item
                     >
-                    <el-dropdown-item command="f">流量计查询</el-dropdown-item>
+                    <!-- <el-dropdown-item command="f">流量计查询</el-dropdown-item> -->
                     <el-dropdown-item command="e">巡线查询</el-dropdown-item>
 
                     <el-dropdown-item command="exit" divided
