@@ -1,10 +1,10 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-07-03 19:06:14
- * @LastEditTime: 2023-07-04 17:26:58
+ * @LastEditTime: 2023-07-06 17:44:02
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /electronic-file/src/views/report/modules/map.vue
+ * @FilePath: /gas/src/views/report/modules/map.vue
  * 工作，生活，健康
 -->
 <template>
@@ -66,6 +66,8 @@ export default {
         if (code == 200) {
           this.markersMap['xunxian'] = this.createLabelMarkers(this.AMap, rows)
 
+          this.labelsLayer.clear()
+
           this.labelsLayer.add(this.markersMap['xunxian'])
 
           this.map.setFitView()
@@ -97,7 +99,7 @@ export default {
           this.map = new AMap.Map('map', {
             viewMode: '3D', // 是否为3D地图模式
             zoom: 12, // 初始化地图级别
-            // mapStyle: 'amap://styles/darkblue',
+            mapStyle: 'amap://styles/darkblue',
             center: [112.45, 34.8], // 初始化地图中心点位置
           })
 
@@ -143,7 +145,7 @@ export default {
       for (let i = 0; i < paths.length; i++) {
         let polyline = new AMap.Polyline({
           path: paths[i].path, // 设置线覆盖物路径
-          strokeColor: 'red', // 线颜色
+          strokeColor: '#f99c35', // 线颜色
           strokeWeight: 4, // 线宽
           strokeStyle: DashedLineKey.includes(paths[i].key)
             ? 'dashed'

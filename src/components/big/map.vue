@@ -1,10 +1,10 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-07-04 16:16:57
+ * @LastEditTime: 2023-07-06 17:40:12
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /electronic-file/src/components/big/map.vue
+ * @FilePath: /gas/src/components/big/map.vue
  * 工作，生活，健康
 -->
 <template>
@@ -292,7 +292,7 @@ export default {
         console.log(paths[i])
         let polyline = new AMap.Polyline({
           path: paths[i].path, // 设置线覆盖物路径
-          strokeColor: 'red', // 线颜色
+          strokeColor: '#f99c35', // 线颜色
           strokeWeight: 4, // 线宽
           strokeStyle: DashedLineKey.includes(paths[i].key)
             ? 'dashed'
