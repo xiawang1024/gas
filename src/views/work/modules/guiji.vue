@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-06-25 10:42:41
+ * @LastEditTime: 2023-07-10 16:58:30
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/guiji.vue
@@ -124,6 +124,12 @@ export default {
     },
 
     createGuiji(map, AMap, lineArr) {
+      if (lineArr.length === 0) {
+        this.$message({
+          message: '暂无轨迹',
+          type: 'warning',
+        })
+      }
       this.marker && this.marker.stopMove()
       map.clearMap()
       let size = new AMap.Size(30, 30)
