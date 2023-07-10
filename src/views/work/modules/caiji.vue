@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-07-04 09:21:30
+ * @LastEditTime: 2023-07-10 16:52:09
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/caiji.vue
@@ -147,13 +147,16 @@
           </el-select>
         </el-form-item>
         <el-form-item label="问题详情">
-          <el-input
-            type="textarea"
-            v-model="dealForm.wtxq"
-            placeholder="问题详情"
-            clearable
-          >
-          </el-input>
+          <el-row>
+            <el-input
+              type="textarea"
+              v-model="dealForm.wtxq"
+              placeholder="问题详情"
+              clearable
+            >
+            </el-input>
+            <el-button @click="openTextDialog('wtxq')">选择</el-button>
+          </el-row>
         </el-form-item>
         <el-form-item label="处理人">
           <el-select v-model="dealForm.userId" placeholder="处理人" clearable>
@@ -187,6 +190,7 @@
             clearable
           >
           </el-input>
+          <el-button @click="openTextDialog('dealDuration')">选择</el-button>
         </el-form-item>
         <el-form-item label="发现人">
           <el-input v-model="dealForm.submitNickName" disabled> </el-input>
@@ -326,6 +330,19 @@
         >
       </div>
     </el-drawer>
+
+    <el-drawer title="问题选择" :visible.sync="drawerTextVisible">
+      <div class="drawer-text-wrap" v-for="item of content" :key="item">
+        <div class="wrap" v-if="item.comment">
+          <div class="text-wrap">
+            <el-tag class="text">{{ item.comment }}</el-tag>
+          </div>
+          <el-button class="btn" size="mini" @click="selectText(item.comment)"
+            >选择</el-button
+          >
+        </div>
+      </div>
+    </el-drawer>
   </div>
 </template>
 
@@ -384,6 +401,9 @@ export default {
       drawerImgVisible: false,
       noHostImgList: [],
       ImgField: '',
+
+      drawerTextVisible: false,
+      TextField: '',
     }
   },
   computed: {
@@ -449,12 +469,22 @@ export default {
     dealHandler(row) {
       this.dialogDealVisible = true
       let noHostImgList = []
+      let content = []
       for (let i = 1; i <= 9; i++) {
         let noHostUrl = row[`imageUrl${i}`] ? row[`imageUrl${i}`] : ''
+
+        let url = row[`imageUrl${i}`] ? IMGHOST + row[`imageUrl${i}`] : ''
+        content.push({
+          id: i,
+          comment: row[`comment${i}`],
+          imageUrl: url,
+        })
         if (noHostUrl) {
           noHostImgList.push(noHostUrl)
         }
       }
+
+      this.content = content
       this.noHostImgList = noHostImgList
 
       this.dealForm = {
@@ -533,9 +563,18 @@ export default {
       this.drawerImgVisible = true
       this.ImgField = field
     },
+    openTextDialog(field) {
+      this.drawerTextVisible = true
+      this.TextField = field
+    },
     selectImg(url) {
       this.dealForm[this.ImgField] = url
       this.drawerImgVisible = false
+    },
+
+    selectText(text) {
+      this.dealForm[this.TextField] = text
+      this.drawerTextVisible = false
     },
     updateImgUrl(url) {
       return `${this.IMGHOST}${url}`
@@ -608,6 +647,18 @@ export default {
     bottom: 0;
     right: 0;
     margin-left: 30px;
+  }
+}
+
+.drawer-text-wrap {
+  .wrap {
+    padding: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #efefef;
+  }
+
+  .btn {
+    margin-top: 8px;
   }
 }
 </style>
