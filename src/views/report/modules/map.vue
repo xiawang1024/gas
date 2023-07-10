@@ -1,10 +1,10 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-07-03 19:06:14
- * @LastEditTime: 2023-07-06 17:44:02
+ * @LastEditTime: 2023-07-10 15:54:08
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /gas/src/views/report/modules/map.vue
+ * @FilePath: /electronic-file/src/views/report/modules/map.vue
  * 工作，生活，健康
 -->
 <template>
@@ -37,7 +37,7 @@ import * as Service from '@/api/index'
 import * as GuiJiService from '@/api/guiji'
 import AMapLoader from '@amap/amap-jsapi-loader'
 
-const DashedLineKey = ['A001', 'A002', 'A003']
+const DashedLineKey = ['A001', 'A002', 'A003', 'A004']
 
 export default {
   name: 'Map',
@@ -145,7 +145,7 @@ export default {
       for (let i = 0; i < paths.length; i++) {
         let polyline = new AMap.Polyline({
           path: paths[i].path, // 设置线覆盖物路径
-          strokeColor: '#f99c35', // 线颜色
+          strokeColor: paths[i].key != 'A004' ? '#f99c35' : '#999999', // 线颜色
           strokeWeight: 4, // 线宽
           strokeStyle: DashedLineKey.includes(paths[i].key)
             ? 'dashed'
@@ -158,12 +158,13 @@ export default {
     createLabelMarkers(AMap, list) {
       let labelMarkers = []
       for (let i = 0; i < list.length; i++) {
-        let size = [5, 5]
+        let size = [8, 8]
         let icon = {
           type: 'image', // 图标类型，现阶段只支持 image 类型
           image: require(`./icons/xian.png`),
           size: size, // 图片尺寸
           anchor: 'center', // 图片相对 position 的锚点，默认为 bottom-center
+          offset: [-4, -4], // 图标偏移量
         }
 
         let content = `${list[i].nickName} ${list[i].createTime}`
@@ -233,6 +234,6 @@ export default {
 }
 .map {
   width: 100%;
-  height: 600px;
+  height: calc(100vh - 260px);
 }
 </style>
