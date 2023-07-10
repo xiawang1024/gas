@@ -1,10 +1,10 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-07-06 17:40:12
+ * @LastEditTime: 2023-07-10 15:48:37
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /gas/src/components/big/map.vue
+ * @FilePath: /electronic-file/src/components/big/map.vue
  * 工作，生活，健康
 -->
 <template>
@@ -37,7 +37,7 @@ import { WorkTypeMap } from '@/views/work/conf.js'
 
 import AMapLoader from '@amap/amap-jsapi-loader'
 
-const DashedLineKey = ['A001', 'A002', 'A003']
+const DashedLineKey = ['A001', 'A002', 'A003', 'A004']
 
 export default {
   name: 'MapXw',
@@ -292,7 +292,7 @@ export default {
         console.log(paths[i])
         let polyline = new AMap.Polyline({
           path: paths[i].path, // 设置线覆盖物路径
-          strokeColor: '#f99c35', // 线颜色
+          strokeColor: paths[i].key != 'A004' ? '#f99c35' : '#999999', // 线颜色
           strokeWeight: 4, // 线宽
           strokeStyle: DashedLineKey.includes(paths[i].key)
             ? 'dashed'
