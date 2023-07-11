@@ -90,7 +90,7 @@ export default {
     },
     initMap() {
       AMapLoader.load({
-        key: 'a5e96381ba664e245f7c036a6de5f7d4',
+        key: '0cd7ff82d162927a0785f1ee25e7b7d3',
         version: '2.0',
         plugins: ['AMap.Scale', 'AMap.HawkEye', 'AMap.ToolBar'], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
       })
