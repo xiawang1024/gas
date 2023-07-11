@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2023-07-11 12:34:26
+ * @LastEditTime: 2023-07-11 12:43:52
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/flowDigita1.vue
@@ -22,7 +22,7 @@
         <div class="icon icon-1"></div>
         <div class="text">浓度</div>
       </div>
-      <div class="digita">{{ info.payload.gas_value }} %</div>
+      <div class="digita">{{ info.payload.gas_value }} ppm</div>
     </div>
   </div>
 </template>
