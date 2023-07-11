@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-07-04 17:49:25
+ * @LastEditTime: 2023-07-11 11:13:00
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -159,7 +159,7 @@ export default {
 
 .danger {
   position: absolute;
-  bottom: 20%;
+  bottom: 18%;
   right: -10px;
   width: 20%;
   height: 15%;

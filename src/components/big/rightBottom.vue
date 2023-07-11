@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:18:36
- * @LastEditTime: 2023-07-04 12:36:44
+ * @LastEditTime: 2023-07-11 11:12:19
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightBottom.vue
@@ -111,7 +111,7 @@ export default {
 .player {
   position: absolute;
   left: 2.5%;
-  top: 3%;
+  top: 5%;
   width: 95%;
   height: 94%;
   .video {

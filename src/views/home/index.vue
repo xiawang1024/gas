@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 08:45:39
- * @LastEditTime: 2023-07-04 16:17:49
+ * @LastEditTime: 2023-07-11 11:10:28
  * @LastEditors: xiawang1024
  * @Description
  * @FilePath: /electronic-file/src/views/home/index.vue
@@ -204,11 +204,11 @@ export default {
       display: flex;
       flex-direction: column;
       .right-top {
-        height: 45%;
+        height: 50%;
         width: 100%;
       }
       .right-bottom {
-        height: 55%;
+        height: 50%;
         width: 100%;
       }
     }
