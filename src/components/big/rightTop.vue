@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-07-11 11:13:00
+ * @LastEditTime: 2023-07-11 11:23:45
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -20,7 +20,17 @@
         </el-option>
       </el-select>
     </div>
-    <Flow class="scroll-board" :address="value" v-if="type == 'location'" />
+
+    <Flow12
+      class="scroll-board"
+      :address="value"
+      v-if="type == 'location' && value == '朝阳'"
+    />
+    <Flow
+      class="scroll-board"
+      :address="value"
+      v-else-if="type == 'location'"
+    />
     <Flow1
       class="scroll-board"
       :address="value"
@@ -40,6 +50,7 @@
 import * as Service from '@/api/index'
 import Flow from '@/components/big/flowDigita.vue'
 import Flow1 from '@/components/big/flowDigita1.vue'
+import Flow12 from '@/components/big/flowDigita12.vue'
 
 import * as ClientService from '@/api/service.js'
 
@@ -48,6 +59,7 @@ export default {
   components: {
     Flow,
     Flow1,
+    Flow12,
   },
   data() {
     return {
@@ -72,7 +84,7 @@ export default {
 
   mounted() {
     this.timer = setInterval(() => {
-      this.watchAlarm()
+      // this.watchAlarm()
     }, 5000)
 
     this.getDict()

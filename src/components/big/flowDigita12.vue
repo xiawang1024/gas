@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2023-07-04 11:25:21
+ * @LastEditTime: 2023-07-11 11:23:10
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/flowDigita12.vue
@@ -103,7 +103,7 @@ import * as ClientService from '@/api/service.js'
 import * as FlowService from '@/api/flow'
 
 export default {
-  name: 'Flow',
+  name: 'Flow12',
   props: {
     address: {
       type: String,

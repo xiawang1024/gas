@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2023-07-04 15:51:19
+ * @LastEditTime: 2023-07-11 11:15:51
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/flowDigita.vue
@@ -96,7 +96,7 @@ export default {
 
     this.timer = setInterval(() => {
       this.getData()
-    }, 2000)
+    }, 3000)
   },
 
   beforeDestroy() {

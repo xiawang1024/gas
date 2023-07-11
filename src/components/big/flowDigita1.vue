@@ -1,14 +1,14 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2023-07-04 17:56:50
+ * @LastEditTime: 2023-07-11 11:24:37
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/flowDigita1.vue
  * 工作，生活，健康
 -->
 <template>
-  <div class="grid-container" v-if="info">
+  <div class="grid-container" v-if="info.payload">
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
@@ -23,7 +23,7 @@
 import * as FlowService from '@/api/flow'
 
 export default {
-  name: 'Flow',
+  name: 'Flow1',
   props: {
     address: {
       type: String,
@@ -46,7 +46,7 @@ export default {
 
     this.timer = setInterval(() => {
       this.getData()
-    }, 1000)
+    }, 30000)
   },
 
   beforeDestroy() {
