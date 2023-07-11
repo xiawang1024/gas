@@ -1,55 +1,55 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2023-07-11 11:23:10
+ * @LastEditTime: 2023-07-11 11:51:37
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/flowDigita12.vue
  * 工作，生活，健康
 -->
 <template>
-  <div class="grid-container">
+  <div class="grid-container" v-if="info">
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">A温度</div>
       </div>
-      <div class="digita">{{ info.temperature }} ℃</div>
+      <div class="digita">{{ info['DB16.DBD294'] }} ℃</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">A压力</div>
       </div>
-      <div class="digita">{{ info.pressure }} kPa</div>
+      <div class="digita">{{ info['DB16.DBD290'] }} kPa</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">A工况流量</div>
       </div>
-      <div class="digita">{{ info.flowInstant }} m³/h</div>
+      <div class="digita">{{ info['DB16.DBD298'] }} m³/h</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">A标况流量</div>
       </div>
-      <div class="digita">{{ info.flowTotal }} m³</div>
+      <div class="digita">{{ info['DB16.DBD302'] }} m³</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">A工况总量</div>
       </div>
-      <div class="digita">{{ info.flowTotal }} m³</div>
+      <div class="digita">{{ info['DB16.DBD282'] }} m³</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">A标况总量</div>
       </div>
-      <div class="digita">{{ info.flowTotal }} m³</div>
+      <div class="digita">{{ info['DB16.DBD286'] }} m³</div>
     </div>
 
     <div class="grid-item">
@@ -57,49 +57,47 @@
         <div class="icon"></div>
         <div class="text">B温度</div>
       </div>
-      <div class="digita">{{ info.temperature }} ℃</div>
+      <div class="digita">{{ info['DB16.DBD318'] }} ℃</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">B压力</div>
       </div>
-      <div class="digita">{{ info.pressure }} kPa</div>
+      <div class="digita">{{ info['DB16.DBD314'] }} kPa</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">B工况流量</div>
       </div>
-      <div class="digita">{{ info.flowInstant }} m³/h</div>
+      <div class="digita">{{ info['DB16.DBD322'] }} m³/h</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">B标况流量</div>
       </div>
-      <div class="digita">{{ info.flowTotal }} m³</div>
+      <div class="digita">{{ info['DB16.DBD326'] }} m³</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">B工况总量</div>
       </div>
-      <div class="digita">{{ info.flowTotal }} m³</div>
+      <div class="digita">{{ info['DB16.DBD306'] }} m³</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">B标况流量</div>
       </div>
-      <div class="digita">{{ info.flowTotal }} m³</div>
+      <div class="digita">{{ info['DB16.DBD310'] }} m³</div>
     </div>
   </div>
 </template>
 
 <script>
-import * as ClientService from '@/api/service.js'
-
 import * as FlowService from '@/api/flow'
 
 export default {
@@ -112,8 +110,7 @@ export default {
   },
   data() {
     return {
-      menZhanDict: [],
-      info: {},
+      info: null,
     }
   },
   watch: {
@@ -121,25 +118,13 @@ export default {
       this.getData()
     },
   },
-  created() {
-    ClientService.getDict('location').then(res => {
-      let { code, data } = res.data
-      if (code === 200) {
-        this.menZhanDict = data.map(item => {
-          return {
-            label: item.dictLabel,
-            value: item.dictValue,
-          }
-        })
-      }
-    })
-  },
+
   mounted() {
     this.getData()
 
     this.timer = setInterval(() => {
       this.getData()
-    }, 1000)
+    }, 3000)
   },
 
   beforeDestroy() {
@@ -150,7 +135,7 @@ export default {
       FlowService.get(this.address).then(res => {
         let { code, data } = res.data
         if (code == 200) {
-          this.info = data
+          this.info = JSON.parse(data.originalData)
         }
       })
     },

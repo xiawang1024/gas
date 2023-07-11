@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-07-11 11:23:45
+ * @LastEditTime: 2023-07-11 11:39:18
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -24,7 +24,7 @@
     <Flow12
       class="scroll-board"
       :address="value"
-      v-if="type == 'location' && value == '朝阳'"
+      v-if="type == 'location' && value == '001'"
     />
     <Flow
       class="scroll-board"
