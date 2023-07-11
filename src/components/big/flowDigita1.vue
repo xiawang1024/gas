@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2023-07-11 12:43:52
+ * @LastEditTime: 2023-07-11 15:15:10
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/flowDigita1.vue
@@ -93,6 +93,8 @@ export default {
 }
 
 .grid-item {
+  width: 90%;
+  margin: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -110,8 +112,8 @@ export default {
     }
   }
   .digita {
-    flex: 0 0 200px;
-    font-size: 50px;
+    flex: 0 0 300px;
+    font-size: 46px;
   }
   &:nth-child(1) {
     .icon-wrap {

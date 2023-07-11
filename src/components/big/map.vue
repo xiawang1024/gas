@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-07-11 11:37:49
+ * @LastEditTime: 2023-07-11 15:13:04
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/map.vue
@@ -159,14 +159,11 @@ export default {
 
         let content = ''
 
-        if (list[i].mapType == 'menzhan') {
+        if (list[i].mapType == 'menzhan' || list[i].mapType == 'tiaoyaxiang') {
           content = list[i].name
         } else if (list[i].mapType == 'fajing') {
           content = list[i].mapNo
-        } else if (
-          list[i].mapType == 'tiaoyaxiang' ||
-          list[i].mapType == 'guanwang'
-        ) {
+        } else if (list[i].mapType == 'guanwang') {
           content = ''
         } else {
           content = WorkTypeMap[list[i].mapType]
