@@ -32,7 +32,7 @@
                       >隐患排查治理</el-dropdown-item
                     >
                     <!-- <el-dropdown-item command="f">流量计查询</el-dropdown-item> -->
-                    <el-dropdown-item command="e">巡线查询</el-dropdown-item>
+                    <el-dropdown-item command="e">巡线管理</el-dropdown-item>
 
                     <el-dropdown-item command="exit" divided
                       >注销登录</el-dropdown-item

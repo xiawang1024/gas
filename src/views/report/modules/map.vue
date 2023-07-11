@@ -10,7 +10,7 @@
 <template>
   <el-card class="map-wrap">
     <div slot="header" class="clearfix">
-      <span>巡线查询</span>
+      <span>巡线管理</span>
       <div class="right">
         <el-date-picker
           v-model="date"

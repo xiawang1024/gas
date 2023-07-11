@@ -70,7 +70,7 @@ const routes = [
     name: 'Report',
     component: Report,
     meta: {
-      title: '巡线查询系统',
+      title: '巡线管理系统',
     },
   },
   {
