@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2023-07-11 11:24:37
+ * @LastEditTime: 2023-07-11 12:34:26
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/flowDigita1.vue
@@ -9,12 +9,20 @@
 -->
 <template>
   <div class="grid-container" v-if="info.payload">
-    <div class="grid-item">
+    <div class="grid-item" v-if="isPressure">
       <div class="icon-wrap">
         <div class="icon"></div>
         <div class="text">压力</div>
       </div>
+
       <div class="digita">{{ info.payload.meter_value }} kPa</div>
+    </div>
+    <div class="grid-item" v-else>
+      <div class="icon-wrap">
+        <div class="icon icon-1"></div>
+        <div class="text">浓度</div>
+      </div>
+      <div class="digita">{{ info.payload.gas_value }} %</div>
     </div>
   </div>
 </template>
@@ -35,6 +43,15 @@ export default {
       info: {},
     }
   },
+  computed: {
+    isPressure() {
+      if (this.info.payload && this.info.payload.meter_value) {
+        return true
+      } else {
+        return false
+      }
+    },
+  },
   watch: {
     address() {
       this.getData()
@@ -54,6 +71,7 @@ export default {
   },
   methods: {
     getData() {
+      this.info = {}
       this.address &&
         FlowService.getZa({ deviceId: this.address }).then(res => {
           let { code, data } = res.data
@@ -99,6 +117,10 @@ export default {
     .icon-wrap {
       .icon {
         background: url('./icons/yali.png') center center no-repeat;
+        background-size: contain;
+      }
+      .icon-1 {
+        background: url('./icons/nongdu.png') center center no-repeat;
         background-size: contain;
       }
     }
