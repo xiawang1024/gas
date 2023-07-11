@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2023-07-11 15:15:10
+ * @LastEditTime: 2023-07-11 15:55:16
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/flowDigita1.vue
@@ -45,7 +45,7 @@ export default {
   },
   computed: {
     isPressure() {
-      if (this.info.payload && this.info.payload.meter_value) {
+      if (this.info.deviceType == 'pressure') {
         return true
       } else {
         return false
