@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-07-13 15:06:32
+ * @LastEditTime: 2023-07-13 17:36:50
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -104,6 +104,7 @@ export default {
   },
   beforeDestroy() {
     clearInterval(this.timer)
+    this.notice && this.notice.close()
   },
   methods: {
     getDict() {
