@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2023-07-12 09:34:59
+ * @LastEditTime: 2023-07-13 16:53:42
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/flowDigita1.vue
@@ -15,7 +15,7 @@
         <div class="text">压力</div>
       </div>
 
-      <div class="digita">{{ info.payload.meter_value }} kPa</div>
+      <div class="digita">{{ info.payload.meter_value }} MPa</div>
     </div>
     <div class="grid-item" v-else>
       <div class="icon-wrap">

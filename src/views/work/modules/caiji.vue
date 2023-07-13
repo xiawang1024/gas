@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-07-11 11:06:54
+ * @LastEditTime: 2023-07-13 17:19:18
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/caiji.vue
@@ -353,7 +353,7 @@ import * as ClientService from '@/api/service.js'
 import { WorkType, WorkTypeMap } from '../conf.js'
 import * as DangerService from '@/api/danger.js'
 export default {
-  name: 'Guiji',
+  name: 'Caiji',
   data() {
     return {
       IMGHOST,

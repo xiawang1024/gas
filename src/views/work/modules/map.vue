@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-20 15:07:02
- * @LastEditTime: 2023-06-20 15:10:30
+ * @LastEditTime: 2023-07-13 17:25:39
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/map.vue
@@ -23,9 +23,36 @@
 import AMapLoader from '@amap/amap-jsapi-loader'
 
 export default {
-  name: 'Map',
+  name: 'MapGuiJi',
+  props: {
+    lineArr: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
-    return {}
+    return {
+      map: null,
+      marker: null,
+    }
+  },
+  watch: {
+    lineArr: {
+      handler: function(val, oldVal) {
+        if (val.length && this.map) {
+          this.marker = this.createGuiji(this.map, this.AMap, val)
+        }
+      },
+      immediate: true,
+    },
+    map: {
+      handler: function(val, oldVal) {
+        if (val && this.lineArr.length) {
+          this.marker = this.createGuiji(val, this.AMap, this.lineArr)
+        }
+      },
+      immediate: true,
+    },
   },
   mounted() {
     this.initMap()
@@ -34,7 +61,7 @@ export default {
     startAnimation() {
       this.marker.moveAlong(this.lineArr, {
         // 每一段的时长
-        duration: 500, //可根据实际采集时间间隔设置
+        duration: 200, //可根据实际采集时间间隔设置
         // JSAPI2.0 是否延道路自动设置角度在 moveAlong 里设置
         autoRotation: true,
       })
@@ -63,6 +90,7 @@ export default {
         icon: icon,
         offset: new AMap.Pixel(-13, -26),
       })
+
       // 绘制轨迹
       let polyline = new AMap.Polyline({
         map: map,
@@ -113,4 +141,13 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="less" scoped>
+#guiji {
+  height: calc(100vh - 400px);
+  width: 100%;
+}
+
+.controls {
+  margin-top: 10px;
+}
+</style>

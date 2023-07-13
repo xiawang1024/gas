@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 19:10:13
- * @LastEditTime: 2023-07-13 15:36:15
+ * @LastEditTime: 2023-07-13 16:38:13
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/index.js
@@ -27,29 +27,7 @@ export const mapAll = () => request({ url: '/gas/index/map', method: 'get' })
 
 export const mapSingle = type =>
   request({ url: `/gas/index/map/${type}`, method: 'get' })
-// 历史轨迹查询
-export const guiji = ({
-  pageNum = 1,
-  pageSize = 500000,
-  nickName,
-  workType,
-  beginTime,
-  endTime,
-  userId,
-}) =>
-  request({
-    url: '/gas/index/guiji/history',
-    method: 'get',
-    params: {
-      pageNum,
-      pageSize,
-      nickName,
-      workType,
-      beginTime,
-      endTime,
-      userId,
-    },
-  })
+
 // 手动采集查询
 export const caiji = ({
   userId,
