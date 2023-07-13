@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-07-13 17:17:25
+ * @LastEditTime: 2023-07-13 17:28:11
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/guiji.vue
@@ -156,6 +156,12 @@ export default {
   },
   methods: {
     openMapHandler(row) {
+      let loading = this.$loading({
+        lock: true,
+        text: '正在加载中...',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)',
+      })
       GuiJiService.getDetail(row.guijiId).then(res => {
         let { code, rows } = res.data
         if (code == 200) {
@@ -173,6 +179,7 @@ export default {
             })
           }
         }
+        loading.close()
       })
     },
     getUsers() {
