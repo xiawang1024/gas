@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-07-10 16:58:30
+ * @LastEditTime: 2023-07-13 15:43:06
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/guiji.vue
@@ -35,12 +35,9 @@
       <el-form-item label="日期">
         <el-date-picker
           v-model="formInline.date"
-          type="datetimerange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          value-format="yyyy-MM-dd HH:mm:ss"
-          clearable
+          type="date"
+          placeholder="选择日期"
+          value-format="yyyy-MM-dd"
         >
         </el-date-picker>
       </el-form-item>
@@ -75,7 +72,7 @@ export default {
       formInline: {
         userId: '',
         workType: '',
-        date: [],
+        date: '',
       },
     }
   },
@@ -84,8 +81,10 @@ export default {
       return {
         userId: this.formInline.userId,
         workType: this.formInline.workType,
-        beginTime: this.formInline.date && this.formInline.date[0],
-        endTime: this.formInline.date && this.formInline.date[1],
+        beginTime: this.formInline.date
+          ? `${this.formInline.date} 00:00:00`
+          : '',
+        endTime: this.formInline.date ? `${this.formInline.date} 23:59:59` : '',
       }
     },
   },
