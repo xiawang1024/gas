@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 19:10:13
- * @LastEditTime: 2023-06-25 17:57:38
+ * @LastEditTime: 2023-07-13 11:36:42
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/index.js
@@ -106,12 +106,15 @@ export const order = ({
 // 传感器监控报警
 export const watchAlarm = () =>
   request({
-    url: '/gas/flowmeter/alarm',
+    url: '/gas/index/alarm',
     method: 'get',
   })
 // 取消传感器报警
-export const closeAlarm = () =>
+export const closeAlarm = deviceId =>
   request({
-    url: `/gas/flowmeter/alarm/disable`,
+    url: `/gas/index/alarm/disable`,
     method: 'get',
+    params: {
+      deviceId,
+    },
   })

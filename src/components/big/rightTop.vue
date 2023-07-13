@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-07-11 11:39:18
+ * @LastEditTime: 2023-07-13 12:00:16
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -54,6 +54,8 @@ import Flow12 from '@/components/big/flowDigita12.vue'
 
 import * as ClientService from '@/api/service.js'
 
+import { Notification } from 'element-ui'
+
 export default {
   name: 'RightTop',
   components: {
@@ -65,7 +67,7 @@ export default {
     return {
       options: [],
       value: '',
-      danger: false,
+      dangerList: [],
     }
   },
   computed: {
@@ -80,11 +82,22 @@ export default {
 
       return type
     },
+    danger() {
+      return this.dangerList.includes(this.value)
+    },
+    menzhanMap() {
+      let map = {}
+      for (let i = 0; i < this.options.length; i++) {
+        map[this.options[i].value] = this.options[i].label
+      }
+
+      return map
+    },
   },
 
   mounted() {
     this.timer = setInterval(() => {
-      // this.watchAlarm()
+      this.watchAlarm()
     }, 5000)
 
     this.getDict()
@@ -123,11 +136,11 @@ export default {
       Service.watchAlarm().then(res => {
         let { code, data } = res.data
         if (code == 200) {
-          if (data.isAlarm == -1) {
-            this.danger = true
+          if (data.length > 0) {
             this.$refs['audio'].play()
+            this.dangerList = data
+            this.tips(data)
           } else {
-            this.danger = false
             this.$refs['audio'].pause()
           }
         }
@@ -135,12 +148,30 @@ export default {
     },
 
     clearDanger() {
-      Service.closeAlarm().then(res => {
+      Service.closeAlarm(this.value).then(res => {
         let { code } = res.data
         if (code == 200) {
-          this.danger = false
-          this.$refs['audio'].pause()
+          this.watchAlarm()
         }
+      })
+    },
+
+    tips(data) {
+      let str = ``
+
+      for (let i = 0; i < data.length; i++) {
+        str += `<div><el-tag type="danger">${
+          this.menzhanMap[data[i]]
+        }</el-tag></div>`
+      }
+
+      console.log(str)
+      Notification({
+        title: '警报',
+        message: str,
+        type: 'error',
+        dangerouslyUseHTMLString: true,
+        duration: 3000,
       })
     },
   },
