@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-07-13 12:00:16
+ * @LastEditTime: 2023-07-13 13:36:15
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -133,6 +133,7 @@ export default {
       })
     },
     watchAlarm() {
+      this.notice && this.notice.close()
       Service.watchAlarm().then(res => {
         let { code, data } = res.data
         if (code == 200) {
@@ -160,18 +161,19 @@ export default {
       let str = ``
 
       for (let i = 0; i < data.length; i++) {
-        str += `<div><el-tag type="danger">${
+        str += `<div style="font-size:16px;color:red;line-height:1.8;">${
           this.menzhanMap[data[i]]
-        }</el-tag></div>`
+        } 报警 </div>
+        `
       }
 
       console.log(str)
-      Notification({
+      this.notice = Notification({
         title: '警报',
         message: str,
         type: 'error',
         dangerouslyUseHTMLString: true,
-        duration: 3000,
+        duration: 0,
       })
     },
   },
