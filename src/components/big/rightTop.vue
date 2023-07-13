@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-07-13 13:36:15
+ * @LastEditTime: 2023-07-13 15:06:32
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -167,7 +167,6 @@ export default {
         `
       }
 
-      console.log(str)
       this.notice = Notification({
         title: '警报',
         message: str,
