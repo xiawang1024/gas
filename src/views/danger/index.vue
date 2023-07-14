@@ -268,7 +268,7 @@ import * as ClientService from '@/api/service.js'
 
 import * as DangerService from '@/api/danger'
 
-const IMGHOST = 'http://114.115.206.239:8089'
+const IMGHOST = 'http://123.7.68.106:8089'
 
 export default {
   name: 'Danger',

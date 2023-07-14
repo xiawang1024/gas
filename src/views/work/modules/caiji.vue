@@ -347,7 +347,7 @@
 </template>
 
 <script>
-const IMGHOST = 'http://114.115.206.239:8089'
+const IMGHOST = 'http://123.7.68.106:8089'
 import * as Service from '@/api/index'
 import * as ClientService from '@/api/service.js'
 import { WorkType, WorkTypeMap } from '../conf.js'
