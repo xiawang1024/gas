@@ -1,10 +1,10 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:00:16
- * @LastEditTime: 2023-06-26 22:03:04
+ * @LastEditTime: 2023-07-17 10:12:35
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /gas/src/views/danger/index.vue
+ * @FilePath: /electronic-file/src/views/danger/index.vue
  * 工作，生活，健康
 -->
 <template>
@@ -242,17 +242,24 @@
             placeholder="请输入发现人"
           ></el-input>
         </el-form-item>
-        <el-row>
-          <el-form-item label="隐患内容">
-            <el-input
-              class="fixWidth"
-              type="textarea"
-              rows="4"
-              v-model="dealForm.wtxq"
-              placeholder="请输入隐患内容"
-            ></el-input>
-          </el-form-item>
-        </el-row>
+        <el-form-item label="隐患内容">
+          <el-input
+            class="fixWidth"
+            type="textarea"
+            rows="4"
+            v-model="dealForm.wtxq"
+            placeholder="请输入隐患内容"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="处理过程">
+          <el-input
+            class="fixWidth"
+            type="textarea"
+            rows="4"
+            v-model="dealForm.dealDuration"
+            placeholder="请输入处理过程"
+          ></el-input>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
