@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-21 16:33:01
- * @LastEditTime: 2023-07-04 17:33:31
+ * @LastEditTime: 2023-07-17 11:00:40
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/flow.js
@@ -35,4 +35,18 @@ export const getFlowList = ({
     url: `/gas/flowmeter/list`,
     method: 'get',
     params: { location, pageNum, pageSize, beginTime, endTime },
+  })
+
+// 中安历史流量
+export const getZaFlowList = ({
+  deviceId,
+  pageNum = 1,
+  pageSize = 10000,
+  beginTime,
+  endTime,
+}) =>
+  request({
+    url: `/gas/za/list`,
+    method: 'get',
+    params: { deviceId, beginTime, endTime, pageNum, pageSize },
   })

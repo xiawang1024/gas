@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-25 09:24:12
- * @LastEditTime: 2023-07-04 12:00:38
+ * @LastEditTime: 2023-07-17 11:05:02
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/flow/index.vue
@@ -12,10 +12,10 @@
     <NavHeader />
     <el-card class="wrap">
       <el-form ref="form" :inline="true" :model="schForm">
-        <el-form-item label="门站" prop="address">
+        <el-form-item label="设备" prop="address">
           <el-select
             v-model="schForm.address"
-            placeholder="请选择门站"
+            placeholder="请选择设备"
             clearable
           >
             <el-option
@@ -49,11 +49,11 @@
         </el-form-item>
       </el-form>
 
-      <div class="chart" v-if="false">
+      <div class="chart">
         <Chart :table-data="tableData"></Chart>
       </div>
 
-      <el-table :data="tableData" border style="width: 100%">
+      <!-- <el-table :data="tableData" border style="width: 100%">
         <el-table-column prop="location" label="门站">
           <template slot-scope="scope">
             {{ FLOW_LIST_MAP[scope.row.location] }}
@@ -79,7 +79,7 @@
           :total="pageInfo.total"
         >
         </el-pagination>
-      </div>
+      </div> -->
     </el-card>
   </div>
 </template>
@@ -87,9 +87,12 @@
 <script>
 import NavHeader from '@/components/nav/index.vue'
 import * as FLowService from '@/api/flow.js'
-import Chart from '@/views/flow/chart.vue'
+import Chart from '@/views/flow/chart1.vue'
 
 import * as ClientService from '@/api/service.js'
+
+import dayjs from 'dayjs'
+
 export default {
   name: 'Flow',
   components: {
@@ -105,7 +108,7 @@ export default {
       FLOW_LIST: [],
       pageInfo: {
         pageNum: 1,
-        pageSize: 20,
+        pageSize: 10000,
         total: 0,
       },
       tableData: [],
@@ -114,7 +117,7 @@ export default {
   computed: {
     postData() {
       return {
-        location: this.schForm.address,
+        deviceId: this.schForm.address,
         beginTime: this.schForm.date ? this.schForm.date[0] : null,
         endTime: this.schForm.date ? this.schForm.date[1] : null,
         pageNum: this.pageInfo.pageNum,
@@ -151,19 +154,20 @@ export default {
   },
   methods: {
     getDict() {
-      let menzhanPromise = ClientService.getDict('location')
+      // let menzhanPromise = ClientService.getDict('location')
       let shebeipromise = ClientService.getDict('za_device_list')
       //并行请求
-      Promise.all([menzhanPromise, shebeipromise]).then(res => {
-        let menzhan = res[0].data.data
-        let shebei = res[1].data.data
+      // Promise.all([menzhanPromise, shebeipromise]).then(res => {
+      Promise.all([shebeipromise]).then(res => {
+        // let menzhan = res[0].data.data
+        let shebei = res[0].data.data
         let options = []
-        menzhan.forEach(item => {
-          options.push({
-            label: item.dictLabel,
-            value: item.dictValue,
-          })
-        })
+        // menzhan.forEach(item => {
+        //   options.push({
+        //     label: item.dictLabel,
+        //     value: item.dictValue,
+        //   })
+        // })
         shebei.forEach(item => {
           options.push({
             label: item.dictLabel,
@@ -173,10 +177,17 @@ export default {
         this.FLOW_LIST = options
 
         this.schForm.address = options[0].value
+        //间隔一周，结束时间为当前时间，开始时间为一周前  使用dayjs
+        this.schForm.date = [
+          dayjs()
+            .subtract(1, 'week')
+            .format('YYYY-MM-DD 00:00:00'),
+          dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        ]
       })
     },
     getData() {
-      FLowService.getFlowList(this.postData).then(res => {
+      FLowService.getZaFlowList(this.postData).then(res => {
         let { code, rows, total } = res.data
         if (code === 200) {
           this.tableData = rows
@@ -219,6 +230,6 @@ export default {
 
 .chart {
   width: 100%;
-  height: 200px;
+  height: 400px;
 }
 </style>

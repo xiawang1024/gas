@@ -78,7 +78,7 @@ const routes = [
     name: 'Flow',
     component: Flow,
     meta: {
-      title: '流量计查询系统',
+      title: '传感器查询系统',
     },
   },
   {
