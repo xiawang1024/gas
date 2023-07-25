@@ -68,7 +68,11 @@
           show-overflow-tooltip
         >
         </el-table-column>
-        <el-table-column prop="nickName" label="处理人" show-overflow-tooltip>
+        <el-table-column
+          prop="nickName"
+          label="整改责任人"
+          show-overflow-tooltip
+        >
         </el-table-column>
         <el-table-column prop="wtxq" label="隐患内容" show-overflow-tooltip>
         </el-table-column>
@@ -98,7 +102,7 @@
 
         <el-table-column
           prop="submitNickName"
-          label="发现人"
+          label="隐患排查人"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -211,11 +215,11 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="处理人">
+        <el-form-item label="整改责任人">
           <el-input
             class="fixWidth"
             v-model="dealForm.nickName"
-            placeholder="处理人"
+            placeholder="整改责任人"
           ></el-input>
         </el-form-item>
 
@@ -235,11 +239,11 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="发现人">
+        <el-form-item label="隐患排查人">
           <el-input
             class="fixWidth"
             v-model="dealForm.submitNickName"
-            placeholder="请输入发现人"
+            placeholder="请输入隐患排查人"
           ></el-input>
         </el-form-item>
         <el-form-item label="隐患内容">

@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2023-07-11 11:51:37
+ * @LastEditTime: 2023-07-25 17:04:17
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/flowDigita12.vue
@@ -90,7 +90,7 @@
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text">B标况流量</div>
+        <div class="text">B标况总量</div>
       </div>
       <div class="digita">{{ info['DB16.DBD310'] }} m³</div>
     </div>

@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-07-11 15:13:04
+ * @LastEditTime: 2023-07-25 17:12:42
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/map.vue
@@ -144,7 +144,7 @@ export default {
     },
     createInfoWindow(title, content) {},
     createMarkers(AMap, list, onMarkerClick) {
-      let iconSize = 40
+      let iconSize = 26
       let markers = []
       for (let i = 0; i < list.length; i++) {
         let size =
