@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 14:03:54
- * @LastEditTime: 2023-07-25 17:51:10
+ * @LastEditTime: 2023-07-27 16:36:57
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/map.vue
@@ -144,7 +144,7 @@ export default {
     },
     createInfoWindow(title, content) {},
     createMarkers(AMap, list, onMarkerClick) {
-      let iconSize = 18
+      let iconSize = 12
       let markers = []
       for (let i = 0; i < list.length; i++) {
         let size =
@@ -177,15 +177,24 @@ export default {
           position: [list[i].mapLon, list[i].mapLat],
           icon: icon,
           offset: new AMap.Pixel(-iconSize / 2, -iconSize / 2),
-          label: {
-            content: content,
-            offset: [0, 0],
-            direction: 'bottom',
-          },
+          // label: {
+          //   content: content,
+          //   offset: [0, 0],
+          //   direction: 'bottom',
+          //   fontSize: 10,
+          // },
         })
-        marker.content = '我是第' + (i + 1) + '个Marker'
-        marker.on('click', onMarkerClick) // 绑定 click 事件
-        marker.emit('click', { target: marker })
+        marker.content = content
+        // marker.on('click', onMarkerClick) // 绑定 click 事件
+        // marker.emit('click', { target: marker })
+
+        marker.on('mouseover', e => {
+          this.infoWindow.setContent(e.target.content)
+          this.infoWindow.open(this.map, e.target.getPosition())
+        })
+        marker.on('mouseout', e => {
+          this.infoWindow.close()
+        })
         markers.push(marker)
       }
 
@@ -315,7 +324,12 @@ export default {
           })
 
           // 创建信息窗体
-          const infoWindow = new AMap.InfoWindow({ isCustom: true })
+          const infoWindow = new AMap.InfoWindow({
+            isCustom: true,
+            offset: new AMap.Pixel(0, -10),
+          })
+
+          this.infoWindow = infoWindow
           const onMarkerClick = e => {
             console.log(e)
             infoWindow.setContent(e.target.content)
