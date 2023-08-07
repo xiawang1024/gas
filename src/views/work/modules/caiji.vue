@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-07-13 17:19:18
+ * @LastEditTime: 2023-08-07 09:42:36
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/caiji.vue
@@ -491,12 +491,16 @@ export default {
         locationinfoId: row.locationinfoId,
         queNum: `${row.nickName}_${row.locationinfoId}`,
         address: row.comment1,
-        wtflvalue: row.wtflvalue,
-        jjcdvalue: row.jjcdvalue,
+        wtflvalue: this.getValueByLabel(this.QuestionType, row.wtflvalue),
+        jjcdvalue: this.getValueByLabel(this.ImportantLevel, row.jjcdvalue),
         submitNickName: row.nickName,
         longitude: row.longitude,
         latitude: row.latitude,
       }
+    },
+    getValueByLabel(arr, label) {
+      let res = arr.find(item => item.label === label)
+      return res ? res.value : ''
     },
     getUsers() {
       Service.allUser().then(res => {

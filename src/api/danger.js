@@ -1,15 +1,18 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-26 19:47:46
- * @LastEditTime: 2023-06-26 22:01:51
+ * @LastEditTime: 2023-08-07 09:35:36
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /gas/src/api/danger.js
+ * @FilePath: /electronic-file/src/api/danger.js
  * 工作，生活，健康
  */
 import request from './request'
 
 export const deal = ({
+  jjcdvalue,
+  wtflvalue,
+  address,
   locationinfoId,
   queNum,
   wtxq,
@@ -32,6 +35,9 @@ export const deal = ({
     url: `/gas/dealquestion/deal`,
     method: 'post',
     data: {
+      jjcdvalue,
+      wtflvalue,
+      address,
       locationinfoId,
       queNum,
       wtxq,
