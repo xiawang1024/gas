@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-21 16:33:01
- * @LastEditTime: 2023-08-30 11:46:01
+ * @LastEditTime: 2023-08-30 15:25:06
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/flow.js
@@ -33,7 +33,7 @@ export const getFlowList = ({
 }) =>
   request({
     url: `/gas/flowmeter/list`,
-    method: 'post',
+    method: 'get',
     data: { location, pageNum, pageSize, params: { beginTime, endTime } },
   })
 
@@ -47,8 +47,8 @@ export const getZaFlowList = ({
 }) =>
   request({
     url: `/gas/za/list`,
-    method: 'post',
-    data: {
+    method: 'get',
+    params: {
       deviceId,
       pageNum,
       pageSize,
