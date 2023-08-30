@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:06:13
- * @LastEditTime: 2023-07-14 09:50:00
+ * @LastEditTime: 2023-08-30 10:32:34
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/big/rightTop.vue
@@ -24,7 +24,9 @@
     <Flow12
       class="scroll-board"
       :address="value"
-      v-if="type == 'location' && value == '001'"
+      v-if="
+        type == 'location' && (value == '001' || value == '99' || value == '88')
+      "
     />
     <Flow
       class="scroll-board"
