@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-14 10:20:07
- * @LastEditTime: 2023-06-14 10:24:30
+ * @LastEditTime: 2023-08-31 09:59:47
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/nav/index.vue
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import localforage from 'localforage'
+
 export default {
   name: 'Nav',
   data() {
@@ -31,8 +33,9 @@ export default {
       this.$router.push('/')
     },
     logOut() {
-      localStorage.removeItem('token')
-      this.$router.push('/login')
+      localforage.removeItem('token').then(() => {
+        this.$router.push('/login')
+      })
     },
   },
 }

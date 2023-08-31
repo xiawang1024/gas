@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 19:10:18
- * @LastEditTime: 2023-08-30 15:29:16
+ * @LastEditTime: 2023-08-31 10:00:19
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/request.js
@@ -9,6 +9,7 @@
  */
 import router from '@/router/index.js'
 import axios from 'axios'
+import localforage from 'localforage'
 
 const request = axios.create({
   // baseURL: 'http://192.168.241.94:8089',
@@ -19,18 +20,22 @@ const request = axios.create({
 
 // 请求拦截器
 request.interceptors.request.use(
-  config => {
-    if (config.method === 'get' && config.params) {
-      let url = config.url + '?' + tansParams(config.params)
-      url = url.slice(0, -1)
-      config.params = {}
-      config.url = url
+  async config => {
+    try {
+      if (config.method === 'get' && config.params) {
+        let url = config.url + '?' + tansParams(config.params)
+        url = url.slice(0, -1)
+        config.params = {}
+        config.url = url
+      }
+      // 在发送请求之前做些什么
+      // console.log(config)
+      // localStorage.getItem('token') 设置token
+      config.headers['Authorization'] = await localforage.getItem('token')
+      return config
+    } catch (error) {
+      console.log(err)
     }
-    // 在发送请求之前做些什么
-    // console.log(config)
-    // localStorage.getItem('token') 设置token
-    config.headers['Authorization'] = localStorage.getItem('token')
-    return config
   },
   error => {
     // 对请求错误做些什么
@@ -46,8 +51,10 @@ request.interceptors.response.use(
     //401 token过期
     if (response.data.code === 401) {
       // 跳转到登录页面
-      localStorage.removeItem('token')
-      router.push('/login')
+      localforage.removeItem('token').then(() => {
+        console.log('token已经删除')
+        router.push('/login')
+      })
     }
 
     return response

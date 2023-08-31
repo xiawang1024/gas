@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 08:45:39
- * @LastEditTime: 2023-07-17 10:18:08
+ * @LastEditTime: 2023-08-31 09:56:36
  * @LastEditors: xiawang1024
  * @Description
  * @FilePath: /electronic-file/src/views/home/index.vue
@@ -82,6 +82,8 @@ import mapXw from '@/components/big/map.vue'
 import RightTop from '@/components/big/rightTop.vue'
 import RightBottom from '@/components/big/rightBottom.vue'
 
+import localforage from 'localforage'
+
 export default {
   name: 'DataView',
   components: {
@@ -119,8 +121,9 @@ export default {
           this.goToPath('/flow')
           break
         case 'exit':
-          localStorage.removeItem('token')
-          this.$router.push('/login')
+          localforage.removeItem('token').then(() => {
+            this.$router.push('/login')
+          })
           break
       }
     },

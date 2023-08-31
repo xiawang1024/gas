@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:38:14
- * @LastEditTime: 2023-07-04 10:59:52
+ * @LastEditTime: 2023-08-31 09:59:06
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/router/index.js
@@ -10,6 +10,7 @@
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import localforage from 'localforage'
 
 import DataV from '@/views/home/index.vue'
 import Order from '@/views/order/index.vue'
@@ -23,7 +24,7 @@ import Flow from '@/views/flow/index.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
+export const routes = [
   {
     path: '/',
     redirect: '/datav',
@@ -37,6 +38,7 @@ const routes = [
     path: '/order',
     name: 'Order',
     component: Order,
+    roles: ['admin'],
     meta: {
       title: '客户缴费查询系统',
     },
@@ -45,6 +47,7 @@ const routes = [
     path: '/work',
     name: 'Work',
     component: Work,
+    roles: ['admin'],
     meta: {
       title: '外勤查询系统',
     },
@@ -53,6 +56,7 @@ const routes = [
     path: '/service',
     name: 'Service',
     component: Service,
+    roles: ['admin'],
     meta: {
       title: '客户服务系统',
     },
@@ -61,6 +65,7 @@ const routes = [
     path: '/danger',
     name: 'Danger',
     component: Danger,
+    roles: ['admin'],
     meta: {
       title: '隐患排查治理系统',
     },
@@ -69,6 +74,7 @@ const routes = [
     path: '/report',
     name: 'Report',
     component: Report,
+    roles: ['admin'],
     meta: {
       title: '巡线管理系统',
     },
@@ -77,6 +83,7 @@ const routes = [
     path: '/flow',
     name: 'Flow',
     component: Flow,
+    roles: ['admin'],
     meta: {
       title: '传感器查询系统',
     },
@@ -98,13 +105,17 @@ const router = new VueRouter({
 })
 
 // 路由守卫
-router.beforeEach((to, from, next) => {
-  // 检查localStorage中是否有token
-  const token = localStorage.getItem('token')
-  if (to.path === '/login') {
-    next()
-  } else {
-    token ? next() : next('/login')
+router.beforeEach(async (to, from, next) => {
+  try {
+    // 检查localStorage中是否有token
+    const token = await localforage.getItem('token')
+    if (to.path === '/login') {
+      next()
+    } else {
+      token ? next() : next('/login')
+    }
+  } catch (error) {
+    console.log(err)
   }
 })
 

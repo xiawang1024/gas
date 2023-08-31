@@ -16,8 +16,10 @@
     "echarts": "^5.4.2",
     "element-ui": "^2.15.13",
     "hls.js": "^1.4.5",
+    "localforage": "^1.10.0",
     "vue": "^2.6.10",
-    "vue-router": "^3.0.3"
+    "vue-router": "^3.0.3",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",
