@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2023-07-17 11:06:41
+ * @LastEditTime: 2023-08-31 10:35:42
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/flow/chart1.vue
@@ -63,7 +63,7 @@ export default {
     tableData: {
       handler(val) {
         let lastItem = val[val.length - 1]
-        if (lastItem.deviceType == 'pressure') {
+        if (lastItem && lastItem.deviceType == 'pressure') {
           this.options.title.text = '压力 MPa'
           this.options.series[0].data = val.map(
             item => item.payload.meter_value
