@@ -61,8 +61,11 @@ export default {
           Service.login(this.form).then(res => {
             let { code, token, msg } = res.data
             if (code == 200) {
-              localforage.setItem('token', `Bearer ${token}`)
-              this.$router.push('/datav')
+              localforage.setItem('token', `Bearer ${token}`).then(() => {
+                let role = 'admin'
+                this.update_permissions(role)
+                this.$router.push('/datav')
+              })
             } else {
               this.$message.error(msg)
             }

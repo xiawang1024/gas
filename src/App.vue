@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 08:45:39
- * @LastEditTime: 2023-07-04 17:26:06
+ * @LastEditTime: 2023-08-31 10:16:38
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/App.vue
@@ -14,10 +14,24 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import localforage from 'localforage'
+
 export default {
   name: 'App',
   data() {
     return {}
+  },
+  async created() {
+    try {
+      let token = await localforage.getItem('token')
+      token && this.update_permissions('admin')
+    } catch (error) {
+      console.log(error)
+    }
+  },
+  methods: {
+    ...mapActions(['update_permissions']),
   },
 }
 </script>

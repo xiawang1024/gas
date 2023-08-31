@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-08-31 09:26:29
- * @LastEditTime: 2023-08-31 09:49:56
+ * @LastEditTime: 2023-08-31 10:31:03
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/store/index.js
@@ -10,7 +10,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import routes from '@/router/index.js'
+import { routes } from '@/router/index.js'
 
 Vue.use(Vuex)
 
@@ -26,7 +26,9 @@ const store = new Vuex.Store({
   },
   mutations: {
     UPDATE_PERMISSIONS(state, payload) {
-      state.permission_routes = payload
+      state.permission_routes = state.routes.filter(
+        item => item.roles && item.roles.includes(payload)
+      )
     },
   },
   actions: {
