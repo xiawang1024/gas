@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:38:14
- * @LastEditTime: 2023-08-31 09:59:06
+ * @LastEditTime: 2023-08-31 10:44:44
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/router/index.js
@@ -21,6 +21,9 @@ import Report from '@/views/report/index.vue'
 import NotFound from '@/views/404/index.vue'
 import Login from '@/views/login/index.vue'
 import Flow from '@/views/flow/index.vue'
+import HomeCheck from '@/views/homeCheck/index.vue'
+import EmergencyRescue from '@/views/emergencyRescue/index.vue'
+import SpecialOperation from '@/views/specialOperation/index.vue'
 
 Vue.use(VueRouter)
 
@@ -85,7 +88,34 @@ export const routes = [
     component: Flow,
     roles: ['admin'],
     meta: {
-      title: '传感器查询系统',
+      title: '入户安检系统',
+    },
+  },
+  {
+    path: '/homeCheck',
+    name: 'HomeCheck',
+    component: HomeCheck,
+    roles: ['admin'],
+    meta: {
+      title: '家庭巡检系统',
+    },
+  },
+  {
+    path: '/emergencyRescue',
+    name: 'EmergencyRescue',
+    component: EmergencyRescue,
+    roles: ['admin'],
+    meta: {
+      title: '应急抢险系统',
+    },
+  },
+  {
+    path: '/specialOperation',
+    name: 'SpecialOperation',
+    component: SpecialOperation,
+    roles: ['admin'],
+    meta: {
+      title: '特种作业系统',
     },
   },
   {
