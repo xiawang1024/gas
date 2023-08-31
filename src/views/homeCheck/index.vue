@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:01:26
- * @LastEditTime: 2023-08-31 10:46:00
+ * @LastEditTime: 2023-08-31 10:54:41
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/homeCheck/index.vue
@@ -10,16 +10,19 @@
 <template>
   <div class="container">
     <NavHeader />
+    <FormCore />
   </div>
 </template>
 
 <script>
 import NavHeader from '@/components/nav/index.vue'
+import FormCore from './modules/formCore.vue'
 
 export default {
   name: 'HomeCheck',
   components: {
     NavHeader,
+    FormCore,
   },
   data() {
     return {}
