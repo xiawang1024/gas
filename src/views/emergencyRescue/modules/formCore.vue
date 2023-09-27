@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:00:16
- * @LastEditTime: 2023-09-27 16:31:03
+ * @LastEditTime: 2023-09-27 16:44:08
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/emergencyRescue/modules/formCore.vue
@@ -406,31 +406,7 @@ export default {
       console.log('actionHandler')
     },
     dialogConfirm() {
-      if (this.dialogType === 0) {
-        ClientService.add({ ...this.editForm }).then(res => {
-          let { code } = res.data
-          if (code === 200) {
-            this.$message({
-              type: 'success',
-              message: '新增成功!',
-            })
-            this.dialogVisible = false
-            this.getData()
-          }
-        })
-      } else {
-        ClientService.update({ ...this.editForm }).then(res => {
-          let { code } = res.data
-          if (code === 200) {
-            this.$message({
-              type: 'success',
-              message: '修改成功!',
-            })
-            this.dialogVisible = false
-            this.getData()
-          }
-        })
-      }
+      this.dialogVisible = false
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`)
