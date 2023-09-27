@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:00:16
- * @LastEditTime: 2023-09-27 16:08:28
+ * @LastEditTime: 2023-09-27 16:31:03
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/emergencyRescue/modules/formCore.vue
@@ -48,9 +48,9 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item prop="problemType">
+          <el-form-item prop="isOver">
             <el-select
-              v-model="schForm.problemType"
+              v-model="schForm.isOver"
               placeholder="是否结束"
               clearable
             >
