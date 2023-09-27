@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:00:16
- * @LastEditTime: 2023-09-27 12:32:09
+ * @LastEditTime: 2023-09-27 15:23:52
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/homeCheck/modules/formCore.vue
@@ -20,39 +20,52 @@
           >新增</el-button
         >
         <el-form :inline="true" :model="schForm" ref="schForm">
-          <el-form-item prop="clientInfo">
+          <el-form-item prop="userId">
             <el-input
-              v-model.trim="schForm.clientInfo"
-              placeholder="客户信息"
+              v-model.trim="schForm.userId"
+              placeholder="用户号"
               clearable
             ></el-input>
           </el-form-item>
-          <el-form-item prop="problemUrgency">
-            <el-select
-              v-model="schForm.problemUrgency"
-              placeholder="紧急程度"
+          <el-form-item prop="gasNo">
+            <el-input
+              v-model.trim="schForm.gasNo"
+              placeholder="燃气表号"
               clearable
-            >
-              <el-option
-                :label="item.label"
-                :value="item.value"
-                v-for="item of ImportantLevel"
-                :key="item.value"
-              ></el-option>
-            </el-select>
+            ></el-input>
           </el-form-item>
-          <el-form-item prop="problemType">
-            <el-select
-              v-model="schForm.problemType"
-              placeholder="问题分类"
+          <el-form-item prop="customerName">
+            <el-input
+              v-model.trim="schForm.customerName"
+              placeholder="用户名称"
               clearable
-            >
-              <el-option
-                :label="item.label"
-                :value="item.value"
-                v-for="item of QuestionType"
-                :key="item.value"
-              ></el-option>
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="address">
+            <el-input
+              v-model.trim="schForm.address"
+              placeholder="详细地址"
+              clearable
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="securityUser">
+            <el-input
+              v-model.trim="schForm.securityUser"
+              placeholder="安检员"
+              clearable
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="executeUser">
+            <el-input
+              v-model.trim="schForm.executeUser"
+              placeholder="整改人"
+              clearable
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="executeStatus">
+            <el-select v-model="schForm.executeStatus" placeholder="是否完成">
+              <el-option label="已完成" value="Y"> </el-option>
+              <el-option label="未完成" value="N"> </el-option>
             </el-select>
           </el-form-item>
           <el-form-item prop="date">
@@ -196,14 +209,23 @@
         <el-descriptions-item label="安检员">{{
           editForm.securityUser
         }}</el-descriptions-item>
-        <el-descriptions-item label="安检日期">{{
-          editForm.securityTime
-        }}</el-descriptions-item>
         <el-descriptions-item label="安检详情">{{
           editForm.securityDetail
         }}</el-descriptions-item>
+        <el-descriptions-item label="安检日期">{{
+          editForm.securityTime
+        }}</el-descriptions-item>
         <el-descriptions-item label="整改人">{{
           editForm.executeUser
+        }}</el-descriptions-item>
+        <el-descriptions-item label="经度">{{
+          editForm.longitude
+        }}</el-descriptions-item>
+        <el-descriptions-item label="维度">{{
+          editForm.latitude
+        }}</el-descriptions-item>
+        <el-descriptions-item label="海拔">{{
+          editForm.altitude
         }}</el-descriptions-item>
         <el-descriptions-item label="整改情况">{{
           editForm.executeDetail
@@ -214,15 +236,7 @@
             >{{ editForm.executeStatus === 'Y' ? '未完成' : '已完成' }}</el-tag
           >
         </el-descriptions-item>
-        <el-descriptions-item label="经度">{{
-          editForm.longitude
-        }}</el-descriptions-item>
-        <el-descriptions-item label="维度">{{
-          editForm.latitude
-        }}</el-descriptions-item>
-        <el-descriptions-item label="海拔">{{
-          editForm.altitude
-        }}</el-descriptions-item>
+
         <el-descriptions-item label="安检单">
           <el-image
             style="width: 80px; height: 80px"
@@ -233,31 +247,31 @@
         </el-descriptions-item>
         <el-descriptions-item label="安检照片">
           <el-image
-            v-for="index in 5"
-            :key="index"
+            v-for="item of [1, 2, 3, 4, 5, 6]"
+            :key="item"
             style="width: 80px; height: 80px;margin-right: 4px;"
-            :src="`${IMGHOST}${editForm.securityImage}${index + 1}`"
-            :preview-src-list="[`${IMGHOST}${editForm.securityTable}`]"
+            :src="`${IMGHOST}${editForm['securityImage' + item]}`"
+            :preview-src-list="securityImageList"
           >
           </el-image>
         </el-descriptions-item>
         <el-descriptions-item label="隐患照片">
           <el-image
-            v-for="index in 2"
-            :key="index"
-            style="width: 80px; height: 80px"
-            :src="`${IMGHOST}${editForm.hiddenDangerImage}${index + 1}`"
-            :preview-src-list="[`${IMGHOST}${editForm.securityTable}`]"
+            v-for="item of [1, 2, 3]"
+            :key="item"
+            style="width: 80px; height: 80px;margin-right: 4px;"
+            :src="`${IMGHOST}${editForm['hiddenDangerImage' + item]}`"
+            :preview-src-list="hiddenDangerImageList"
           >
           </el-image>
         </el-descriptions-item>
         <el-descriptions-item label="整改照片">
           <el-image
-            v-for="index in 2"
-            :key="index"
-            style="width: 80px; height: 80px"
-            :src="`${IMGHOST}${editForm.executeImage}${index + 1}`"
-            :preview-src-list="[`${IMGHOST}${editForm.securityTable}`]"
+            v-for="item of [1, 2, 3]"
+            :key="item"
+            style="width: 80px; height: 80px;margin-right: 4px;"
+            :src="`${IMGHOST}${editForm['executeImage' + item]}`"
+            :preview-src-list="executeImageList"
           >
           </el-image>
         </el-descriptions-item>
@@ -284,12 +298,7 @@ export default {
       IMGHOST,
       QuestionType: [],
       ImportantLevel: [],
-      schForm: {
-        problemType: '',
-        problemUrgency: '',
-        clientInfo: '',
-        date: null,
-      },
+      schForm: {},
       tableData: [],
       pageInfo: {
         pageNum: 1,
@@ -298,13 +307,7 @@ export default {
       },
       dialogVisible: false,
       dialogType: 0, // 0 新增 1 编辑 2 查看
-      editForm: {
-        problemType: '',
-        problemUrgency: '',
-        clientInfo: '',
-        address: '',
-        problemDetails: '',
-      },
+      editForm: {},
     }
   },
   computed: {
@@ -333,15 +336,38 @@ export default {
     },
     postData() {
       let data = {
+        ...this.schForm,
         pageNum: this.pageInfo.pageNum,
         pageSize: this.pageInfo.pageSize,
-        problemType: this.schForm.problemType,
-        problemUrgency: this.schForm.problemUrgency,
-        clientInfo: this.schForm.clientInfo,
         beginTime: this.schForm.date && this.schForm.date[0],
         endTime: this.schForm.date && this.schForm.date[1],
       }
       return data
+    },
+    securityImageList() {
+      let list = []
+      for (let i = 1; i <= 6; i++) {
+        let key = `securityImage${i}`
+        list.push(`${IMGHOST}${this.editForm[key]}`)
+      }
+      return list
+    },
+    hiddenDangerImageList() {
+      let list = []
+      for (let i = 1; i <= 3; i++) {
+        let key = `hiddenDangerImage${i}`
+        list.push(`${IMGHOST}${this.editForm[key]}`)
+      }
+      return list
+    },
+    executeImageList() {
+      let list = []
+      for (let i = 1; i <= 3; i++) {
+        let key = `executeImage${i}`
+
+        list.push(`${IMGHOST}${this.editForm[key]}`)
+      }
+      return list
     },
   },
   watch: {
@@ -377,9 +403,9 @@ export default {
     },
     dialogClose() {
       this.editForm = {
-        problemType: '',
-        problemUrgency: '',
-        clientInfo: '',
+        customerName: '',
+        gasNo: '',
+        userId: '',
         address: '',
         problemDetails: '',
       }
