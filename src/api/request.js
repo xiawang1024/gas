@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 19:10:18
- * @LastEditTime: 2023-09-27 11:18:01
+ * @LastEditTime: 2023-09-27 16:11:54
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/request.js
@@ -12,7 +12,7 @@ import axios from 'axios'
 import localforage from 'localforage'
 
 const request = axios.create({
-  baseURL: 'http://192.168.241.94:8089',
+  baseURL: process.env.VUE_APP_API_HOST,
   // baseURL: 'http://114.115.206.239:8089',
   // baseURL: 'http://123.7.68.106:8089',
   timeout: 20000,

@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:38:14
- * @LastEditTime: 2023-09-27 11:15:40
+ * @LastEditTime: 2023-09-27 16:21:09
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/router/index.js
@@ -82,15 +82,15 @@ export const routes = [
       title: '巡线管理系统',
     },
   },
-  // {
-  //   path: '/flow',
-  //   name: 'Flow',
-  //   component: Flow,
-  //   roles: ['admin'],
-  //   meta: {
-  //     title: '入户安检系统',
-  //   },
-  // },
+  {
+    path: '/flow',
+    name: 'Flow',
+    component: Flow,
+    roles: ['admin'],
+    meta: {
+      title: '流量计查询系统',
+    },
+  },
   {
     path: '/homeCheck',
     name: 'HomeCheck',

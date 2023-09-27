@@ -288,7 +288,7 @@
 <script>
 import * as ClientService from '@/api/homeCheck.js'
 
-const IMGHOST = 'http://192.168.241.94:8089'
+const IMGHOST = process.env.VUE_APP_API_HOST
 
 export default {
   name: 'FormCore',

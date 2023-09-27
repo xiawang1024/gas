@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 17:49:02
- * @LastEditTime: 2023-08-07 09:42:36
+ * @LastEditTime: 2023-09-27 16:13:28
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/work/modules/caiji.vue
@@ -347,7 +347,7 @@
 </template>
 
 <script>
-const IMGHOST = 'http://123.7.68.106:8089'
+const IMGHOST = process.env.VUE_APP_API_HOST
 import * as Service from '@/api/index'
 import * as ClientService from '@/api/service.js'
 import { WorkType, WorkTypeMap } from '../conf.js'

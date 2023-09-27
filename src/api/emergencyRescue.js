@@ -1,10 +1,10 @@
 /*
  * @Author: xiawang1024
- * @Date: 2023-09-27 11:16:18
- * @LastEditTime: 2023-09-27 16:20:39
+ * @Date: 2023-09-27 15:32:03
+ * @LastEditTime: 2023-09-27 16:20:06
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /electronic-file/src/api/homeCheck.js
+ * @FilePath: /electronic-file/src/api/emergencyRescue.js
  * 工作，生活，健康
  */
 import request from './request'
@@ -12,29 +12,25 @@ import request from './request'
 export const get = ({
   pageNum = 1,
   pageSize = 20,
-  userId,
-  gasNo,
-  customerName,
-  address,
-  securityUser,
-  executeUser,
-  executeStatus,
+  emergencyTime,
+  emergencyAddress,
+  emergencyGrade,
+  rescueUser,
+  isOver,
   beginTime,
   endTime,
 }) =>
   request({
-    url: `/system/check/list`,
+    url: `/system/rescue/list`,
     method: 'get',
     params: {
       pageNum,
       pageSize,
-      userId,
-      gasNo,
-      customerName,
-      address,
-      securityUser,
-      executeUser,
-      executeStatus,
+      emergencyTime,
+      emergencyAddress,
+      emergencyGrade,
+      rescueUser,
+      isOver,
       params: {
         beginTime,
         endTime,
@@ -42,7 +38,10 @@ export const get = ({
     },
   })
 
+export const getDict = dictType =>
+  request({ url: `/system/dict/data/type/${dictType}`, method: 'get' })
+
 export const add = () => {}
 export const update = () => {}
-export const getDict = () => {}
+
 export const del = () => {}

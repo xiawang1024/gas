@@ -1,10 +1,10 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:00:16
- * @LastEditTime: 2023-06-25 17:13:06
+ * @LastEditTime: 2023-09-27 16:08:28
  * @LastEditors: xiawang1024
  * @Description:
- * @FilePath: /electronic-file/src/views/service/index.vue
+ * @FilePath: /electronic-file/src/views/emergencyRescue/modules/formCore.vue
  * 工作，生活，健康
 -->
 <template>
@@ -12,6 +12,7 @@
     <el-card class="card">
       <div class="hd-wrap">
         <el-button
+          v-if="false"
           type="primary"
           class="btn"
           icon="el-icon-plus"
@@ -19,17 +20,24 @@
           >新增</el-button
         >
         <el-form :inline="true" :model="schForm" ref="schForm">
-          <el-form-item prop="clientInfo">
+          <el-form-item prop="emergencyAddress">
             <el-input
-              v-model.trim="schForm.clientInfo"
-              placeholder="客户信息"
+              v-model.trim="schForm.emergencyAddress"
+              placeholder="地点"
               clearable
             ></el-input>
           </el-form-item>
-          <el-form-item prop="problemUrgency">
+          <el-form-item prop="rescueUser">
+            <el-input
+              v-model.trim="schForm.rescueUser"
+              placeholder="抢险人员"
+              clearable
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="emergencyGrade">
             <el-select
-              v-model="schForm.problemUrgency"
-              placeholder="紧急程度"
+              v-model="schForm.emergencyGrade"
+              placeholder="险情等级"
               clearable
             >
               <el-option
@@ -43,15 +51,11 @@
           <el-form-item prop="problemType">
             <el-select
               v-model="schForm.problemType"
-              placeholder="问题分类"
+              placeholder="是否结束"
               clearable
             >
-              <el-option
-                :label="item.label"
-                :value="item.value"
-                v-for="item of QuestionType"
-                :key="item.value"
-              ></el-option>
+              <el-option label="已结束" value="Y"></el-option>
+              <el-option label="未结束" value="N"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item prop="date">
@@ -77,50 +81,59 @@
         </el-form>
       </div>
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="createTime" label="日期"> </el-table-column>
-        <el-table-column prop="address" label="位置"> </el-table-column>
-        <el-table-column prop="problemType" label="问题分类">
-          <template slot-scope="scope">
-            <el-tag>{{ QuestionTypeMap[scope.row.problemType] }}</el-tag>
-          </template>
+        <el-table-column prop="emergencyTime" label="日期"> </el-table-column>
+        <el-table-column prop="emergencyAddress" label="地点">
         </el-table-column>
+
         <el-table-column
-          prop="problemDetails"
-          label="问题详情"
+          prop="emergencyDetail"
+          label="险情描述"
           show-overflow-tooltip
         >
         </el-table-column>
-        <el-table-column prop="problemUrgency" label="紧急程度">
+        <el-table-column prop="emergencyGrade" label="险情等级">
           <template slot-scope="scope">
             <el-tag type="danger">{{
-              ImportantLevelMap[scope.row.problemUrgency]
+              ImportantLevelMap[scope.row.emergencyGrade]
             }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="clientInfo" label="发现人" show-overflow-tooltip>
-        </el-table-column>
-        <el-table-column fixed="right" label="操作" width="220">
+        <el-table-column prop="isOver" label="是否结束" show-overflow-tooltip>
           <template slot-scope="scope">
-            <el-button @click="actionHandler(scope.row, 0)" size="mini"
-              >查看</el-button
-            >
+            <el-tag :type="scope.row.isOver === 'Y' ? 'success' : 'danger'">{{
+              scope.row.isOver === 'Y' ? '已结束' : '未结束'
+            }}</el-tag>
+          </template>
+        </el-table-column>
+
+        <el-table-column prop="process" label="处置情况" show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column
+          prop="analysisAndSummary"
+          label="事件分析与总结"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column
+          prop="longitude"
+          label="经度"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="latitude"
+          label="维度"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column prop="altitude" label="海拔" show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column fixed="right" label="操作" width="80">
+          <template slot-scope="scope">
             <el-button
               type="primary"
+              @click="actionHandler(scope.row, 0)"
               size="mini"
-              @click="actionHandler(scope.row, 1)"
-              >编辑</el-button
+              >查看</el-button
             >
-            <el-popconfirm
-              icon="el-icon-info"
-              icon-color="red"
-              title="确定删除吗？"
-              style="margin-left: 12px;"
-              @confirm="actionHandler(scope.row, 2)"
-            >
-              <el-button slot="reference" type="danger" size="mini"
-                >删除</el-button
-              >
-            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -141,64 +154,72 @@
     <el-dialog
       :title="dialogTitle"
       :visible.sync="dialogVisible"
-      width="800px"
+      width="1000px"
       @closed="dialogClose"
     >
-      <el-form :inline="true" :model="editForm" label-width="100px">
-        <el-form-item label="紧急程度" prop="problemUrgency">
-          <el-select
-            v-model="editForm.problemUrgency"
-            placeholder="紧急程度"
-            clearable
-            class="fixWidth"
+      <el-descriptions border>
+        <el-descriptions-item label="日期">
+          {{ editForm.emergencyTime }}</el-descriptions-item
+        >
+        <el-descriptions-item label="地点">{{
+          editForm.emergencyAddress
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="险情等级">
+          {{ ImportantLevelMap[editForm.emergencyGrade] }}
+        </el-descriptions-item>
+        <el-descriptions-item label="险情描述">
+          {{ editForm.emergencyDetail }}
+        </el-descriptions-item>
+        <el-descriptions-item label="抢险人员">{{
+          editForm.rescueUser
+        }}</el-descriptions-item>
+        <el-descriptions-item label="是否结束">
+          <el-tag :type="editForm.isOver === 'Y' ? 'success' : 'danger'">{{
+            editForm.isOver === 'Y' ? '已结束' : '未结束'
+          }}</el-tag>
+        </el-descriptions-item>
+
+        <el-descriptions-item label="经度">{{
+          editForm.longitude
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="维度">{{
+          editForm.latitude
+        }}</el-descriptions-item>
+        <el-descriptions-item label="海拔">{{
+          editForm.altitude
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="处置情况">{{
+          editForm.process
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="事件分析与总结" :span="2">{{
+          editForm.analysisAndSummary
+        }}</el-descriptions-item>
+
+        <el-descriptions-item label="险情照片">
+          <el-image
+            v-for="item of [1, 2, 3]"
+            :key="item"
+            style="width: 80px; height: 80px;margin-right: 4px;"
+            :src="`${IMGHOST}${editForm['emergencyImage' + item]}`"
+            :preview-src-list="emergencyImageList"
           >
-            <el-option
-              :label="item.label"
-              :value="item.value"
-              v-for="item of ImportantLevel"
-              :key="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="问题分类" prop="problemType">
-          <el-select
-            v-model="editForm.problemType"
-            placeholder="问题分类"
-            clearable
-            class="fixWidth"
+          </el-image>
+        </el-descriptions-item>
+        <el-descriptions-item label="处置照片">
+          <el-image
+            v-for="item of [1, 2, 3]"
+            :key="item"
+            style="width: 80px; height: 80px;margin-right: 4px;"
+            :src="`${IMGHOST}${editForm['executeImage' + item]}`"
+            :preview-src-list="executeImageList"
           >
-            <el-option
-              :label="item.label"
-              :value="item.value"
-              v-for="item of QuestionType"
-              :key="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="客户信息" prop="clientInfo">
-          <el-input
-            class="fixWidth"
-            v-model="editForm.clientInfo"
-            placeholder="请输入客户名称"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="所在位置" prop="address">
-          <el-input
-            class="fixWidth"
-            v-model="editForm.address"
-            placeholder="请输入所在位置"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="问题详情">
-          <el-input
-            class="fixWidth"
-            type="textarea"
-            rows="4"
-            v-model="editForm.problemDetails"
-            placeholder="请输入问题详情"
-          ></el-input>
-        </el-form-item>
-      </el-form>
+          </el-image>
+        </el-descriptions-item>
+      </el-descriptions>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogConfirm">确 定</el-button>
@@ -208,21 +229,19 @@
 </template>
 
 <script>
-import * as ClientService from '@/api/service.js'
+import * as ClientService from '@/api/emergencyRescue.js'
+
+const IMGHOST = process.env.VUE_APP_API_HOST
 
 export default {
   name: 'FormCore',
 
   data() {
     return {
+      IMGHOST,
       QuestionType: [],
       ImportantLevel: [],
-      schForm: {
-        problemType: '',
-        problemUrgency: '',
-        clientInfo: '',
-        date: null,
-      },
+      schForm: {},
       tableData: [],
       pageInfo: {
         pageNum: 1,
@@ -266,15 +285,31 @@ export default {
     },
     postData() {
       let data = {
+        ...this.schForm,
         pageNum: this.pageInfo.pageNum,
         pageSize: this.pageInfo.pageSize,
-        problemType: this.schForm.problemType,
-        problemUrgency: this.schForm.problemUrgency,
-        clientInfo: this.schForm.clientInfo,
+
         beginTime: this.schForm.date && this.schForm.date[0],
         endTime: this.schForm.date && this.schForm.date[1],
       }
       return data
+    },
+    emergencyImageList() {
+      let list = []
+      for (let i = 1; i <= 3; i++) {
+        let key = `emergencyImage${i}`
+        list.push(`${IMGHOST}${this.editForm[key]}`)
+      }
+      return list
+    },
+    executeImageList() {
+      let list = []
+      for (let i = 1; i <= 3; i++) {
+        let key = `executeImage${i}`
+
+        list.push(`${IMGHOST}${this.editForm[key]}`)
+      }
+      return list
     },
   },
   watch: {
@@ -291,18 +326,7 @@ export default {
     },
   },
   created() {
-    ClientService.getDict('problem_type').then(res => {
-      let { code, data } = res.data
-      if (code === 200) {
-        this.QuestionType = data.map(item => {
-          return {
-            label: item.dictLabel,
-            value: item.dictValue,
-          }
-        })
-      }
-    })
-    ClientService.getDict('problem_urgency').then(res => {
+    ClientService.getDict('emergency_grade').then(res => {
       let { code, data } = res.data
       if (code === 200) {
         this.ImportantLevel = data.map(item => {

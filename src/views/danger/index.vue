@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:00:16
- * @LastEditTime: 2023-07-17 10:12:35
+ * @LastEditTime: 2023-09-27 16:13:08
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/danger/index.vue
@@ -279,7 +279,7 @@ import * as ClientService from '@/api/service.js'
 
 import * as DangerService from '@/api/danger'
 
-const IMGHOST = 'http://123.7.68.106:8089'
+const IMGHOST = process.env.VUE_APP_API_HOST
 
 export default {
   name: 'Danger',
