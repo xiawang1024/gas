@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-26 19:47:46
- * @LastEditTime: 2023-08-07 09:35:36
+ * @LastEditTime: 2023-09-27 16:54:14
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/danger.js
@@ -20,6 +20,7 @@ export const deal = ({
   dealProgress,
   dealDuration,
   submitNickName,
+  superviseUser,
   longitude,
   latitude,
   imageWtyj,
@@ -45,6 +46,7 @@ export const deal = ({
       dealProgress,
       dealDuration,
       submitNickName,
+      superviseUser,
       longitude,
       latitude,
       imageWtyj,
@@ -58,7 +60,17 @@ export const deal = ({
     },
   })
 
-export const get = ({ pageNum, pageSize, wtflvalue, jjcdvalue }) =>
+export const get = ({
+  pageNum,
+  pageSize,
+  wtflvalue,
+  jjcdvalue,
+  dealProgress,
+  superviseUser,
+  nickName,
+  beginTime,
+  endTime,
+}) =>
   request({
     url: `/gas/dealquestion/list`,
     method: 'get',
@@ -67,6 +79,13 @@ export const get = ({ pageNum, pageSize, wtflvalue, jjcdvalue }) =>
       pageSize,
       wtflvalue,
       jjcdvalue,
+      dealProgress,
+      superviseUser,
+      nickName,
+      params: {
+        beginTime,
+        endTime,
+      },
     },
   })
 export const update = data =>

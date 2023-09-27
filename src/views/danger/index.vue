@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-13 16:00:16
- * @LastEditTime: 2023-09-27 16:13:08
+ * @LastEditTime: 2023-09-27 16:53:36
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/danger/index.vue
@@ -21,7 +21,7 @@
           >新增</el-button
         >
         <el-form :inline="true" :model="schForm" ref="schForm">
-          <el-form-item label="紧急程度" prop="jjcdvalue">
+          <el-form-item prop="jjcdvalue">
             <el-select
               v-model="schForm.jjcdvalue"
               placeholder="紧急程度"
@@ -35,7 +35,21 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="问题分类" prop="wtflvalue">
+          <el-form-item prop="dealProgress">
+            <el-select
+              v-model="schForm.dealProgress"
+              placeholder="处理进度"
+              clearable
+            >
+              <el-option
+                :label="item.label"
+                :value="item.value"
+                v-for="item of DealProcess"
+                :key="item.value"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item prop="wtflvalue">
             <el-select
               v-model="schForm.wtflvalue"
               placeholder="问题分类"
@@ -48,6 +62,32 @@
                 :key="item.value"
               ></el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item prop="superviseUser">
+            <el-input
+              v-model.trim="schForm.superviseUser"
+              placeholder="督办责任人"
+              clearable
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="nickName">
+            <el-input
+              v-model.trim="schForm.nickName"
+              placeholder="整改责任人"
+              clearable
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="date">
+            <el-date-picker
+              v-model="schForm.date"
+              type="datetimerange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              clearable
+              value-format="yyyy-MM-dd HH:mm:ss"
+            >
+            </el-date-picker>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="schHandler" icon="el-icon-search"
@@ -103,6 +143,11 @@
         <el-table-column
           prop="submitNickName"
           label="隐患排查人"
+          show-overflow-tooltip
+        ></el-table-column>
+        <el-table-column
+          prop="superviseUser"
+          label="督办责任人"
           show-overflow-tooltip
         >
         </el-table-column>
@@ -246,6 +291,13 @@
             placeholder="请输入隐患排查人"
           ></el-input>
         </el-form-item>
+        <el-form-item label="督办责任人">
+          <el-input
+            class="fixWidth"
+            v-model="dealForm.superviseUser"
+            placeholder="请输入督办责任人"
+          ></el-input>
+        </el-form-item>
         <el-form-item label="隐患内容">
           <el-input
             class="fixWidth"
@@ -288,10 +340,7 @@ export default {
   },
   data() {
     return {
-      schForm: {
-        wtflvalue: '',
-        jjcdvalue: '',
-      },
+      schForm: {},
       tableData: [],
       pageInfo: {
         pageNum: 1,
@@ -342,6 +391,17 @@ export default {
     },
     previewImgUrls() {
       return this.ImgUrls.length && this.ImgUrls.map(item => item.url)
+    },
+    postData() {
+      let data = {
+        ...this.schForm,
+        pageNum: this.pageInfo.pageNum,
+        pageSize: this.pageInfo.pageSize,
+
+        beginTime: this.schForm.date && this.schForm.date[0],
+        endTime: this.schForm.date && this.schForm.date[1],
+      }
+      return data
     },
   },
 
@@ -453,7 +513,7 @@ export default {
       this.ImgDialogVisible = true
     },
     getData() {
-      DangerService.get({ ...this.pageInfo, ...this.schForm }).then(res => {
+      DangerService.get(this.postData).then(res => {
         let { code, rows, total } = res.data
         if (code === 200) {
           this.tableData = rows
