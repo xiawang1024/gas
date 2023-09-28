@@ -63,9 +63,9 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item prop="superviseUser">
+          <el-form-item prop="dubanname">
             <el-input
-              v-model.trim="schForm.superviseUser"
+              v-model.trim="schForm.dubanname"
               placeholder="督办责任人"
               clearable
             ></el-input>
@@ -146,7 +146,7 @@
           show-overflow-tooltip
         ></el-table-column>
         <el-table-column
-          prop="superviseUser"
+          prop="dubanname"
           label="督办责任人"
           show-overflow-tooltip
         >
@@ -294,7 +294,7 @@
         <el-form-item label="督办责任人">
           <el-input
             class="fixWidth"
-            v-model="dealForm.superviseUser"
+            v-model="dealForm.dubanname"
             placeholder="请输入督办责任人"
           ></el-input>
         </el-form-item>
