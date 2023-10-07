@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-12 08:45:39
- * @LastEditTime: 2023-07-17 10:18:08
+ * @LastEditTime: 2023-08-31 10:30:14
  * @LastEditors: xiawang1024
  * @Description
  * @FilePath: /electronic-file/src/views/home/index.vue
@@ -23,16 +23,12 @@
                     更多菜单<i class="el-icon-arrow-down el-icon--right"></i>
                   </span>
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="a">外勤查询</el-dropdown-item>
-                    <el-dropdown-item command="b"
-                      >客户缴费查询</el-dropdown-item
+                    <el-dropdown-item
+                      :command="item.path"
+                      v-for="item of permission_routes"
+                      :key="item.path"
+                      >{{ item.meta.title }}</el-dropdown-item
                     >
-                    <el-dropdown-item command="c">客户服务</el-dropdown-item>
-                    <el-dropdown-item command="d"
-                      >隐患排查治理</el-dropdown-item
-                    >
-                    <el-dropdown-item command="f">传感器查询</el-dropdown-item>
-                    <el-dropdown-item command="e">巡线管理</el-dropdown-item>
 
                     <el-dropdown-item command="exit" divided
                       >注销登录</el-dropdown-item
@@ -82,6 +78,10 @@ import mapXw from '@/components/big/map.vue'
 import RightTop from '@/components/big/rightTop.vue'
 import RightBottom from '@/components/big/rightBottom.vue'
 
+import localforage from 'localforage'
+
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'DataView',
   components: {
@@ -93,35 +93,21 @@ export default {
   data() {
     return {}
   },
+  computed: {
+    ...mapGetters(['permission_routes']),
+  },
   methods: {
     goToPath(path) {
       this.$router.push(path)
     },
 
     handleCommand(command) {
-      switch (command) {
-        case 'a':
-          this.goToPath('/work')
-          break
-        case 'b':
-          this.goToPath('/order')
-          break
-        case 'c':
-          this.goToPath('/service')
-          break
-        case 'd':
-          this.goToPath('/danger')
-          break
-        case 'e':
-          this.goToPath('/report')
-          break
-        case 'f':
-          this.goToPath('/flow')
-          break
-        case 'exit':
-          localStorage.removeItem('token')
+      if (command == 'exit') {
+        localforage.removeItem('token').then(() => {
           this.$router.push('/login')
-          break
+        })
+      } else {
+        this.goToPath(command)
       }
     },
   },

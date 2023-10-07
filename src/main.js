@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 08:45:39
- * @LastEditTime: 2023-06-12 16:50:05
+ * @LastEditTime: 2023-08-31 09:27:35
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/main.js
@@ -18,6 +18,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import dataV from '@jiaminghi/data-view'
 
 import router from './router/index.js'
+import store from './store/index.js'
 
 Vue.config.productionTip = false
 
@@ -27,5 +28,6 @@ Vue.use(ElementUI)
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')
