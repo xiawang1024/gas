@@ -88,7 +88,7 @@ export const routes = [
     component: Flow,
     roles: ['admin'],
     meta: {
-      title: '流量计查询系统',
+      title: '传感器查询系统',
     },
   },
   {
