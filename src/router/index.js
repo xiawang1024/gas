@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:38:14
- * @LastEditTime: 2023-09-27 16:21:09
+ * @LastEditTime: 2023-12-14 09:45:06
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/router/index.js
@@ -24,6 +24,7 @@ import Flow from '@/views/flow/index.vue'
 import HomeCheck from '@/views/homeCheck/index.vue'
 import EmergencyRescue from '@/views/emergencyRescue/index.vue'
 import SpecialOperation from '@/views/specialOperation/index.vue'
+import ZhongAn from '@/views/zhongAn/index.vue'
 
 Vue.use(VueRouter)
 
@@ -116,6 +117,15 @@ export const routes = [
     roles: ['admin'],
     meta: {
       title: '特种作业系统',
+    },
+  },
+  {
+    path: '/zhongan',
+    name: 'ZhongAn',
+    component: ZhongAn,
+    roles: ['admin'],
+    meta: {
+      title: '中安查询系统',
     },
   },
   {
