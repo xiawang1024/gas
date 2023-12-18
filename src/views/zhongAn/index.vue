@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-12-14 09:43:21
- * @LastEditTime: 2023-12-14 11:09:59
+ * @LastEditTime: 2023-12-18 09:45:05
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/zhongAn/index.vue
@@ -11,31 +11,6 @@
   <div class="container">
     <NavHeader />
     <el-card class="card">
-      <div class="hd-wrap">
-        <el-form :inline="true" :model="schForm" ref="schForm">
-          <el-form-item prop="deptId">
-            <el-cascader
-              v-model="schForm.deptId"
-              :options="depts"
-              :props="{
-                checkStrictly: true,
-                value: 'deptId',
-                label: 'deptName',
-              }"
-              clearable
-            ></el-cascader>
-          </el-form-item>
-
-          <el-form-item>
-            <el-button type="primary" @click="schHandler" icon="el-icon-search"
-              >查询</el-button
-            >
-            <el-button icon="el-icon-refresh" @click="resetHandler"
-              >重置</el-button
-            >
-          </el-form-item>
-        </el-form>
-      </div>
       <el-table :data="tableData" border style="width: 100%" default-expand-all>
         <el-table-column type="expand">
           <template slot-scope="props">
@@ -113,7 +88,7 @@
 </template>
 
 <script>
-import NavHeader from '@/components/nav/index.vue'
+import NavHeader from '@/components/navClient/index.vue'
 import * as ZhongAnService from '@/api/zhongan.js'
 import { GASTYPES, GASSTATUS, GASUINT } from './config'
 

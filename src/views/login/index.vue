@@ -81,7 +81,7 @@ export default {
 
 <style scoped>
 .login-wrap {
-  background-image: url('../home/img/bg.png');
+  background-image: url('../home/img/bg.jpg');
   background-size: cover;
   background-position: center;
   height: 100%;

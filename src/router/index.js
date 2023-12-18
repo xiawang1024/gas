@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:38:14
- * @LastEditTime: 2023-12-14 09:45:06
+ * @LastEditTime: 2023-12-18 09:40:00
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/router/index.js
@@ -31,96 +31,6 @@ Vue.use(VueRouter)
 export const routes = [
   {
     path: '/',
-    redirect: '/datav',
-  },
-  {
-    path: '/datav',
-    name: 'DataV',
-    component: DataV,
-  },
-  {
-    path: '/order',
-    name: 'Order',
-    component: Order,
-    roles: ['admin'],
-    meta: {
-      title: '客户缴费查询系统',
-    },
-  },
-  {
-    path: '/work',
-    name: 'Work',
-    component: Work,
-    roles: ['admin'],
-    meta: {
-      title: '外勤查询系统',
-    },
-  },
-  {
-    path: '/service',
-    name: 'Service',
-    component: Service,
-    roles: ['admin'],
-    meta: {
-      title: '客户服务系统',
-    },
-  },
-  {
-    path: '/danger',
-    name: 'Danger',
-    component: Danger,
-    roles: ['admin'],
-    meta: {
-      title: '隐患排查治理系统',
-    },
-  },
-  {
-    path: '/report',
-    name: 'Report',
-    component: Report,
-    roles: ['admin'],
-    meta: {
-      title: '巡线管理系统',
-    },
-  },
-  {
-    path: '/flow',
-    name: 'Flow',
-    component: Flow,
-    roles: ['admin'],
-    meta: {
-      title: '传感器查询系统',
-    },
-  },
-  {
-    path: '/homeCheck',
-    name: 'HomeCheck',
-    component: HomeCheck,
-    roles: ['admin'],
-    meta: {
-      title: '入户安检系统',
-    },
-  },
-  {
-    path: '/emergencyRescue',
-    name: 'EmergencyRescue',
-    component: EmergencyRescue,
-    roles: ['admin'],
-    meta: {
-      title: '应急抢险系统',
-    },
-  },
-  {
-    path: '/specialOperation',
-    name: 'SpecialOperation',
-    component: SpecialOperation,
-    roles: ['admin'],
-    meta: {
-      title: '特种作业系统',
-    },
-  },
-  {
-    path: '/zhongan',
     name: 'ZhongAn',
     component: ZhongAn,
     roles: ['admin'],
