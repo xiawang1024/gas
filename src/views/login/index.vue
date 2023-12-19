@@ -64,7 +64,7 @@ export default {
               localforage.setItem('token', `Bearer ${token}`).then(() => {
                 let role = 'admin'
                 this.update_permissions(role)
-                this.$router.push('/datav')
+                this.$router.push('/')
               })
             } else {
               this.$message.error(msg)
