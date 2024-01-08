@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:38:14
- * @LastEditTime: 2023-12-14 09:45:06
+ * @LastEditTime: 2024-01-08 16:31:35
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/router/index.js
@@ -25,6 +25,7 @@ import HomeCheck from '@/views/homeCheck/index.vue'
 import EmergencyRescue from '@/views/emergencyRescue/index.vue'
 import SpecialOperation from '@/views/specialOperation/index.vue'
 import ZhongAn from '@/views/zhongAn/index.vue'
+import ZhongAnWatch from '@/views/zhongAnWatch/index.vue'
 
 Vue.use(VueRouter)
 
@@ -126,6 +127,15 @@ export const routes = [
     roles: ['admin'],
     meta: {
       title: '中安查询系统',
+    },
+  },
+  {
+    path: '/zhonganwatch',
+    name: 'ZhongAnWatch',
+    component: ZhongAnWatch,
+    roles: ['admin'],
+    meta: {
+      title: '实时监控系统',
     },
   },
   {
