@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2024-01-08 17:27:36
+ * @LastEditTime: 2024-01-08 17:59:04
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/zhongAnWatch/flowDigita.vue
@@ -12,14 +12,14 @@
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text">气体浓度</div>
+        <div class="text">A气体浓度</div>
       </div>
       <div class="digita">{{ info.sensorDatas[0].gasValue }}</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text">气体状态</div>
+        <div class="text">A气体状态</div>
       </div>
       <div class="digita">
         {{ gasStatusMap[info.sensorDatas[0].gasStatus] }}
@@ -28,7 +28,7 @@
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text">气体类型</div>
+        <div class="text">A气体类型</div>
       </div>
       <div class="digita">
         {{ gasTypeMap[info.sensorDatas[0].gasType].zh }} /
@@ -38,35 +38,35 @@
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text">气体单位</div>
+        <div class="text">A气体单位</div>
       </div>
       <div class="digita">{{ gasUintMap[info.sensorDatas[0].gasUint] }}</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text">检测精度</div>
+        <div class="text">A检测精度</div>
       </div>
       <div class="digita">{{ gasUintMap[info.sensorDatas[0].gas_dec] }}</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text">一级报警值</div>
+        <div class="text">A一级报警值</div>
       </div>
       <div class="digita">{{ info.sensorDatas[0].alarml }}</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text">二级报警值</div>
+        <div class="text">A二级报警值</div>
       </div>
       <div class="digita">{{ info.sensorDatas[0].alarmh }}</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text">探测器量程</div>
+        <div class="text">A探测器量程</div>
       </div>
       <div class="digita">{{ info.sensorDatas[0].gasRange }}</div>
     </div>
@@ -74,14 +74,14 @@
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text">气体浓度</div>
+        <div class="text">B气体浓度</div>
       </div>
       <div class="digita">{{ info.sensorDatas[1].gasValue }}</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text">气体状态</div>
+        <div class="text">B气体状态</div>
       </div>
       <div class="digita">
         {{ gasStatusMap[info.sensorDatas[1].gasStatus] }}
@@ -90,7 +90,7 @@
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text">气体类型</div>
+        <div class="text">B气体类型</div>
       </div>
       <div class="digita">
         {{ gasTypeMap[info.sensorDatas[1].gasType].zh }} /
@@ -100,35 +100,35 @@
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text">气体单位</div>
+        <div class="text">B气体单位</div>
       </div>
       <div class="digita">{{ gasUintMap[info.sensorDatas[1].gasUint] }}</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text">检测精度</div>
+        <div class="text">B检测精度</div>
       </div>
       <div class="digita">{{ gasUintMap[info.sensorDatas[0].gas_dec] }}</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text">一级报警值</div>
+        <div class="text">B一级报警值</div>
       </div>
       <div class="digita">{{ info.sensorDatas[1].alarml }}</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text">二级报警值</div>
+        <div class="text">B二级报警值</div>
       </div>
       <div class="digita">{{ info.sensorDatas[1].alarmh }}</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
         <div class="icon"></div>
-        <div class="text">探测器量程</div>
+        <div class="text">B探测器量程</div>
       </div>
       <div class="digita">{{ info.sensorDatas[1].gasRange }}</div>
     </div>
