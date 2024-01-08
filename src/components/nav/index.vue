@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-14 10:20:07
- * @LastEditTime: 2023-08-31 11:15:06
+ * @LastEditTime: 2024-01-08 17:43:44
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/nav/index.vue
@@ -84,6 +84,9 @@ export default {
 ::v-deep {
   .el-page-header__left {
     align-items: center;
+  }
+  .el-page-header__left {
+    display: none;
   }
 }
 .wrap {

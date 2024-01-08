@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-20 11:17:02
- * @LastEditTime: 2023-12-18 09:42:46
+ * @LastEditTime: 2024-01-08 17:54:30
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/api/zhongan.js
@@ -16,4 +16,10 @@ export const get = ({ pageNum, pageSize }) =>
     url: `/4g/data/c/list`,
     method: 'get',
     params: { pageNum, pageSize },
+  })
+
+export const getLast = () =>
+  request({
+    url: '/4g/data/latest?deptId=114',
+    method: 'get',
   })

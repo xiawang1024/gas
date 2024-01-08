@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-14 10:20:07
- * @LastEditTime: 2023-12-18 09:49:15
+ * @LastEditTime: 2024-01-08 17:40:27
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/components/navClient/index.vue
@@ -11,7 +11,7 @@
   <div class="nav-wrap">
     <el-card>
       <div class="wrap">
-        <p class="title">查询系统</p>
+        <p class="title">历史查询系统</p>
         <el-button class="btn" @click="logOut">注销登录</el-button>
       </div>
     </el-card>

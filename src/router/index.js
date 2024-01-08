@@ -1,7 +1,7 @@
 /*
  * @Author: xiawang1024
  * @Date: 2023-06-12 16:38:14
- * @LastEditTime: 2023-12-18 09:40:00
+ * @LastEditTime: 2024-01-08 17:37:49
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/router/index.js
@@ -12,19 +12,11 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import localforage from 'localforage'
 
-import DataV from '@/views/home/index.vue'
-import Order from '@/views/order/index.vue'
-import Work from '@/views/work/index.vue'
-import Service from '@/views/service/index.vue'
-import Danger from '@/views/danger/index.vue'
-import Report from '@/views/report/index.vue'
 import NotFound from '@/views/404/index.vue'
 import Login from '@/views/login/index.vue'
-import Flow from '@/views/flow/index.vue'
-import HomeCheck from '@/views/homeCheck/index.vue'
-import EmergencyRescue from '@/views/emergencyRescue/index.vue'
-import SpecialOperation from '@/views/specialOperation/index.vue'
+
 import ZhongAn from '@/views/zhongAn/index.vue'
+import ZhongAnWatch from '@/views/zhongAnWatch/index.vue'
 
 Vue.use(VueRouter)
 
@@ -36,6 +28,15 @@ export const routes = [
     roles: ['admin'],
     meta: {
       title: '中安查询系统',
+    },
+  },
+  {
+    path: '/watch',
+    name: 'ZhongAnWatch',
+    component: ZhongAnWatch,
+    roles: ['admin'],
+    meta: {
+      title: '中安监控系统',
     },
   },
   {

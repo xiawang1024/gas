@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-12-14 09:43:21
- * @LastEditTime: 2023-12-18 09:45:05
+ * @LastEditTime: 2024-01-08 17:42:00
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/zhongAn/index.vue
@@ -19,13 +19,13 @@
               </el-table-column>
               <el-table-column prop="gasValue" label="气体浓度">
               </el-table-column>
-              <!-- <el-table-column prop="gasDec" label="检测精度">
+              <el-table-column prop="gasDec" label="检测精度">
                 <template slot-scope="scope">
                   <div>
-                    {{ gasStatusMap[scope.row.gasStatus] }}
+                    {{ gasStatusMap[scope.row.gasDec] }}
                   </div>
                 </template>
-              </el-table-column> -->
+              </el-table-column>
               <el-table-column prop="gasStatus" label="气体状态">
                 <template slot-scope="scope">
                   <div>
@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import NavHeader from '@/components/navClient/index.vue'
+import NavHeader from '@/components/nav/index.vue'
 import * as ZhongAnService from '@/api/zhongan.js'
 import { GASTYPES, GASSTATUS, GASUINT } from './config'
 
