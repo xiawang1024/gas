@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2024-01-09 09:21:26
+ * @LastEditTime: 2024-01-09 10:27:11
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/zhongAnWatch/flowDigita.vue
@@ -181,11 +181,11 @@ export default {
 
 <style lang="less" scoped>
 .grid-container {
-  height: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(4, 1fr);
-  gap: 0;
+  gap: 80px 0;
+  height: calc(100vh - 240px);
 }
 
 .grid-item {
@@ -197,7 +197,7 @@ export default {
     flex: 0 0 75px;
     .icon {
       width: 100%;
-      height: 20px;
+      height: 50px;
     }
     .text {
       text-align: center;
@@ -206,6 +206,7 @@ export default {
     }
   }
   .digita {
+    margin-left: 10px;
     flex: 0 0 100px;
     font-size: 14px;
     font-weight: bold;
@@ -253,7 +254,7 @@ export default {
   &:nth-child(6) {
     .icon-wrap {
       .icon {
-        height: 20px;
+        height: 40px;
         background: url('./icons/ljll.png') center center no-repeat;
         background-size: contain;
       }
@@ -262,7 +263,7 @@ export default {
   &:nth-child(7) {
     .icon-wrap {
       .icon {
-        height: 20px;
+        height: 40px;
         background: url('./icons/ljll.png') center center no-repeat;
         background-size: contain;
       }
@@ -271,7 +272,7 @@ export default {
   &:nth-child(8) {
     .icon-wrap {
       .icon {
-        height: 20px;
+        height: 40px;
         background: url('./icons/ljll.png') center center no-repeat;
         background-size: contain;
       }
@@ -321,7 +322,7 @@ export default {
   &:nth-child(14) {
     .icon-wrap {
       .icon {
-        height: 20px;
+        height: 40px;
         background: url('./icons/ljll.png') center center no-repeat;
         background-size: contain;
       }
@@ -330,7 +331,7 @@ export default {
   &:nth-child(15) {
     .icon-wrap {
       .icon {
-        height: 20px;
+        height: 40px;
         background: url('./icons/ljll.png') center center no-repeat;
         background-size: contain;
       }
@@ -339,7 +340,7 @@ export default {
   &:nth-child(16) {
     .icon-wrap {
       .icon {
-        height: 20px;
+        height: 40px;
         background: url('./icons/ljll.png') center center no-repeat;
         background-size: contain;
       }
