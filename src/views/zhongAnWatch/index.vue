@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-12-14 09:43:21
- * @LastEditTime: 2024-01-08 17:55:35
+ * @LastEditTime: 2024-01-09 09:16:47
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/zhongAnWatch/index.vue
@@ -87,7 +87,7 @@ export default {
     this.getData()
     this.timer = setInterval(() => {
       this.getData()
-    }, 3000)
+    }, 5000)
   },
   beforeDestroy() {
     clearInterval(this.timer)
