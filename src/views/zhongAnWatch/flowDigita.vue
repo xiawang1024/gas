@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-06-21 15:42:52
- * @LastEditTime: 2024-01-08 17:59:04
+ * @LastEditTime: 2024-01-09 09:21:26
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/zhongAnWatch/flowDigita.vue
@@ -47,7 +47,7 @@
         <div class="icon"></div>
         <div class="text">A检测精度</div>
       </div>
-      <div class="digita">{{ gasUintMap[info.sensorDatas[0].gas_dec] }}</div>
+      <div class="digita">{{ info.sensorDatas[0].gasDec }}</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
@@ -109,7 +109,7 @@
         <div class="icon"></div>
         <div class="text">B检测精度</div>
       </div>
-      <div class="digita">{{ gasUintMap[info.sensorDatas[0].gas_dec] }}</div>
+      <div class="digita">{{ info.sensorDatas[0].gasDec }}</div>
     </div>
     <div class="grid-item">
       <div class="icon-wrap">
@@ -181,10 +181,11 @@ export default {
 
 <style lang="less" scoped>
 .grid-container {
+  height: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(4, 1fr);
-  gap: 20px 0;
+  gap: 0;
 }
 
 .grid-item {

@@ -1,7 +1,7 @@
 <!--
  * @Author: xiawang1024
  * @Date: 2023-12-14 09:43:21
- * @LastEditTime: 2024-01-08 17:30:48
+ * @LastEditTime: 2024-01-09 09:22:45
  * @LastEditors: xiawang1024
  * @Description:
  * @FilePath: /electronic-file/src/views/zhongAnWatch/index.vue
@@ -222,16 +222,18 @@ export default {
 
 <style lang="less" scoped>
 .row {
+  height: calc(100vh - 280px);
   .column {
     display: flex;
     width: 100%;
+    height: 50%;
     .item {
       position: relative;
       border: 1px solid #efefef;
       border-radius: 4px;
       flex: 1;
       margin: 5px;
-      padding: 30px 0;
+      padding: 10px 0;
       .name {
         position: absolute;
         top: 0;
